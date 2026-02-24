@@ -53,8 +53,8 @@ export function renderLandingPage(cities, onCitySelect) {
                         <h3 class="lp-card-title">Bengaluru <span class="lp-card-local">ಬೆಂಗಳೂರು</span></h3>
                         <p class="lp-card-desc">Navigate the Silicon Valley of India through the innovative Namma Metro corridors.</p>
                         <div class="lp-card-stats">
-                            <div class="lp-stat"><span>4</span> Lines</div>
-                            <div class="lp-stat"><span>90+</span> Stations</div>
+                            <div class="lp-stat"><span>5</span> Lines</div>
+                            <div class="lp-stat"><span>130+</span> Stations</div>
                         </div>
                         <button class="lp-card-btn">Explore Network</button>
                     </div>
