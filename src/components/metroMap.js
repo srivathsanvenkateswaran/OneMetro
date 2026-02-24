@@ -381,7 +381,14 @@ export function renderMetroMap(cityData, activeLine, activeStation, showUpcoming
 
             ${layout.lines.map(({ coords, line }) => {
     return coords.map((coord, i) => {
+      // Logic for conditional interchange rendering
+      let actsAsInterchange = false;
       if (coord.station.isInterchange) {
+        const visibleLineIds = layout.lines.map(l => l.line.id);
+        actsAsInterchange = coord.station.interchangeWith.some(id => visibleLineIds.includes(id));
+      }
+
+      if (actsAsInterchange) {
         const key = coord.station.name;
         if (renderedInterchanges.has(key)) return '';
         renderedInterchanges.add(key);
