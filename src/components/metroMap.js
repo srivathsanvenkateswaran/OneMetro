@@ -207,7 +207,7 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
     case 'bengaluru_green': {
       const startY = padding + 10;
       const endY = height - padding - 10;
-      const centerX = width * 0.45;
+      const centerX = width * 0.40;
       for (let i = 0; i < count; i++) {
         const t = i / (count - 1);
         const y = startY + (endY - startY) * t;
