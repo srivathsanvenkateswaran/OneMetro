@@ -102,8 +102,8 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
         { idx: 16, x: 0.58, y: 0.50 },  // Thousand Lights
         { idx: 19, x: 0.53, y: 0.59 },  // Nandanam / Saidapet
         { idx: 22, x: 0.48, y: 0.70 },  // Alandur — interchange hub
-        { idx: 23, x: 0.49, y: 0.76 },  // Nanganallur Road — south (Blue continues straight)
-        { idx: 25, x: 0.50, y: 0.93 },  // Chennai Airport — south
+        { idx: 23, x: 0.45, y: 0.76 },  // Nanganallur Road — Blue goes west/southwest
+        { idx: 25, x: 0.43, y: 0.93 },  // Chennai Airport — southwest of Alandur
       ];
       interpolateWaypoints(w.map(p => ({ idx: p.idx, x: p.x * width, y: p.y * height })), count, coords, line);
       break;
@@ -123,7 +123,7 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
         { idx: 12, x: 0.35, y: 0.42 },  // Vadapalani
         { idx: 14, x: 0.40, y: 0.58 },  // Ekkattuthangal
         { idx: 15, x: 0.48, y: 0.70 },  // Alandur — interchange
-        { idx: 16, x: 0.42, y: 0.76 },  // St. Thomas Mount — distinctly SW of Alandur
+        { idx: 16, x: 0.54, y: 0.76 },  // St. Thomas Mount — east of Alandur
       ];
       interpolateWaypoints(w.map(p => ({ idx: p.idx, x: p.x * width, y: p.y * height })), count, coords, line);
       break;
@@ -181,7 +181,7 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
         { idx: 23, x: 0.17, y: 0.43 },  // Porur Junction — interchange with Yellow
         { idx: 26, x: 0.28, y: 0.52 },  // DLF IT SEZ / Sathya Nagar
         { idx: 29, x: 0.48, y: 0.70 },  // Alandur — interchange with Blue & Green
-        { idx: 30, x: 0.42, y: 0.76 },  // St. Thomas Mount — interchange with Green
+        { idx: 30, x: 0.54, y: 0.76 },  // St. Thomas Mount — interchange with Green (east)
         { idx: 33, x: 0.50, y: 0.82 },  // Puzhuthivakkam / Vanuvampet
         { idx: 38, x: 0.62, y: 0.87 },  // Kovilabakkam / Vellakkal
         { idx: 42, x: 0.74, y: 0.90 },  // Medavakkam / Perumbakkam
