@@ -44,14 +44,6 @@ function getAllLines() {
     return state.city ? state.city.lines : [];
 }
 
-function updateTheme(cityId) {
-    if (cityId) {
-        document.documentElement.setAttribute('data-theme', cityId);
-    } else {
-        document.documentElement.removeAttribute('data-theme');
-    }
-}
-
 function getVisibleLines() {
     const filtered = getFilteredCity();
     return filtered ? filtered.lines : [];
@@ -87,7 +79,6 @@ function init() {
     const route = parseHash();
     state.cityId = route.cityId;
     state.city = cities[route.cityId] || null;
-    updateTheme(state.cityId);
 
     // If the line from URL exists, select it
     if (state.city && route.lineId) {
@@ -118,14 +109,12 @@ function init() {
             state.cityId = null;
             state.activeLine = null;
             state.activeStation = null;
-            updateTheme(null);
             renderHeader(null, handleCityChange);
         } else if (newCity && (!state.city || newCity.id !== state.city.id)) {
             state.city = newCity;
             state.cityId = route.cityId;
             state.activeLine = null;
             state.activeStation = null;
-            updateTheme(route.cityId);
             renderHeader(state.city, handleCityChange);
         }
 
@@ -360,7 +349,6 @@ function handleCityChange(cityId) {
         state.activeStation = null;
         state.showUpcoming = false;
         setHash(cityId, null);
-        updateTheme(cityId);
         renderHeader(state.city, handleCityChange);
         renderAll();
     }
