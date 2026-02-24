@@ -30,6 +30,9 @@ function getLayout(cityData, showUpcoming) {
   } else if (cityData.id === 'delhi') {
     width = 1400;
     height = 1000;
+  } else if (cityData.id === 'mumbai') {
+    width = 1300;
+    height = 1700;
   } else {
     width = hasPhase2 ? 1100 : 900;
     height = hasPhase2 ? 900 : 700;
@@ -491,6 +494,57 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
       const wpts = [
         { idx: 0, x: 200, y: 600 },   // Dwarka (Blue)
         { idx: 3, x: 50, y: 600 },   // Dhansa Bus Stand
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    // ═══════════════════════════════════════════
+    // MUMBAI LAYOUTS
+    // ═══════════════════════════════════════════
+    case 'mumbai_yellow': {
+      const wpts = [
+        { idx: 0, x: 450, y: 150 },   // Dahisar East
+        { idx: 6, x: 300, y: 350 },   // Pahadi Eksar
+        { idx: 16, x: 300, y: 600 },  // Andheri West (DN Nagar)
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'mumbai_red': {
+      const wpts = [
+        { idx: 0, x: 450, y: 150 },   // Dahisar East
+        { idx: 5, x: 500, y: 350 },   // Poisar
+        { idx: 13, x: 500, y: 600 },  // Gundavali / WEH
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'mumbai_blue': {
+      const wpts = [
+        { idx: 0, x: 150, y: 600 },   // Versova
+        { idx: 1, x: 300, y: 600 },   // DN Nagar
+        { idx: 4, x: 500, y: 600 },   // WEH
+        { idx: 7, x: 800, y: 600 },   // Marol Naka
+        { idx: 11, x: 1050, y: 750 }, // Ghatkopar
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'mumbai_aqua': {
+      const wpts = [
+        { idx: 0, x: 600, y: 400 },   // Aarey JVLR
+        { idx: 3, x: 800, y: 600 },   // Marol Naka
+        { idx: 4, x: 700, y: 700 },   // CSMIA T2
+        { idx: 9, x: 500, y: 950 },   // BKC
+        { idx: 12, x: 400, y: 1100 }, // Dadar
+        { idx: 17, x: 350, y: 1250 }, // Mahalaxmi
+        { idx: 22, x: 500, y: 1400 }, // CSMT
+        { idx: 24, x: 400, y: 1450 }, // Churchgate
+        { idx: 26, x: 350, y: 1550 }, // Cuffe Parade
       ];
       interpolateWaypoints(wpts, count, coords, line);
       break;

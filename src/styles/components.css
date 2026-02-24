@@ -1252,6 +1252,15 @@
 
 .lp-img-mumbai {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/Mumbai.png');
+}
+
+.lp-img-kolkata {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/Kolkata.png');
+    filter: grayscale(1);
+}
+
+.lp-img-hyderabad {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/Hyderabad.png');
     filter: grayscale(1);
 }
 
