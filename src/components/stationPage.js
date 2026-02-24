@@ -42,8 +42,8 @@ export function renderStationPage(station, line, prevStation, nextStation) {
             </div>
             
             <div class="station-nav-controls">
-                ${prevStation ? `<button class="btn-nav btn-prev" data-target="${prevStation.id}" aria-label="Previous station">← ${prevStation.name}</button>` : '<div class="btn-nav empty"></div>'}
-                ${nextStation ? `<button class="btn-nav btn-next" data-target="${nextStation.id}" aria-label="Next station">${nextStation.name} →</button>` : '<div class="btn-nav empty"></div>'}
+                ${prevStation ? `<button class="btn-nav btn-prev" style="--nav-color: ${line.color};" data-target="${prevStation.id}" aria-label="Previous station"><span class="nav-arrow">←</span> <span class="nav-text">${prevStation.name}</span></button>` : '<div class="btn-nav empty"></div>'}
+                ${nextStation ? `<button class="btn-nav btn-next" style="--nav-color: ${line.color};" data-target="${nextStation.id}" aria-label="Next station"><span class="nav-text">${nextStation.name}</span> <span class="nav-arrow">→</span></button>` : '<div class="btn-nav empty"></div>'}
             </div>
         </div>
 

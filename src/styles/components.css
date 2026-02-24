@@ -1445,6 +1445,7 @@
 .badges-row {
     display: flex;
     gap: 0.75rem;
+    flex-wrap: wrap;
 }
 
 .info-grid {
@@ -1618,8 +1619,8 @@
 }
 
 .btn-nav:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
+    background: var(--nav-color, rgba(255, 255, 255, 0.1));
+    border-color: var(--nav-color, rgba(255, 255, 255, 0.2));
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
@@ -1627,4 +1628,38 @@
 .btn-nav.empty {
     visibility: hidden;
     pointer-events: none;
+}
+
+/* ── Responsive Mobile Adjustments ── */
+@media (max-width: 768px) {
+    .station-page-container {
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .station-page-header {
+        padding: 1.25rem;
+    }
+
+    .info-card {
+        padding: 1.25rem;
+    }
+
+    .title-text h1 {
+        font-size: 1.8rem;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+
+    .station-nav-controls {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+
+    .btn-nav {
+        width: 100%;
+        justify-content: center;
+    }
 }
