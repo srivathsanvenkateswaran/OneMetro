@@ -355,8 +355,7 @@ export function renderMetroMap(cityData, activeLine, activeStation, showUpcoming
         </div>
       </div>
       <div class="map-viewport" id="map-viewport">
-        <div class="map-transform-layer" id="map-transform">
-          <svg class="metro-map-svg" viewBox="0 0 ${layout.width} ${layout.height}" xmlns="${SVG_NS}">
+          <svg class="metro-map-svg" id="map-svg" viewBox="0 0 ${layout.width} ${layout.height}" xmlns="${SVG_NS}">
             <defs>
               ${layout.lines.map(({ line }) => generateGlowFilter(line.id, line.color)).join('')}
             </defs>
@@ -389,7 +388,6 @@ export function renderMetroMap(cityData, activeLine, activeStation, showUpcoming
     }).join('');
   }).join('')}
           </svg>
-        </div>
       </div>
     </div>
   `;
@@ -407,57 +405,93 @@ export function renderMetroMap(cityData, activeLine, activeStation, showUpcoming
   initMapControls(container);
 }
 
-// ── Zoom / Pan / Fullscreen Controller ──
+// ── SVG ViewBox Zoom / Pan / Fullscreen Controller ──
+// Zoom by changing SVG viewBox (not CSS transform) — stays crisp at any level
 
 function initMapControls(container) {
   const viewer = container.querySelector('#map-viewer');
   const viewport = container.querySelector('#map-viewport');
-  const transform = container.querySelector('#map-transform');
+  const svg = container.querySelector('#map-svg');
   const zoomLabel = container.querySelector('#zoom-level');
 
-  let scale = 1, panX = 0, panY = 0;
-  let isPanning = false, startX = 0, startY = 0;
-  const MIN_ZOOM = 0.5, MAX_ZOOM = 4;
+  // Parse original viewBox
+  const orig = svg.getAttribute('viewBox').split(' ').map(Number);
+  let vx = orig[0], vy = orig[1], vw = orig[2], vh = orig[3];
+  const origW = vw, origH = vh;
 
-  function applyTransform() {
-    transform.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+  let scale = 1;
+  let isPanning = false, startX = 0, startY = 0, startVx = 0, startVy = 0;
+  const MIN_ZOOM = 0.5, MAX_ZOOM = 6;
+
+  function updateViewBox() {
+    svg.setAttribute('viewBox', `${vx} ${vy} ${vw} ${vh}`);
     zoomLabel.textContent = `${Math.round(scale * 100)}%`;
   }
 
-  function zoomTo(newScale, cx, cy) {
-    const rect = viewport.getBoundingClientRect();
-    const ox = cx !== undefined ? cx - rect.left : rect.width / 2;
-    const oy = cy !== undefined ? cy - rect.top : rect.height / 2;
-    const oldScale = scale;
-    scale = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, newScale));
-    const ratio = scale / oldScale;
-    panX = ox - ratio * (ox - panX);
-    panY = oy - ratio * (oy - panY);
-    applyTransform();
+  // Convert screen coords to SVG coords
+  function screenToSVG(clientX, clientY) {
+    const rect = svg.getBoundingClientRect();
+    const rx = (clientX - rect.left) / rect.width;
+    const ry = (clientY - rect.top) / rect.height;
+    return { x: vx + rx * vw, y: vy + ry * vh };
+  }
+
+  function zoomAt(factor, clientX, clientY) {
+    // Point in SVG space under cursor
+    const pt = (clientX !== undefined)
+      ? screenToSVG(clientX, clientY)
+      : { x: vx + vw / 2, y: vy + vh / 2 };
+
+    const newScale = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, scale * factor));
+    const newW = origW / newScale;
+    const newH = origH / newScale;
+
+    // Keep the point under cursor stationary
+    const rx = (clientX !== undefined)
+      ? (clientX - svg.getBoundingClientRect().left) / svg.getBoundingClientRect().width
+      : 0.5;
+    const ry = (clientY !== undefined)
+      ? (clientY - svg.getBoundingClientRect().top) / svg.getBoundingClientRect().height
+      : 0.5;
+
+    vx = pt.x - rx * newW;
+    vy = pt.y - ry * newH;
+    vw = newW;
+    vh = newH;
+    scale = newScale;
+    updateViewBox();
   }
 
   // Mouse wheel zoom
   viewport.addEventListener('wheel', (e) => {
     e.preventDefault();
-    const delta = e.deltaY > 0 ? 0.9 : 1.1;
-    zoomTo(scale * delta, e.clientX, e.clientY);
+    const factor = e.deltaY > 0 ? 0.85 : 1.18;
+    zoomAt(factor, e.clientX, e.clientY);
   }, { passive: false });
 
-  // Mouse drag pan
+  // Mouse drag pan (translate viewBox origin)
   viewport.addEventListener('mousedown', (e) => {
     if (e.button !== 0) return;
     isPanning = true;
-    startX = e.clientX - panX;
-    startY = e.clientY - panY;
+    startX = e.clientX;
+    startY = e.clientY;
+    startVx = vx;
+    startVy = vy;
     viewport.style.cursor = 'grabbing';
     e.preventDefault();
   });
+
   window.addEventListener('mousemove', (e) => {
     if (!isPanning) return;
-    panX = e.clientX - startX;
-    panY = e.clientY - startY;
-    applyTransform();
+    const rect = svg.getBoundingClientRect();
+    // Convert pixel delta to SVG coordinate delta
+    const dx = (e.clientX - startX) / rect.width * vw;
+    const dy = (e.clientY - startY) / rect.height * vh;
+    vx = startVx - dx;
+    vy = startVy - dy;
+    updateViewBox();
   });
+
   window.addEventListener('mouseup', () => {
     if (isPanning) {
       isPanning = false;
@@ -474,8 +508,10 @@ function initMapControls(container) {
       lastDist = Math.sqrt(dx * dx + dy * dy);
     } else if (e.touches.length === 1) {
       isPanning = true;
-      startX = e.touches[0].clientX - panX;
-      startY = e.touches[0].clientY - panY;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      startVx = vx;
+      startVy = vy;
     }
   }, { passive: true });
 
@@ -487,22 +523,26 @@ function initMapControls(container) {
       const dist = Math.sqrt(dx * dx + dy * dy);
       const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2;
       const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-      if (lastDist > 0) zoomTo(scale * (dist / lastDist), cx, cy);
+      if (lastDist > 0) zoomAt(dist / lastDist, cx, cy);
       lastDist = dist;
     } else if (e.touches.length === 1 && isPanning) {
-      panX = e.touches[0].clientX - startX;
-      panY = e.touches[0].clientY - startY;
-      applyTransform();
+      const rect = svg.getBoundingClientRect();
+      const dx = (e.touches[0].clientX - startX) / rect.width * vw;
+      const dy = (e.touches[0].clientY - startY) / rect.height * vh;
+      vx = startVx - dx;
+      vy = startVy - dy;
+      updateViewBox();
     }
   }, { passive: false });
 
   viewport.addEventListener('touchend', () => { isPanning = false; lastDist = 0; });
 
   // Button controls
-  container.querySelector('#zoom-in').addEventListener('click', () => zoomTo(scale * 1.25));
-  container.querySelector('#zoom-out').addEventListener('click', () => zoomTo(scale * 0.8));
+  container.querySelector('#zoom-in').addEventListener('click', () => zoomAt(1.3));
+  container.querySelector('#zoom-out').addEventListener('click', () => zoomAt(0.75));
   container.querySelector('#zoom-reset').addEventListener('click', () => {
-    scale = 1; panX = 0; panY = 0; applyTransform();
+    scale = 1; vx = orig[0]; vy = orig[1]; vw = orig[2]; vh = orig[3];
+    updateViewBox();
   });
 
   // Fullscreen toggle
