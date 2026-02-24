@@ -324,6 +324,28 @@ const mumbaiMetro = {
                 { id: 'm8_15', name: 'Horniman Circle', nameLocal: 'हॉर्निमन सर्कल', type: 'underground', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
                 { id: 'm8_16', name: 'GPO', nameLocal: 'जीपीओ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 }
             ]
+        },
+        {
+            id: 'red-9',
+            name: 'Line 9 (Red Ext.)',
+            color: '#F44336',
+            colorLight: '#EF9A9A',
+            corridor: '9',
+            length: '11.3 km',
+            totalStations: 8,
+            status: 'under-construction',
+            expectedCompletion: '2025',
+            gauge: 'Standard Gauge (1435 mm)',
+            stations: [
+                { id: 'm9_01', name: 'Dahisar East', nameLocal: 'दहिसर पूर्व', type: 'elevated', isInterchange: true, interchangeWith: ['yellow', 'red'], landmark: '', zone: 3 },
+                { id: 'm9_02', name: 'Pandurang Wadi', nameLocal: 'पांडुरंग वाडी', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 3 },
+                { id: 'm9_03', name: 'Miragaon', nameLocal: 'मीरागाव', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 3 },
+                { id: 'm9_04', name: 'Kashigaon', nameLocal: 'काशीगाव', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 3 },
+                { id: 'm9_05', name: 'Sai Baba Nagar', nameLocal: 'साई बाबा नगर', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 3 },
+                { id: 'm9_06', name: 'Medtiya Nagar', nameLocal: 'मेडीतिया नगर', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 3 },
+                { id: 'm9_07', name: 'Shahid Bhagat Singh Garden', nameLocal: 'शहीद भगतसिंग बाग', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 3 },
+                { id: 'm9_08', name: 'Subhash Chandra Bose Stadium', nameLocal: 'सुभाषचंद्र बोस स्टेडियम', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 3 }
+            ]
         }
     ]
 };

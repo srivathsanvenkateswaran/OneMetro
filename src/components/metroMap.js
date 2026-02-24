@@ -506,7 +506,7 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
       const wpts = [
         { idx: 0, x: 400, y: 100 },   // Dahisar East
         { idx: 2, x: 300, y: 200 },   // Kandarpada
-        { idx: 14, x: 300, y: 450 },  // Oshiwara / Adarsh Nagar (Pink intersect)
+        { idx: 14, x: 300, y: 570 },  // Oshiwara / Adarsh Nagar (Pink intersect)
         { idx: 16, x: 300, y: 600 },  // Andheri West (DN Nagar)
       ];
       interpolateWaypoints(wpts, count, coords, line);
@@ -517,7 +517,7 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
       const wpts = [
         { idx: 0, x: 400, y: 100 },   // Dahisar East
         { idx: 2, x: 500, y: 200 },   // Rashtriya Udyan
-        { idx: 11, x: 500, y: 450 },  // Jogeshwari / JVLR (Pink intersect)
+        { idx: 11, x: 500, y: 570 },  // Jogeshwari / JVLR (Pink intersect)
         { idx: 13, x: 500, y: 600 },  // Gundavali / WEH
       ];
       interpolateWaypoints(wpts, count, coords, line);
@@ -539,7 +539,7 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
     case 'mumbai_aqua': {
       const wpts = [
         { idx: 0, x: 600, y: 350 },   // Aarey JVLR
-        { idx: 1, x: 600, y: 450 },   // SEEPZ (Pink intersect)
+        { idx: 1, x: 600, y: 570 },   // SEEPZ (Pink intersect)
         { idx: 3, x: 600, y: 600 },   // Marol Naka
         { idx: 4, x: 550, y: 700 },   // CSMIA T2
         { idx: 9, x: 500, y: 950 },   // BKC
@@ -570,7 +570,7 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
       const wpts = [
         { idx: 0, x: 800, y: 50 },    // Kasarvadavali
         { idx: 10, x: 800, y: 250 },  // Thane
-        { idx: 18, x: 800, y: 450 },  // Kanjurmarg
+        { idx: 18, x: 800, y: 570 },  // Kanjurmarg
         { idx: 24, x: 750, y: 700 },  // Pant Nagar
         { idx: 29, x: 700, y: 1100 }, // Bhakti Park
       ];
@@ -580,12 +580,12 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
 
     case 'mumbai_pink': {
       const wpts = [
-        { idx: 0, x: 200, y: 450 },   // Swami Samarth Nagar
-        { idx: 1, x: 300, y: 450 },   // Adarsh Nagar 
-        { idx: 3, x: 500, y: 450 },   // JVLR Junction
-        { idx: 6, x: 600, y: 450 },   // SEEPZ 
-        { idx: 11, x: 800, y: 450 },  // Kanjurmarg West
-        { idx: 12, x: 900, y: 450 },  // Vikhroli EEH
+        { idx: 0, x: 200, y: 570 },   // Swami Samarth Nagar
+        { idx: 1, x: 300, y: 570 },   // Adarsh Nagar 
+        { idx: 3, x: 500, y: 570 },   // JVLR Junction
+        { idx: 6, x: 600, y: 570 },   // SEEPZ 
+        { idx: 11, x: 800, y: 570 },  // Kanjurmarg West
+        { idx: 12, x: 900, y: 570 },  // Vikhroli EEH
       ];
       interpolateWaypoints(wpts, count, coords, line);
       break;
@@ -608,6 +608,15 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
         { idx: 9, x: 500, y: 1300 },  // Byculla
         { idx: 13, x: 400, y: 1400 }, // CSMT (Aqua intersect)
         { idx: 15, x: 450, y: 1450 }, // GPO
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+    case 'mumbai_red-9': {
+      const wpts = [
+        { idx: 0, x: 400, y: 100 },   // Dahisar East (Red/Yellow intersect)
+        { idx: 4, x: 400, y: 0 },     // Sai Baba Nagar
+        { idx: 7, x: 300, y: -50 },   // Subhash Chandra Bose Stadium (turning west)
       ];
       interpolateWaypoints(wpts, count, coords, line);
       break;
