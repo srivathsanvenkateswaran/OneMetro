@@ -10,6 +10,7 @@ import { renderLineSelector, bindLineCardEvents } from './components/lineSelecto
 import { renderLineInfo } from './components/lineInfo.js';
 import { renderStationList, bindStationEvents } from './components/stationList.js';
 import { renderMetroMap } from './components/metroMap.js';
+import { renderStationPage, bindStationPageEvents } from './components/stationPage.js';
 
 import { renderLandingPage } from './components/landingPage.js';
 
@@ -58,12 +59,15 @@ function parseHash() {
     return {
         cityId: parts[0] || null,
         lineId: parts[1] || null,
+        stationId: parts[2] || null
     };
 }
 
-function setHash(cityId, lineId) {
+function setHash(cityId, lineId, stationId) {
     if (cityId) {
-        if (lineId) {
+        if (stationId && lineId) {
+            window.location.hash = `/${cityId}/${lineId}/${stationId}`;
+        } else if (lineId) {
             window.location.hash = `/${cityId}/${lineId}`;
         } else {
             window.location.hash = `/${cityId}`;
@@ -88,6 +92,12 @@ function init() {
             // Auto-enable upcoming if the line is under construction
             if (line.status !== 'operational') {
                 state.showUpcoming = true;
+            }
+            if (route.stationId) {
+                const station = line.stations.find(s => s.id === route.stationId);
+                if (station) {
+                    state.activeStation = route.stationId;
+                }
             }
         }
     }
@@ -123,11 +133,22 @@ function init() {
             if (line) {
                 state.activeLine = route.lineId;
                 if (line.status !== 'operational') state.showUpcoming = true;
+
+                if (route.stationId) {
+                    const station = line.stations.find(s => s.id === route.stationId);
+                    if (station) {
+                        state.activeStation = route.stationId;
+                    } else {
+                        state.activeStation = null;
+                    }
+                } else {
+                    state.activeStation = null;
+                }
             }
         } else {
             state.activeLine = null;
+            state.activeStation = null;
         }
-        state.activeStation = null;
         renderAll();
     });
 }
@@ -278,7 +299,7 @@ function bindSidebarEvents() {
                 if (line && line.status !== 'operational' && !state.showUpcoming) {
                     state.activeLine = null;
                     state.activeStation = null;
-                    setHash(state.cityId, null);
+                    setHash(state.cityId, null, null);
                 }
             }
             // Partial update — don't rebuild the toggle!
@@ -293,7 +314,7 @@ function bindSidebarEvents() {
         viewAllBtn.addEventListener('click', () => {
             state.activeLine = null;
             state.activeStation = null;
-            setHash(state.cityId, null);
+            setHash(state.cityId, null, null);
             renderAll();
         });
     }
@@ -304,6 +325,21 @@ function renderContent() {
     const content = document.getElementById('content');
     content.className = 'content';
     const displayCity = state.showUpcoming ? state.city : getFilteredCity();
+
+    // Check if we have an active station to show the detail page
+    if (state.activeStation && state.activeLine) {
+        const line = state.city.lines.find(l => l.id === state.activeLine);
+        const station = line ? line.stations.find(s => s.id === state.activeStation) : null;
+        if (station) {
+            content.innerHTML = renderStationPage(station, line);
+            bindStationPageEvents(() => {
+                state.activeStation = null;
+                setHash(state.cityId, state.activeLine, null);
+                renderContent();
+            });
+            return;
+        }
+    }
 
     if (!state.activeLine) {
         // Show welcome state with full network map
@@ -348,7 +384,7 @@ function handleCityChange(cityId) {
         state.activeLine = null;
         state.activeStation = null;
         state.showUpcoming = false;
-        setHash(cityId, null);
+        setHash(cityId, null, null);
         renderHeader(state.city, handleCityChange);
         renderAll();
     }
@@ -359,45 +395,42 @@ function handleLineSelect(lineId) {
         // Deselect → back to full network view
         state.activeLine = null;
         state.activeStation = null;
-        setHash(state.cityId, null);
+        setHash(state.cityId, null, null);
     } else {
         state.activeLine = lineId;
         state.activeStation = null;
-        setHash(state.cityId, lineId);
+        setHash(state.cityId, lineId, null);
     }
     renderAll();
 }
 
 function handleStationClick(stationId) {
-    state.activeStation = state.activeStation === stationId ? null : stationId;
-    renderContent();
-
-    const el = document.querySelector(`.station-item[data-station-id="${stationId}"]`);
-    if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (state.activeStation === stationId) {
+        state.activeStation = null;
+    } else {
+        state.activeStation = stationId;
     }
+    setHash(state.cityId, state.activeLine, state.activeStation);
+    renderContent();
 }
 
 function handleMapStationClick(stationId, lineId) {
     if (lineId && lineId !== 'interchange') {
         state.activeLine = lineId;
-        setHash(state.cityId, lineId);
     } else if (lineId === 'interchange') {
         if (!state.activeLine) {
             state.activeLine = 'blue';
-            setHash(state.cityId, 'blue');
         }
     }
 
-    state.activeStation = state.activeStation === stationId ? null : stationId;
-    renderAll();
+    if (state.activeStation === stationId) {
+        state.activeStation = null;
+    } else {
+        state.activeStation = stationId;
+    }
 
-    setTimeout(() => {
-        const el = document.querySelector(`.station-item[data-station-id="${stationId}"]`);
-        if (el) {
-            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    }, 100);
+    setHash(state.cityId, state.activeLine, state.activeStation);
+    renderAll();
 }
 
 // ── Boot ──

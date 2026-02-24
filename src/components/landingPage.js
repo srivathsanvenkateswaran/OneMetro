@@ -30,7 +30,7 @@ export function renderLandingPage(cities, onCitySelect) {
                 <div class="lp-section-line"></div>
             </div>
 
-            <div class="lp-grid">
+            <div class="lp-grid stagger-children">
                 <!-- Available Cities -->
                 <div class="lp-card available" data-city-id="chennai">
                     <div class="lp-card-image lp-img-chennai"></div>

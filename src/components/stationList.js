@@ -4,21 +4,21 @@
  */
 
 export function renderStationList(line, activeStation, onStationClick) {
-    if (!line) return '';
+  if (!line) return '';
 
-    return `
+  return `
     <div class="station-list-container">
       <div class="station-list-header">
         <span class="station-list-title">Stations</span>
         <span class="station-count-badge">${line.totalStations} stops</span>
       </div>
-      <div class="station-list" style="--line-color: ${line.color}; --line-glow: ${line.id === 'blue' ? 'rgba(33,150,243,0.35)' : 'rgba(76,175,80,0.35)'};">
+      <div class="station-list stagger-children" style="--line-color: ${line.color}; --line-glow: ${line.id === 'blue' ? 'rgba(33,150,243,0.35)' : 'rgba(76,175,80,0.35)'};">
         ${line.stations.map((station, index) => {
-        const isFirst = index === 0;
-        const isLast = index === line.stations.length - 1;
-        const isTerminal = isFirst || isLast;
+    const isFirst = index === 0;
+    const isLast = index === line.stations.length - 1;
+    const isTerminal = isFirst || isLast;
 
-        return `
+    return `
             <div class="station-item ${activeStation === station.id ? 'active' : ''}"
                  data-station-id="${station.id}"
                  role="button"
@@ -32,21 +32,21 @@ export function renderStationList(line, activeStation, onStationClick) {
               </div>
             </div>
           `;
-    }).join('')}
+  }).join('')}
       </div>
     </div>
   `;
 }
 
 export function bindStationEvents(onStationClick) {
-    document.querySelectorAll('.station-item').forEach(item => {
-        const handler = () => onStationClick(item.dataset.stationId);
-        item.addEventListener('click', handler);
-        item.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                handler();
-            }
-        });
+  document.querySelectorAll('.station-item').forEach(item => {
+    const handler = () => onStationClick(item.dataset.stationId);
+    item.addEventListener('click', handler);
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handler();
+      }
     });
+  });
 }

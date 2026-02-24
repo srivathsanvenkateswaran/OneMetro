@@ -49,7 +49,22 @@ A fast, premium static website displaying metro system maps, lines, and stations
   "isInterchange": "boolean",
   "interchangeWith": "string[] (line IDs)",
   "landmark": "string (nearby landmark)",
-  "zone": "number"
+  "zone": "number",
+  "contact": "string (optional phone)",
+  "parking": "boolean (optional)",
+  "facilities": "string[] (optional)",
+  "gates": [
+    {
+      "gate": "string (e.g., A)",
+      "landmarks": "string[]"
+    }
+  ],
+  "platforms": [
+    {
+      "no": "number",
+      "towards": "string"
+    }
+  ]
 }
 ```
 

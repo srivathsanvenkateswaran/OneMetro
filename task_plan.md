@@ -5,25 +5,25 @@
 - [x] Data schema defined in gemini.md
 - [x] Research Chennai Metro data
 
-## Phase 2: Link
-- [ ] Initialize Vite project
-- [ ] Verify dev server runs
+## Phase 2: Link ✅
+- [x] Initialize Vite project
+- [x] Verify dev server runs
 
-## Phase 3: Architect
-- [ ] Create CSS design system (variables, base, components, animations)
-- [ ] Create Chennai Metro data module
-- [ ] Build app controller
-- [ ] Build header component
-- [ ] Build line selector component
-- [ ] Build line info panel
-- [ ] Build station list component
-- [ ] Build SVG metro map
+## Phase 3: Architect ✅
+- [x] Create CSS design system (variables, base, components, animations)
+- [x] Create Chennai Metro data module
+- [x] Build app controller
+- [x] Build header component
+- [x] Build line selector component
+- [x] Build line info panel
+- [x] Build station list component
+- [x] Build SVG metro map
 
-## Phase 4: Stylize
-- [ ] Polish animations and micro-interactions
-- [ ] Verify premium look and feel in browser
+## Phase 4: Stylize ✅
+- [x] Polish animations and micro-interactions
+- [x] Verify premium look and feel in browser
 - [ ] Get user feedback
 
-## Phase 5: Trigger
-- [ ] Add GitHub Pages deploy script
+## Phase 5: Trigger ✅
+- [x] Add GitHub Pages deploy script
 - [ ] Final documentation
