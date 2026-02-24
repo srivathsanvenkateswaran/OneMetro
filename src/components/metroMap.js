@@ -602,6 +602,18 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
       break;
     }
 
+    case 'mumbai_gold': {
+      const wpts = [
+        { idx: 0, x: 700, y: 1100 },  // Wadala - Bhakti Park (Green intersect)
+        { idx: 9, x: 500, y: 1300 },  // Byculla
+        { idx: 13, x: 400, y: 1400 }, // CSMT (Aqua intersect)
+        { idx: 15, x: 450, y: 1450 }, // GPO
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+
     default: {
       const startY2 = padding;
       const endY2 = height - padding;

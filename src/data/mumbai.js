@@ -294,6 +294,36 @@ const mumbaiMetro = {
                 { id: 'm5_16', name: 'Kalyan Railway Station', nameLocal: 'कल्याण रेल्वे स्थानक', type: 'elevated', isInterchange: true, interchangeWith: ['rail'], landmark: '', zone: 1 },
                 { id: 'm5_17', name: 'Kalyan APMC', nameLocal: 'कल्याण एपीएमसी', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 }
             ]
+        },
+        {
+            id: 'gold',
+            name: 'Line 8 (Gold)',
+            color: '#FFC107',
+            colorLight: '#FFE082',
+            corridor: '8',
+            length: '12.7 km',
+            totalStations: 16,
+            status: 'under-construction',
+            expectedCompletion: '2028',
+            gauge: 'Standard Gauge (1435 mm)',
+            stations: [
+                { id: 'm8_01', name: 'Wadala - Bhakti Park', nameLocal: 'वडाळा', type: 'elevated', isInterchange: true, interchangeWith: ['green', 'monorail'], landmark: '', zone: 1 },
+                { id: 'm8_02', name: 'Anik Bus Depot', nameLocal: 'अणिक बस आगार', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
+                { id: 'm8_03', name: 'CGS Colony', nameLocal: 'सीजीएस कॉलनी', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
+                { id: 'm8_04', name: 'Ganesh Nagar', nameLocal: 'गणेश नगर', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
+                { id: 'm8_05', name: 'BPT Hospital', nameLocal: 'बीपीटी रुग्णालय', type: 'underground', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
+                { id: 'm8_06', name: 'Sewri', nameLocal: 'शिवडी', type: 'underground', isInterchange: true, interchangeWith: ['rail'], landmark: '', zone: 4 },
+                { id: 'm8_07', name: 'Hay Bunder', nameLocal: 'हे बंदर', type: 'underground', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
+                { id: 'm8_08', name: 'Coal Bunder', nameLocal: 'कोळसा बंदर', type: 'underground', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
+                { id: 'm8_09', name: 'Reay Road', nameLocal: 'रे रोड', type: 'underground', isInterchange: true, interchangeWith: ['rail'], landmark: '', zone: 4 },
+                { id: 'm8_10', name: 'Byculla', nameLocal: 'भायखळा', type: 'underground', isInterchange: true, interchangeWith: ['rail'], landmark: '', zone: 4 },
+                { id: 'm8_11', name: 'Nagpada Junction', nameLocal: 'नागपाडा जंक्शन', type: 'underground', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
+                { id: 'm8_12', name: 'Bhendi Bazaar', nameLocal: 'भेंडी बाजार', type: 'underground', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
+                { id: 'm8_13', name: 'Crawford Market', nameLocal: 'क्रॉफर्ड मार्केट', type: 'underground', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
+                { id: 'm8_14', name: 'CSMT', nameLocal: 'छत्रपती शिवाजी महाराज टर्मिनस', type: 'underground', isInterchange: true, interchangeWith: ['aqua', 'rail'], landmark: '', zone: 4 },
+                { id: 'm8_15', name: 'Horniman Circle', nameLocal: 'हॉर्निमन सर्कल', type: 'underground', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
+                { id: 'm8_16', name: 'GPO', nameLocal: 'जीपीओ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 }
+            ]
         }
     ]
 };
