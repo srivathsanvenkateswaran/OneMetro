@@ -1,5 +1,5 @@
 /**
- * BharatOne — Main Application Controller
+ * OneMetro — Main Application Controller
  * Orchestrates all components, handles routing and state
  */
 
@@ -11,6 +11,8 @@ import { renderLineInfo } from './components/lineInfo.js';
 import { renderStationList, bindStationEvents } from './components/stationList.js';
 import { renderMetroMap } from './components/metroMap.js';
 
+import { renderLandingPage } from './components/landingPage.js';
+
 // ── City Registry ──
 const cities = {
     chennai: chennaiMetro,
@@ -19,8 +21,8 @@ const cities = {
 
 // ── State ──
 const state = {
-    cityId: 'chennai',
-    city: chennaiMetro,
+    cityId: null,
+    city: null,
     activeLine: null,
     activeStation: null,
     showUpcoming: false, // toggle for Phase 2 lines
@@ -29,6 +31,7 @@ const state = {
 // ── Helpers ──
 function getFilteredCity() {
     // Return city data filtered by showUpcoming toggle
+    if (!state.city) return null;
     const city = state.city;
     if (state.showUpcoming) return city;
     return {
@@ -38,11 +41,12 @@ function getFilteredCity() {
 }
 
 function getAllLines() {
-    return state.city.lines;
+    return state.city ? state.city.lines : [];
 }
 
 function getVisibleLines() {
-    return getFilteredCity().lines;
+    const filtered = getFilteredCity();
+    return filtered ? filtered.lines : [];
 }
 
 // ── URL Routing ──
@@ -52,16 +56,20 @@ function parseHash() {
     const parts = hash.split('/').filter(Boolean);
 
     return {
-        cityId: parts[0] || 'chennai',
+        cityId: parts[0] || null,
         lineId: parts[1] || null,
     };
 }
 
 function setHash(cityId, lineId) {
-    if (lineId) {
-        window.location.hash = `/${cityId}/${lineId}`;
+    if (cityId) {
+        if (lineId) {
+            window.location.hash = `/${cityId}/${lineId}`;
+        } else {
+            window.location.hash = `/${cityId}`;
+        }
     } else {
-        window.location.hash = `/${cityId}`;
+        window.location.hash = '';
     }
 }
 
@@ -70,10 +78,10 @@ function init() {
     // Parse initial URL
     const route = parseHash();
     state.cityId = route.cityId;
-    state.city = cities[route.cityId] || chennaiMetro;
+    state.city = cities[route.cityId] || null;
 
     // If the line from URL exists, select it
-    if (route.lineId) {
+    if (state.city && route.lineId) {
         const line = state.city.lines.find(l => l.id === route.lineId);
         if (line) {
             state.activeLine = route.lineId;
@@ -95,14 +103,22 @@ function init() {
     window.addEventListener('hashchange', () => {
         const route = parseHash();
         const newCity = cities[route.cityId];
-        if (newCity && newCity.id !== state.city.id) {
+
+        if (!route.cityId) {
+            state.city = null;
+            state.cityId = null;
+            state.activeLine = null;
+            state.activeStation = null;
+            renderHeader(null, handleCityChange);
+        } else if (newCity && (!state.city || newCity.id !== state.city.id)) {
             state.city = newCity;
             state.cityId = route.cityId;
             state.activeLine = null;
             state.activeStation = null;
             renderHeader(state.city, handleCityChange);
         }
-        if (route.lineId) {
+
+        if (state.city && route.lineId) {
             const line = state.city.lines.find(l => l.id === route.lineId);
             if (line) {
                 state.activeLine = route.lineId;
@@ -118,6 +134,24 @@ function init() {
 
 // ── Render All ──
 function renderAll() {
+    const sidebar = document.getElementById('sidebar');
+    const content = document.getElementById('content');
+
+    if (!state.city) {
+        if (sidebar) sidebar.style.display = 'none';
+        if (content) content.style.display = 'none';
+        renderLandingPage(cities, handleCityChange);
+        return;
+    }
+
+    // Restore layout
+    if (sidebar) sidebar.style.display = '';
+    if (content) content.style.display = '';
+
+    // Clear landing page if it exists
+    const lp = document.getElementById('landing-page');
+    if (lp) lp.remove();
+
     renderSidebar();
     renderContent();
 }

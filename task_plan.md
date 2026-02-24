@@ -1,4 +1,4 @@
-# BharatOne — Task Plan
+# OneMetro — Task Plan
 
 ## Phase 1: Blueprint ✅
 - [x] Discovery questions answered

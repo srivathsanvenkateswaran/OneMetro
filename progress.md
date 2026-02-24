@@ -1,4 +1,4 @@
-# BharatOne — Progress Log
+# OneMetro — Progress Log
 
 ## 2026-02-24
 - ✅ Project initialized with B.L.A.S.T. protocol

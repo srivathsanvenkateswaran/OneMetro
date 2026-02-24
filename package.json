@@ -1,8 +1,8 @@
 {
-  "name": "bharatone",
+  "name": "onemetro",
   "private": true,
   "version": "1.0.0",
-  "description": "India Metro Systems — Interactive Metro Maps",
+  "description": "OneMetro — India's Integrated Metro Portal",
   "type": "module",
   "scripts": {
     "dev": "vite",
