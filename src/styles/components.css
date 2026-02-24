@@ -316,6 +316,8 @@
     gap: var(--space-xl);
     overflow-y: auto;
     max-height: calc(100vh - var(--header-height));
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    will-change: opacity, transform;
 }
 
 /* ── Metro Map Container ── */

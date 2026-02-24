@@ -122,6 +122,21 @@ function renderAll() {
     renderContent();
 }
 
+// ── Smooth content transition helper ──
+function crossfadeContent(updateFn) {
+    const content = document.getElementById('content');
+    content.style.opacity = '0';
+    content.style.transform = 'scale(0.98)';
+
+    setTimeout(() => {
+        updateFn();
+        // Force reflow
+        void content.offsetHeight;
+        content.style.opacity = '1';
+        content.style.transform = 'scale(1)';
+    }, 150);
+}
+
 // ── Sidebar ──
 function renderSidebar() {
     const sidebar = document.getElementById('sidebar');
@@ -140,6 +155,83 @@ function renderSidebar() {
     );
 
     bindLineCardEvents(handleLineSelect);
+    bindSidebarEvents();
+
+    // Render line info if a line is selected
+    const lineInfoContainer = sidebar.querySelector('#line-info-container');
+    if (state.activeLine && lineInfoContainer) {
+        const line = state.city.lines.find(l => l.id === state.activeLine);
+        if (line) {
+            lineInfoContainer.innerHTML = renderLineInfo(line);
+        }
+    }
+}
+
+// ── Partial sidebar update (for toggle — avoids rebuilding the toggle itself) ──
+function updateSidebarLines() {
+    const sidebar = document.getElementById('sidebar');
+    const visibleLines = getVisibleLines();
+
+    // Update stats
+    const statsContainer = sidebar.querySelector('.city-stats');
+    if (statsContainer) {
+        const totalStations = visibleLines.reduce((sum, l) => sum + l.totalStations, 0);
+        const statValues = statsContainer.querySelectorAll('.city-stat-value');
+        if (statValues[0]) statValues[0].textContent = visibleLines.length;
+        if (statValues[1]) statValues[1].textContent = totalStations;
+    }
+
+    // Update upcoming info text
+    const upcomingInfo = sidebar.querySelector('.upcoming-info');
+    if (upcomingInfo) {
+        upcomingInfo.style.display = state.showUpcoming ? '' : 'none';
+    }
+
+    // Rebuild line cards sections only
+    const operationalSection = sidebar.querySelectorAll('.line-cards')[0];
+    const upcomingSection = sidebar.querySelectorAll('.line-cards')[1];
+    const upcomingSectionTitle = sidebar.querySelectorAll('.sidebar-section-title')[1];
+
+    const operationalLines = visibleLines.filter(l => l.status === 'operational');
+    const upcomingLines = visibleLines.filter(l => l.status !== 'operational');
+
+    // Update operational line cards active state
+    if (operationalSection) {
+        operationalSection.querySelectorAll('.line-card').forEach(card => {
+            card.classList.toggle('active', state.activeLine === card.dataset.lineId);
+        });
+    }
+
+    // Show/hide upcoming section
+    if (upcomingSection) {
+        upcomingSection.parentElement.style.display = upcomingLines.length > 0 ? '' : 'none';
+    } else if (state.showUpcoming && upcomingLines.length > 0) {
+        // Need to add the upcoming section — do a full sidebar render
+        renderSidebar();
+        return;
+    }
+
+    if (!state.showUpcoming && upcomingSection) {
+        upcomingSection.parentElement.style.display = 'none';
+    }
+
+    // Update line info
+    const lineInfoContainer = sidebar.querySelector('#line-info-container');
+    if (lineInfoContainer) {
+        if (state.activeLine) {
+            const line = state.city.lines.find(l => l.id === state.activeLine);
+            if (line) {
+                lineInfoContainer.innerHTML = renderLineInfo(line);
+            }
+        } else {
+            lineInfoContainer.innerHTML = '';
+        }
+    }
+}
+
+// ── Bind sidebar events (separated so we can call after full render) ──
+function bindSidebarEvents() {
+    const sidebar = document.getElementById('sidebar');
 
     // Bind "Show Upcoming" toggle
     const toggle = sidebar.querySelector('#upcoming-toggle');
@@ -155,7 +247,9 @@ function renderSidebar() {
                     setHash(state.cityId, null);
                 }
             }
-            renderAll();
+            // Partial update — don't rebuild the toggle!
+            updateSidebarLines();
+            crossfadeContent(renderContent);
         });
     }
 
@@ -168,15 +262,6 @@ function renderSidebar() {
             setHash(state.cityId, null);
             renderAll();
         });
-    }
-
-    // Render line info if a line is selected
-    const lineInfoContainer = sidebar.querySelector('#line-info-container');
-    if (state.activeLine && lineInfoContainer) {
-        const line = state.city.lines.find(l => l.id === state.activeLine);
-        if (line) {
-            lineInfoContainer.innerHTML = renderLineInfo(line);
-        }
     }
 }
 
