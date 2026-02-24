@@ -1073,9 +1073,7 @@
 
 /* ── Landing Page ── */
 .landing-page {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
     width: 100%;
     min-height: calc(100vh - var(--header-height));
     background: var(--bg-primary);
@@ -1087,12 +1085,13 @@
 
 .lp-hero {
     position: relative;
-    height: 450px;
+    min-height: 500px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 0 var(--space-xl);
+    padding: var(--space-3xl) var(--space-xl) var(--space-xl);
     overflow: hidden;
 }
 
@@ -1119,6 +1118,7 @@
 
 .lp-hero-content {
     max-width: 800px;
+    margin-top: var(--space-md);
     animation: fadeInUp var(--duration-slow) var(--ease-out) both;
 }
 
@@ -1148,6 +1148,7 @@
 .lp-highlight {
     background: var(--accent-gradient);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -1343,11 +1344,17 @@
 
 @media (max-width: 768px) {
     .lp-title {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
     }
 
     .lp-hero {
         height: auto;
-        padding: var(--space-2xl) var(--space-xl);
+        min-height: auto;
+        padding-top: calc(var(--header-height) + var(--space-xl));
+        justify-content: flex-start;
+    }
+
+    .lp-badge {
+        margin-top: var(--space-md);
     }
 }
