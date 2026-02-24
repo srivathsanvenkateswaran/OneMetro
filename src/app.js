@@ -10,6 +10,8 @@ import mumbaiMetro from './data/mumbai.js';
 import hyderabadMetro from './data/hyderabad.js';
 import kolkataMetro from './data/kolkata.js';
 import puneMetro from './data/pune.js';
+import nagpurMetro from './data/nagpur.js';
+import ahmedabadMetro from './data/ahmedabad.js';
 import { renderHeader } from './components/header.js';
 import { renderLineSelector, bindLineCardEvents } from './components/lineSelector.js';
 import { renderLineInfo } from './components/lineInfo.js';
@@ -28,6 +30,8 @@ const cities = {
     hyderabad: hyderabadMetro,
     kolkata: kolkataMetro,
     pune: puneMetro,
+    nagpur: nagpurMetro,
+    ahmedabad: ahmedabadMetro,
 };
 
 // ── State ──

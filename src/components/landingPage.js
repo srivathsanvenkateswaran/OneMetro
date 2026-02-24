@@ -143,6 +143,20 @@ export function renderLandingPage(cities, onCitySelect) {
                         <button class="lp-card-btn">Explore Network</button>
                     </div>
                 </div>
+
+                <div class="lp-card available" data-city-id="ahmedabad">
+                    <div class="lp-card-image lp-img-ahmedabad"></div>
+                    <div class="lp-card-content">
+                        <div class="lp-card-status">Operational</div>
+                        <h3 class="lp-card-title">Ahmedabad <span class="lp-card-local">અમદાવાદ</span></h3>
+                        <p class="lp-card-desc">Rapid transit connecting the sprawling twin cities of Ahmedabad and Gandhinagar.</p>
+                        <div class="lp-card-stats">
+                            <div class="lp-stat"><span>4</span> Lines</div>
+                            <div class="lp-stat"><span>54</span> Stations</div>
+                        </div>
+                        <button class="lp-card-btn">Explore Network</button>
+                    </div>
+                </div>
             </div>
         </div>
 

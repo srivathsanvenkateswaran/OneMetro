@@ -40,8 +40,20 @@ function getLayout(cityData, showUpcoming) {
     width = 1200;
     height = 1400;
   } else if (cityData.id === 'nagpur') {
-    width = 1200;
-    height = 1200;
+    width = hasPhase2 ? 1400 : 1200;
+    height = hasPhase2 ? 1400 : 1200;
+  } else if (cityData.id === 'ahmedabad') {
+    geoBounds = { latMin: 22.980, latMax: 23.230, lonMin: 72.490, lonMax: 72.700 };
+    const scale = 5000;
+    const pad = 80;
+    width = Math.round((geoBounds.lonMax - geoBounds.lonMin) * scale) + 2 * pad;
+    height = Math.round((geoBounds.latMax - geoBounds.latMin) * scale) + 2 * pad;
+  } else if (cityData.id === 'pune') {
+    geoBounds = { latMin: 18.480, latMax: 18.650, lonMin: 73.660, lonMax: 73.950 };
+    const scale = 7500;
+    const pad = 100;
+    width = Math.round((geoBounds.lonMax - geoBounds.lonMin) * scale) + 2 * pad;
+    height = Math.round((geoBounds.latMax - geoBounds.latMin) * scale) + 2 * pad;
   } else {
     width = hasPhase2 ? 1100 : 900;
     height = hasPhase2 ? 900 : 700;
@@ -729,9 +741,14 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
     // ═══════════════════════════════════════════
     case 'nagpur_orange': {
       const wpts = [
-        { idx: 0, x: 600, y: 200 },   // Automotive Square (North)
-        { idx: 7, x: 600, y: 600 },   // Sitabuldi 
-        { idx: 17, x: 600, y: 1000 }, // Khapri (South)
+        { idx: 0, x: 650, y: 150 },   // Automotive Square
+        { idx: 4, x: 650, y: 400 },   // Gaddigodam Square
+        { idx: 5, x: 620, y: 480 },   // Kasturchand Park (curves slightly west)
+        { idx: 6, x: 600, y: 530 },   // Zero Mile
+        { idx: 7, x: 600, y: 600 },   // Sitabuldi (Interchange)
+        { idx: 12, x: 580, y: 800 },  // Jaiprakash Nagar (curves slightly west)
+        { idx: 15, x: 550, y: 950 },  // Airport South
+        { idx: 17, x: 550, y: 1050 }, // Khapri (South-West)
       ];
       interpolateWaypoints(wpts, count, coords, line);
       break;
@@ -739,11 +756,151 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
 
     case 'nagpur_aqua': {
       const wpts = [
-        { idx: 0, x: 1000, y: 600 },  // Prajapati Nagar (East)
-        { idx: 9, x: 600, y: 600 },   // Sitabuldi
-        { idx: 19, x: 200, y: 600 },  // Lokmanya Nagar (West)
+        { idx: 0, x: 1050, y: 500 },  // Prajapati Nagar (East)
+        { idx: 4, x: 850, y: 500 },   // Chitar Oli Chowk
+        { idx: 6, x: 750, y: 520 },   // Agrasen Square
+        { idx: 7, x: 700, y: 550 },   // Nagpur Railway Station (Curves South)
+        { idx: 8, x: 650, y: 580 },   // Cotton Market
+        { idx: 9, x: 600, y: 600 },   // Sitabuldi (Interchange)
+        { idx: 13, x: 400, y: 650 },  // LAD Square (Starts going South-West)
+        { idx: 16, x: 250, y: 700 },  // Rachana Ring Road
+        { idx: 19, x: 150, y: 750 },  // Lokmanya Nagar (West-South-West)
       ];
       interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'nagpur_orange-north': {
+      const wpts = [
+        { idx: 0, x: 650, y: 150 },   // Automotive Square
+        { idx: 6, x: 650, y: 50 },    // Cantonment
+        { idx: 12, x: 850, y: 50 },   // Kanhan (Eastwards)
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'nagpur_orange-south': {
+      const wpts = [
+        { idx: 0, x: 550, y: 1050 },  // Khapri
+        { idx: 10, x: 500, y: 1350 }, // MIDC ESR
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'nagpur_aqua-east': {
+      const wpts = [
+        { idx: 0, x: 1050, y: 500 },  // Prajapati Nagar
+        { idx: 3, x: 1250, y: 500 },  // Transport Nagar
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'nagpur_aqua-west': {
+      const wpts = [
+        { idx: 0, x: 150, y: 750 },   // Lokmanya Nagar
+        { idx: 7, x: 50, y: 850 },    // Hingna (Continuing SW)
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    // ═══════════════════════════════════════════
+    // PUNE LAYOUTS
+    // ═══════════════════════════════════════════
+    case 'pune_purple': {
+      const gw = [
+        { idx: 0, lat: 18.612, lon: 73.815 },   // PCMC (Consolidated Northward reach)
+        { idx: 3, lat: 18.595, lon: 73.825 },   // Kasarwadi
+        { idx: 6, lat: 18.562, lon: 73.837 },   // Bopodi
+        { idx: 9, lat: 18.532, lon: 73.847 },   // Shivaji Nagar
+        { idx: 10, lat: 18.528, lon: 73.855 },  // Civil Court
+        { idx: 13, lat: 18.501, lon: 73.858 }, // Swargate
+      ];
+      interpolateWaypoints(projectGeoWaypoints(gw), count, coords, line);
+      break;
+    }
+
+    case 'pune_aqua': {
+      const gw = [
+        { idx: 0, lat: 18.506, lon: 73.811 },   // Vanaz
+        { idx: 3, lat: 18.508, lon: 73.834 },   // Nal Stop
+        { idx: 6, lat: 18.515, lon: 73.844 },   // Chhatrapati Sambhaji Udyan
+        { idx: 8, lat: 18.528, lon: 73.855 },   // Civil Court
+        { idx: 10, lat: 18.528, lon: 73.874 },  // Pune Railway Station
+        { idx: 12, lat: 18.536, lon: 73.884 },  // Bund Garden
+        { idx: 15, lat: 18.561, lon: 73.926 },  // Ramwadi
+      ];
+      interpolateWaypoints(projectGeoWaypoints(gw), count, coords, line);
+      break;
+    }
+
+    case 'pune_line3': {
+      const gw = [
+        { idx: 0, lat: 18.576, lon: 73.684 },  // Megapolis Circle (Far West)
+        { idx: 4, lat: 18.585, lon: 73.725 },  // Wipro / Phase II
+        { idx: 7, lat: 18.595, lon: 73.740 },  // Shivaji Chowk (Phase I - North peak)
+        { idx: 10, lat: 18.582, lon: 73.765 },  // Wakad Chowk
+        { idx: 15, lat: 18.558, lon: 73.784 },  // Baner
+        { idx: 18, lat: 18.541, lon: 73.826 },  // University
+        { idx: 21, lat: 18.532, lon: 73.847 },  // Shivaji Nagar
+        { idx: 22, lat: 18.528, lon: 73.855 },  // Civil Court
+      ];
+      interpolateWaypoints(projectGeoWaypoints(gw), count, coords, line);
+      break;
+    }
+
+    // ═══════════════════════════════════════════
+    // AHMEDABAD LAYOUTS
+    // ═══════════════════════════════════════════
+    case 'ahmedabad_blue': {
+      const gw = [
+        { idx: 0, lat: 23.051, lon: 72.502 },   // Thaltej Gam
+        { idx: 4, lat: 23.040, lon: 72.545 },   // Gujarat Univ
+        { idx: 7, lat: 23.033, lon: 72.568 },   // Old High Court (Interchange)
+        { idx: 10, lat: 23.018, lon: 72.605 },  // Kankaria East
+        { idx: 11, lat: 23.007, lon: 72.618 },  // Apparel Park
+        { idx: 16, lat: 23.003, lon: 72.665 },  // Vastral Gam
+      ];
+      interpolateWaypoints(projectGeoWaypoints(gw), count, coords, line);
+      break;
+    }
+
+    case 'ahmedabad_red': {
+      const gw = [
+        { idx: 0, lat: 23.109, lon: 72.597 },   // Motera Stadium
+        { idx: 2, lat: 23.065, lon: 72.575 },   // AEC
+        { idx: 5, lat: 23.060, lon: 72.570 },   // Vadaj
+        { idx: 8, lat: 23.033, lon: 72.568 },   // Old High Court (Interchange)
+        { idx: 10, lat: 23.012, lon: 72.562 },  // Paldi
+        { idx: 14, lat: 22.992, lon: 72.540 },  // APMC
+      ];
+      interpolateWaypoints(projectGeoWaypoints(gw), count, coords, line);
+      break;
+    }
+
+    case 'ahmedabad_yellow': {
+      const gw = [
+        { idx: 0, lat: 23.109, lon: 72.597 },   // Motera Stadium
+        { idx: 3, lat: 23.148, lon: 72.625 },   // Tapovan Circle
+        { idx: 7, lat: 23.167, lon: 72.633 },   // GNLU (Branch)
+        { idx: 13, lat: 23.197, lon: 72.633 },  // Sector 10A (Turn happens here)
+        { idx: 15, lat: 23.210, lon: 72.595 },  // Akshardham (Westward reach)
+        { idx: 19, lat: 23.225, lon: 72.565 },  // Mahatma Mandir (End)
+      ];
+      interpolateWaypoints(projectGeoWaypoints(gw), count, coords, line);
+      break;
+    }
+
+    case 'ahmedabad_purple': {
+      const gw = [
+        { idx: 0, lat: 23.167, lon: 72.633 },   // GNLU
+        { idx: 1, lat: 23.166, lon: 72.660 },   // PDPU
+        { idx: 2, lat: 23.165, lon: 72.685 },   // GIFT City
+      ];
+      interpolateWaypoints(projectGeoWaypoints(gw), count, coords, line);
       break;
     }
 

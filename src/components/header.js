@@ -22,6 +22,9 @@ export function renderHeader(cityData, onCityChange) {
       <option value="bengaluru" ${currentId === 'bengaluru' ? 'selected' : ''}>🌳 Bengaluru</option>
       <option value="kolkata" ${currentId === 'kolkata' ? 'selected' : ''}>🌉 Kolkata</option>
       <option value="hyderabad" ${currentId === 'hyderabad' ? 'selected' : ''}>🏰 Hyderabad</option>
+      <option value="pune" ${currentId === 'pune' ? 'selected' : ''}>🚊 Pune</option>
+      <option value="nagpur" ${currentId === 'nagpur' ? 'selected' : ''}>🚇 Nagpur</option>
+      <option value="ahmedabad" ${currentId === 'ahmedabad' ? 'selected' : ''}>🪁 Ahmedabad</option>
     </select>
   `;
 
