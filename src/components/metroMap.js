@@ -205,8 +205,8 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
     }
 
     case 'bengaluru_green': {
-      const startY = padding + 10;
-      const endY = height - padding - 10;
+      const startY = padding - 30; // Shifting northward
+      const endY = height - padding - 70;
       const centerX = width * 0.40;
       for (let i = 0; i < count; i++) {
         const t = i / (count - 1);
@@ -221,9 +221,9 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
       const greenData = allLines.find(l => l.id === 'green');
       const rvIndex = greenData ? greenData.stations.findIndex(s => s.name === 'RV Road') : 23;
       const greenCount = greenData ? greenData.stations.length : 32;
-      const gStartY = padding + 10;
-      const gEndY = height - padding - 10;
-      const gCenterX = width * 0.45;
+      const gStartY = padding - 30; // Match green northward shift
+      const gEndY = height - padding - 70;
+      const gCenterX = width * 0.40; // Match green westward shift
       const rvT = rvIndex / (greenCount - 1);
       const rvY = gStartY + (gEndY - gStartY) * rvT;
       const rvX = gCenterX + Math.sin(rvT * Math.PI) * 30;
