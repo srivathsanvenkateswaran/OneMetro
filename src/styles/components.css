@@ -1357,4 +1357,20 @@
     .lp-badge {
         margin-top: var(--space-md);
     }
+
+    /* Header Mobile Adjustments */
+    .app-logo-sub {
+        display: none;
+        /* Free up space in mobile header */
+    }
+
+    .city-selector {
+        max-width: 130px;
+        /* Constrain width */
+        padding: var(--space-xs) var(--space-sm);
+        font-size: var(--fs-xs);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
 }

@@ -84,7 +84,7 @@ export function renderLandingPage(cities, onCitySelect) {
         </div>
 
         <footer class="lp-footer">
-            <p>&copy; 2024 OneMetro. Modernizing the way you view Indian transit.</p>
+            <p>&copy; 2026 OneMetro. Modernizing the way you view Indian transit.</p>
         </footer>
     `;
 
