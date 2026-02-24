@@ -12,7 +12,7 @@ export function renderHeader(cityData, onCityChange) {
     <div class="app-logo" id="header-logo" style="cursor: pointer;">
       <div class="app-logo-icon">M</div>
       <span class="app-logo-text">OneMetro</span>
-      <span class="app-logo-sub">India Metro Systems</span>
+      <span class="app-logo-sub">Indian Metro Systems</span>
     </div>
     <select class="city-selector" id="city-select" aria-label="Select city">
       <option value="" ${!currentId ? 'selected' : ''}>📍 Choose a City</option>
