@@ -231,9 +231,15 @@ function updateSidebarLines() {
     const statsContainer = sidebar.querySelector('.city-stats');
     if (statsContainer) {
         const totalStations = visibleLines.reduce((sum, l) => sum + l.totalStations, 0);
+        const totalLength = visibleLines.reduce((sum, l) => {
+            const numericLength = parseFloat(l.length.replace(/[^0-9.]/g, '')) || 0;
+            return sum + numericLength;
+        }, 0);
+
         const statValues = statsContainer.querySelectorAll('.city-stat-value');
         if (statValues[0]) statValues[0].textContent = visibleLines.length;
         if (statValues[1]) statValues[1].textContent = totalStations;
+        if (statValues[2]) statValues[2].textContent = `${totalLength.toFixed(1)} km`;
     }
 
     // Update upcoming info text
@@ -302,8 +308,8 @@ function bindSidebarEvents() {
                     setHash(state.cityId, null, null);
                 }
             }
-            // Partial update — don't rebuild the toggle!
-            updateSidebarLines();
+            // Perform full render to ensure all sections (operational/upcoming) are correctly handled
+            renderSidebar();
             crossfadeContent(renderContent);
         });
     }

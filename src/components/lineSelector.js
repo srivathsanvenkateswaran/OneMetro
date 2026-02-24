@@ -19,8 +19,15 @@ export function renderLineSelector(cityData, visibleLines, activeLine, showUpcom
   const upcomingLines = visibleLines.filter(l => l.status !== 'operational');
   const totalStations = visibleLines.reduce((sum, l) => sum + l.totalStations, 0);
 
+  // Calculate total length dynamically
+  const totalLengthValue = visibleLines.reduce((sum, l) => {
+    const numericLength = parseFloat(l.length.replace(/[^0-9.]/g, '')) || 0;
+    return sum + numericLength;
+  }, 0);
+  const displayLength = `${totalLengthValue.toFixed(1)} km`;
+
   return `
-    <div class="city-stats animate-fade-in-up">
+    <div class="city-stats">
       <div class="city-stat">
         <div class="city-stat-value">${visibleLines.length}</div>
         <div class="city-stat-label">Lines</div>
@@ -30,7 +37,7 @@ export function renderLineSelector(cityData, visibleLines, activeLine, showUpcom
         <div class="city-stat-label">Stations</div>
       </div>
       <div class="city-stat">
-        <div class="city-stat-value">${cityData.totalLength}</div>
+        <div class="city-stat-value">${displayLength}</div>
         <div class="city-stat-label">Network</div>
       </div>
     </div>

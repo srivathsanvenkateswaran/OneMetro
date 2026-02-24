@@ -1777,7 +1777,7 @@ const chennaiMetro = {
             color: '#F44336',
             colorLight: '#EF9A9A',
             corridor: 'Corridor 5',
-            length: '44.60 km',
+            length: '47.06 km',
             totalStations: 48,
             status: 'under-construction',
             expectedCompletion: '2027–2028',
