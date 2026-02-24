@@ -327,9 +327,27 @@
     border-radius: var(--radius-lg);
     padding: var(--space-lg);
     min-height: 320px;
+    max-height: 75vh;
     position: relative;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: auto;
     animation: scaleIn var(--duration-slow) var(--ease-out) both;
+    scrollbar-width: thin;
+    scrollbar-color: var(--bg-glass-border) transparent;
+}
+
+.metro-map-container::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.metro-map-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.metro-map-container::-webkit-scrollbar-thumb {
+    background: var(--bg-glass-border);
+    border-radius: var(--radius-full);
 }
 
 .metro-map-title {
@@ -342,6 +360,11 @@
     display: flex;
     align-items: center;
     gap: var(--space-sm);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--bg-card);
+    padding-bottom: var(--space-sm);
 }
 
 .metro-map-title::before {
@@ -357,6 +380,9 @@
 .metro-map-svg {
     width: 100%;
     height: auto;
+    max-width: 900px;
+    display: block;
+    margin: 0 auto;
 }
 
 .map-station-dot {
