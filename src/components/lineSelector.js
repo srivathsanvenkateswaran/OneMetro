@@ -8,8 +8,14 @@ function getLineGlow(line) {
     blue: 'rgba(33,150,243,0.25)',
     green: 'rgba(76,175,80,0.25)',
     purple: 'rgba(156,39,176,0.25)',
-    yellow: 'rgba(255,152,0,0.25)',
+    yellow: 'rgba(255,235,59,0.25)',
     red: 'rgba(244,67,54,0.25)',
+    pink: 'rgba(233,30,99,0.25)',
+    magenta: 'rgba(156,39,176,0.25)',
+    orange: 'rgba(255,152,0,0.25)',
+    aqua: 'rgba(0,188,212,0.25)',
+    violet: 'rgba(126,87,194,0.25)',
+    grey: 'rgba(158,158,158,0.25)',
   };
   return glowMap[line.id] || 'rgba(99,102,241,0.25)';
 }

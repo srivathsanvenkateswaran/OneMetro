@@ -27,6 +27,9 @@ function getLayout(cityData, showUpcoming) {
   } else if (cityData.id === 'bengaluru') {
     width = hasPhase2 ? 1100 : 900;
     height = hasPhase2 ? 1200 : 700;
+  } else if (cityData.id === 'delhi') {
+    width = 1400;
+    height = 1000;
   } else {
     width = hasPhase2 ? 1100 : 900;
     height = hasPhase2 ? 900 : 700;
@@ -339,6 +342,160 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
       break;
     }
 
+    // ═══════════════════════════════════════════
+    // DELHI LAYOUTS
+    // ═══════════════════════════════════════════
+    case 'delhi_red': {
+      const wpts = [
+        { idx: 0, x: 1200, y: 250 },  // Shaheed Sthal (East)
+        { idx: 12, x: 900, y: 250 },  // Welcome
+        { idx: 15, x: 700, y: 250 },  // Kashmere Gate
+        { idx: 23, x: 500, y: 250 },  // Netaji Subhash Place
+        { idx: 28, x: 200, y: 200 },  // Rithala (North-West)
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'delhi_yellow': {
+      const wpts = [
+        { idx: 0, x: 600, y: 50 },    // Samaypur Badli
+        { idx: 5, x: 600, y: 150 },   // Azadpur
+        { idx: 11, x: 700, y: 250 },  // Kashmere Gate
+        { idx: 15, x: 700, y: 450 },  // Rajiv Chowk
+        { idx: 17, x: 700, y: 600 },  // Central Secretariat
+        { idx: 21, x: 700, y: 700 },  // INA
+        { idx: 24, x: 700, y: 800 },  // Hauz Khas
+        { idx: 36, x: 550, y: 950 },  // Millennium City Centre (South-West)
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'delhi_blue': {
+      const wpts = [
+        { idx: 0, x: 200, y: 800 },   // Dwarka 21
+        { idx: 8, x: 200, y: 600 },   // Dwarka
+        { idx: 13, x: 300, y: 450 },  // Janakpuri West
+        { idx: 18, x: 400, y: 450 },  // Rajouri Garden
+        { idx: 21, x: 450, y: 450 },  // Kirti Nagar
+        { idx: 28, x: 700, y: 450 },  // Rajiv Chowk
+        { idx: 30, x: 750, y: 450 },  // Mandi House
+        { idx: 33, x: 900, y: 450 },  // Yamuna Bank
+        { idx: 34, x: 950, y: 500 },  // Akshardham
+        { idx: 35, x: 1000, y: 550 }, // Mayur Vihar Phase-1
+        { idx: 41, x: 1100, y: 700 }, // Botanical Garden
+        { idx: 49, x: 1250, y: 750 }, // Noida Electronic City
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'delhi_blue-branch': {
+      const wpts = [
+        { idx: 0, x: 900, y: 450 },   // Yamuna Bank
+        { idx: 4, x: 1100, y: 450 },  // Karkarduma
+        { idx: 5, x: 1160, y: 450 },  // Anand Vihar ISBT
+        { idx: 7, x: 1250, y: 400 },  // Vaishali
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'delhi_pink': {
+      const wpts = [
+        { idx: 0, x: 700, y: 100 },  // Majlis Park (East of Yellow)
+        { idx: 1, x: 600, y: 150 },  // Azadpur
+        { idx: 3, x: 500, y: 250 },  // Netaji Subhash Place
+        { idx: 5, x: 400, y: 350 },  // Punjabi Bagh West
+        { idx: 7, x: 400, y: 450 },  // Rajouri Garden
+        { idx: 11, x: 600, y: 650 },  // Durgabai Deshmukh South Campus
+        { idx: 15, x: 700, y: 700 },  // Dilli Haat - INA
+        { idx: 17, x: 750, y: 700 },  // Lajpat Nagar
+        { idx: 21, x: 1000, y: 550 },  // Mayur Vihar Phase-1
+        { idx: 23, x: 1100, y: 550 },  // Mayur Vihar Pocket I
+        { idx: 25, x: 1160, y: 500 },  // East Vinod Nagar
+        { idx: 27, x: 1160, y: 450 },  // Anand Vihar ISBT
+        { idx: 28, x: 1100, y: 450 },  // Karkarduma
+        { idx: 32, x: 900, y: 250 },  // Welcome
+        { idx: 37, x: 1000, y: 50 },   // Shiv Vihar (North-East)
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'delhi_orange': {
+      const wpts = [
+        { idx: 0, x: 700, y: 450 },  // a01: New Delhi
+        { idx: 1, x: 650, y: 550 },  // a02: Shivaji Stadium
+        { idx: 2, x: 600, y: 650 },  // a03: Dhaula Kuan
+        { idx: 3, x: 500, y: 750 },  // a04: Delhi Aerocity
+        { idx: 4, x: 400, y: 800 },  // a05: IGI Airport
+        { idx: 5, x: 200, y: 800 },  // a06: Dwarka Sector 21
+        { idx: 6, x: 150, y: 800 },  // a07: Yashobhoomi Dwarka Sector 25
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'delhi_magenta': {
+      const wpts = [
+        { idx: 0, x: 300, y: 450 },   // Janakpuri West
+        { idx: 5, x: 400, y: 700 },   // Terminal 1
+        { idx: 11, x: 700, y: 800 },  // Hauz Khas
+        { idx: 16, x: 800, y: 800 },  // Kalkaji Mandir
+        { idx: 24, x: 1100, y: 700 }, // Botanical Garden
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'delhi_violet': {
+      const wpts = [
+        { idx: 0, x: 700, y: 250 },   // Kashmere Gate
+        { idx: 5, x: 750, y: 450 },   // Mandi House
+        { idx: 7, x: 700, y: 600 },   // Central Secretariat
+        { idx: 11, x: 750, y: 700 },  // Lajpat Nagar
+        { idx: 15, x: 800, y: 800 },  // Kalkaji Mandir
+        { idx: 33, x: 850, y: 1100 }, // Raja Nahar Singh
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'delhi_green': {
+      const wpts = [
+        { idx: 0, x: 625, y: 250 },   // Inderlok (Red)
+        { idx: 1, x: 525, y: 300 },   // Ashok Park Main
+        { idx: 2, x: 462, y: 325 },   // Punjabi Bagh
+        { idx: 3, x: 400, y: 350 },   // Punjabi Bagh West (Pink)
+        { idx: 8, x: 292, y: 350 },   // Peeragarhi
+        { idx: 13, x: 184, y: 350 },  // Rajdhani Park
+        { idx: 21, x: 5, y: 350 },  // Brigadier Hoshiar Singh (Absolute West)
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'delhi_green-branch': {
+      const wpts = [
+        { idx: 0, x: 450, y: 450 },   // Kirti Nagar (Blue)
+        { idx: 1, x: 487, y: 375 },   // Satguru Ram Singh Marg
+        { idx: 2, x: 525, y: 300 },   // Ashok Park Main
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'delhi_grey': {
+      const wpts = [
+        { idx: 0, x: 200, y: 600 },   // Dwarka (Blue)
+        { idx: 3, x: 50, y: 600 },   // Dhansa Bus Stand
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
     default: {
       const startY2 = padding;
       const endY2 = height - padding;
@@ -392,14 +549,8 @@ function createSVGPath(coords) {
   if (coords.length < 2) return '';
   let d = `M ${coords[0].x} ${coords[0].y}`;
   for (let i = 1; i < coords.length; i++) {
-    const prev = coords[i - 1];
-    const curr = coords[i];
-    const midX = (prev.x + curr.x) / 2;
-    const midY = (prev.y + curr.y) / 2;
-    d += ` Q ${prev.x} ${prev.y} ${midX} ${midY}`;
+    d += ` L ${coords[i].x} ${coords[i].y}`;
   }
-  const last = coords[coords.length - 1];
-  d += ` L ${last.x} ${last.y}`;
   return d;
 }
 
@@ -434,7 +585,7 @@ export function renderMetroMap(cityData, activeLine, activeStation, showUpcoming
           <button class="map-ctrl-btn map-minimize-btn" id="map-minimize" title="Minimize/Expand map">∨</button>
           <div class="map-toolbar-title">
             <span class="map-toolbar-dot"></span>
-            Network Map — ${cityData.name} ${cityData.nameLocal}
+            Network Map
           </div>
         </div>
         <div class="map-toolbar-controls">

@@ -17,7 +17,7 @@ export function renderHeader(cityData, onCityChange) {
     <select class="city-selector" id="city-select" aria-label="Select city">
       <option value="" ${!currentId ? 'selected' : ''}>📍 Choose a City</option>
       <option value="chennai" ${currentId === 'chennai' ? 'selected' : ''}>🏛️ Chennai</option>
-      <option value="delhi" disabled>🕌 Delhi (Coming Soon)</option>
+      <option value="delhi" ${currentId === 'delhi' ? 'selected' : ''}>🕌 Delhi</option>
       <option value="mumbai" disabled>🌆 Mumbai (Coming Soon)</option>
       <option value="bengaluru" ${currentId === 'bengaluru' ? 'selected' : ''}>🌳 Bengaluru</option>
       <option value="kolkata" disabled>🌉 Kolkata (Coming Soon)</option>

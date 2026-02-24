@@ -60,14 +60,17 @@ export function renderLandingPage(cities, onCitySelect) {
                     </div>
                 </div>
 
-                <!-- Coming Soon Cities -->
-                <div class="lp-card disabled">
+                <div class="lp-card available" data-city-id="delhi">
                     <div class="lp-card-image lp-img-delhi"></div>
                     <div class="lp-card-content">
-                        <div class="lp-card-status soon">Coming Soon</div>
+                        <div class="lp-card-status">Operational</div>
                         <h3 class="lp-card-title">Delhi <span class="lp-card-local">दिल्ली</span></h3>
-                        <p class="lp-card-desc">The nation's largest and most complex network is heading to OneMetro soon.</p>
-                        <button class="lp-card-btn disabled">Stay Tuned</button>
+                        <p class="lp-card-desc">The nation's capital with the largest and most complex metro network in India.</p>
+                        <div class="lp-card-stats">
+                            <div class="lp-stat"><span>10</span> Lines</div>
+                            <div class="lp-stat"><span>280+</span> Stations</div>
+                        </div>
+                        <button class="lp-card-btn">Explore Network</button>
                     </div>
                 </div>
 
