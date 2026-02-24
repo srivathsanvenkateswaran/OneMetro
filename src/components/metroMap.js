@@ -342,9 +342,12 @@ export function renderMetroMap(cityData, activeLine, activeStation, showUpcoming
   container.innerHTML = `
     <div class="metro-map-container" id="map-viewer">
       <div class="map-toolbar">
-        <div class="map-toolbar-title">
-          <span class="map-toolbar-dot"></span>
-          Network Map — ${cityData.name} ${cityData.nameLocal}
+        <div class="map-toolbar-left">
+          <button class="map-ctrl-btn map-minimize-btn" id="map-minimize" title="Minimize/Expand map">∨</button>
+          <div class="map-toolbar-title">
+            <span class="map-toolbar-dot"></span>
+            Network Map — ${cityData.name} ${cityData.nameLocal}
+          </div>
         </div>
         <div class="map-toolbar-controls">
           <span class="map-zoom-level" id="zoom-level">100%</span>
@@ -388,6 +391,21 @@ export function renderMetroMap(cityData, activeLine, activeStation, showUpcoming
     }).join('');
   }).join('')}
           </svg>
+      </div>
+      <div class="map-legend" id="map-legend">
+        <div class="map-legend-header" id="legend-header">
+          <span class="map-legend-title">Legend</span>
+          <button class="map-legend-toggle" id="legend-toggle" title="Toggle Legend">×</button>
+        </div>
+        <div class="map-legend-content">
+          ${layout.lines.map(({ line }) => `
+            <div class="map-legend-item ${activeLine === line.id ? 'active' : ''}" data-line-id="${line.id}">
+              <span class="map-legend-color" style="background: ${line.color}; box-shadow: 0 0 8px ${line.color}44;"></span>
+              <span class="map-legend-name">${line.name}</span>
+              ${line.status !== 'operational' ? '<span class="map-legend-tag">Upcoming</span>' : ''}
+            </div>
+          `).join('')}
+        </div>
       </div>
     </div>
   `;
@@ -557,6 +575,21 @@ function initMapControls(container) {
       fsBtn.textContent = '⛶';
     }
   });
+
+  // Minimize map toggle
+  const minBtn = container.querySelector('#map-minimize');
+  minBtn.addEventListener('click', () => {
+    viewer.classList.toggle('map-minimized');
+    minBtn.textContent = viewer.classList.contains('map-minimized') ? '>' : '∨';
+  });
+
+  // Toggle legend
+  const legend = container.querySelector('#map-legend');
+  const legendBtn = container.querySelector('#legend-toggle');
+  legendBtn.addEventListener('click', () => {
+    legend.classList.toggle('minimized');
+    legendBtn.textContent = legend.classList.contains('minimized') ? '+' : '×';
+  });
 }
 
 // ── Station rendering helpers ──
@@ -578,8 +611,6 @@ function renderMapStation(coord, index, activeLine, activeStation, lineId, total
     pink: { dx: -14, dy: 4, anchor: 'end' },
   };
   const lp = labelPositions[lineId] || { dx: 14, dy: 4, anchor: 'start' };
-  const showLabel = isActive || index === 0 || index === totalStations - 1 || index % 3 === 0;
-
   return `
     <circle class="map-station-dot ${isActive ? 'active' : ''}"
             cx="${coord.x}" cy="${coord.y}" r="${isActive ? 7 : radius}"
@@ -590,13 +621,6 @@ function renderMapStation(coord, index, activeLine, activeStation, lineId, total
             data-station-name="${station.name}"
             data-line-id="${lineId}"
             style="animation: stationPop 0.3s ease both; animation-delay: ${index * 20}ms; cursor: pointer;" />
-    ${showLabel ? `
-      <text class="map-station-label" x="${coord.x + lp.dx}" y="${coord.y + lp.dy}"
-            text-anchor="${lp.anchor}" opacity="${isLineActive ? (isUpcoming ? 0.5 : 0.85) : 0.1}"
-            style="font-size: ${isActive ? '10px' : '8px'}; font-weight: ${isActive ? '700' : '400'};">
-        ${station.name}
-      </text>
-    ` : ''}
   `;
 }
 
@@ -611,11 +635,6 @@ function renderMapInterchange(coord, activeLine, activeStation) {
       <circle cx="${coord.x}" cy="${coord.y}" r="7"
               fill="${isActive ? 'white' : '#0a0e1a'}"
               stroke="white" stroke-width="2" opacity="1" />
-      <text class="map-station-label" x="${coord.x}" y="${coord.y - 17}"
-            text-anchor="middle"
-            style="font-size: 10px; font-weight: 700; fill: #f1f5f9;">
-        ${station.name}
-      </text>
     </g>
   `;
 }
