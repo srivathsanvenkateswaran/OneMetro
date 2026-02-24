@@ -7,14 +7,9 @@
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
 /**
- * Generate schematic layout coordinates for Chennai Metro
- * Blue: vertical (north to south)
- * Green: east to west-south from Chennai Central
- * Purple: north to far south-east (Phase 2)
- * Yellow: east to west (Phase 2)
- * Red: north to south-east via west (Phase 2)
+ * Generate schematic layout coordinates for any city
  */
-function getChennaiLayout(cityData, showUpcoming) {
+function getLayout(cityData, showUpcoming) {
   const lines = cityData.lines.filter(l => showUpcoming || l.status === 'operational');
   const hasPhase2 = lines.some(l => l.status !== 'operational');
 
@@ -25,7 +20,7 @@ function getChennaiLayout(cityData, showUpcoming) {
   const result = { width, height, lines: [] };
 
   lines.forEach(line => {
-    const coords = generateLineCoords(line, lines, padding, width, height, hasPhase2);
+    const coords = generateLineCoords(cityData.id, line, lines, padding, width, height, hasPhase2);
     result.lines.push({ coords, line });
   });
 
@@ -35,12 +30,18 @@ function getChennaiLayout(cityData, showUpcoming) {
   return result;
 }
 
-function generateLineCoords(line, allLines, padding, width, height, hasPhase2) {
+function generateLineCoords(cityId, line, allLines, padding, width, height, hasPhase2) {
   const count = line.stations.length;
   const coords = [];
 
-  switch (line.id) {
-    case 'blue': {
+  // City-specific layout key
+  const layoutKey = `${cityId}_${line.id}`;
+
+  switch (layoutKey) {
+    // ═══════════════════════════════════════════
+    // CHENNAI LAYOUTS
+    // ═══════════════════════════════════════════
+    case 'chennai_blue': {
       const startX = hasPhase2 ? 520 : 540;
       const startY = padding + 10;
       const endY = height - padding - (hasPhase2 ? 80 : 0);
@@ -61,7 +62,7 @@ function generateLineCoords(line, allLines, padding, width, height, hasPhase2) {
       break;
     }
 
-    case 'green': {
+    case 'chennai_green': {
       // Find Chennai Central from blue line
       const blueData = allLines.find(l => l.id === 'blue');
       const blueCount = blueData ? blueData.stations.length : 26;
@@ -110,7 +111,7 @@ function generateLineCoords(line, allLines, padding, width, height, hasPhase2) {
       break;
     }
 
-    case 'purple': {
+    case 'chennai_purple': {
       // North to far south-east: Madhavaram → SIPCOT
       const startX = hasPhase2 ? 620 : 600;
       const startY = padding + 20;
@@ -127,7 +128,7 @@ function generateLineCoords(line, allLines, padding, width, height, hasPhase2) {
       break;
     }
 
-    case 'yellow': {
+    case 'chennai_yellow': {
       // East to West: Light House → Poonamallee
       const startX = hasPhase2 ? 580 : 560;
       const startY = height * 0.45;
@@ -143,7 +144,7 @@ function generateLineCoords(line, allLines, padding, width, height, hasPhase2) {
       break;
     }
 
-    case 'red': {
+    case 'chennai_red': {
       // North to South-East via West arc: Madhavaram → Sholinganallur
       const startX = hasPhase2 ? 660 : 640;
       const startY = padding + 30;
@@ -162,15 +163,92 @@ function generateLineCoords(line, allLines, padding, width, height, hasPhase2) {
       break;
     }
 
-    default: {
-      // Generic vertical layout
-      const startY = padding;
+    // ═══════════════════════════════════════════
+    // BENGALURU LAYOUTS
+    // ═══════════════════════════════════════════
+    case 'bengaluru_purple': {
+      // East-West line: Challaghatta → Whitefield (horizontal)
+      const startX = padding + 20;
+      const endX = width - padding - 20;
+      const centerY = height * 0.42;
+
+      for (let i = 0; i < count; i++) {
+        const t = i / (count - 1);
+        const x = startX + (endX - startX) * t;
+        // Slight wave for visual interest
+        const y = centerY + Math.sin(t * Math.PI * 1.5) * 25;
+        coords.push({ x, y, station: line.stations[i], line });
+      }
+      break;
+    }
+
+    case 'bengaluru_green': {
+      // North-South line: Madavara → Silk Institute (vertical)
+      const startY = padding + 10;
+      const endY = height - padding - 10;
+      const centerX = width * 0.45;
+
+      for (let i = 0; i < count; i++) {
+        const t = i / (count - 1);
+        const y = startY + (endY - startY) * t;
+        // Slight curve in the middle section
+        const x = centerX + Math.sin(t * Math.PI) * 30;
+        coords.push({ x, y, station: line.stations[i], line });
+      }
+      break;
+    }
+
+    case 'bengaluru_yellow': {
+      // South line: RV Road → Bommasandra (vertical, south of center)
+      // Find RV Road position from green line for starting point
+      const greenData = allLines.find(l => l.id === 'green');
+      const rvIndex = greenData ? greenData.stations.findIndex(s => s.name === 'RV Road') : 23;
+      const greenCount = greenData ? greenData.stations.length : 32;
+      const gStartY = padding + 10;
+      const gEndY = height - padding - 10;
+      const gCenterX = width * 0.45;
+      const rvT = rvIndex / (greenCount - 1);
+      const rvY = gStartY + (gEndY - gStartY) * rvT;
+      const rvX = gCenterX + Math.sin(rvT * Math.PI) * 30;
+
+      const endX = width * 0.7;
       const endY = height - padding;
-      const spacing = (endY - startY) / (count - 1);
+
+      for (let i = 0; i < count; i++) {
+        const t = i / (count - 1);
+        // Diagonal going south-east from RV Road
+        const x = rvX + (endX - rvX) * t;
+        const y = rvY + (endY - rvY) * t;
+        coords.push({ x, y, station: line.stations[i], line });
+      }
+      break;
+    }
+
+    case 'bengaluru_pink': {
+      // South-North line: Kalena Agrahara → Nagawara (vertical, east of center)
+      const startY = height - padding - 60;
+      const endY = padding + 30;
+      const centerX = width * 0.58;
+
+      for (let i = 0; i < count; i++) {
+        const t = i / (count - 1);
+        const y = startY + (endY - startY) * t;
+        // Slight eastward curve
+        const x = centerX + Math.sin(t * Math.PI) * 40;
+        coords.push({ x, y, station: line.stations[i], line });
+      }
+      break;
+    }
+
+    default: {
+      // Generic vertical layout for any unrecognized line
+      const startY2 = padding;
+      const endY2 = height - padding;
+      const spacing = (endY2 - startY2) / Math.max(count - 1, 1);
       for (let i = 0; i < count; i++) {
         coords.push({
           x: width / 2,
-          y: startY + i * spacing,
+          y: startY2 + i * spacing,
           station: line.stations[i],
           line,
         });
@@ -253,7 +331,7 @@ export function renderMetroMap(cityData, activeLine, activeStation, showUpcoming
   const container = document.getElementById('metro-map');
   if (!container) return;
 
-  const layout = getChennaiLayout(cityData, showUpcoming);
+  const layout = getLayout(cityData, showUpcoming);
   const renderedInterchanges = new Set();
 
   container.innerHTML = `
@@ -321,11 +399,14 @@ function renderMapStation(coord, index, activeLine, activeStation, lineId, total
 
   // Label positioning based on line direction
   const labelPositions = {
+    // Chennai
     blue: { dx: 14, dy: 4, anchor: 'start' },
     green: { dx: 0, dy: -12, anchor: 'middle' },
-    purple: { dx: -14, dy: 4, anchor: 'end' },
-    yellow: { dx: 0, dy: -12, anchor: 'middle' },
     red: { dx: 14, dy: 4, anchor: 'start' },
+    // Generic / Bengaluru
+    purple: { dx: 0, dy: -12, anchor: 'middle' },
+    yellow: { dx: 14, dy: 4, anchor: 'start' },
+    pink: { dx: -14, dy: 4, anchor: 'end' },
   };
   const lp = labelPositions[lineId] || { dx: 14, dy: 4, anchor: 'start' };
 

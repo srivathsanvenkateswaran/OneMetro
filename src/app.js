@@ -4,6 +4,7 @@
  */
 
 import chennaiMetro from './data/chennai.js';
+import bengaluruMetro from './data/bengaluru.js';
 import { renderHeader } from './components/header.js';
 import { renderLineSelector, bindLineCardEvents } from './components/lineSelector.js';
 import { renderLineInfo } from './components/lineInfo.js';
@@ -13,6 +14,7 @@ import { renderMetroMap } from './components/metroMap.js';
 // ── City Registry ──
 const cities = {
     chennai: chennaiMetro,
+    bengaluru: bengaluruMetro,
 };
 
 // ── State ──
