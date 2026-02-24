@@ -1,4 +1,4 @@
-# BharatOne — Project Constitution
+# OneMetro — Project Constitution
 
 ## North Star
 A fast, premium static website displaying metro system maps, lines, and stations across India.
