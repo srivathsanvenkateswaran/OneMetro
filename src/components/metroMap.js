@@ -24,6 +24,9 @@ function getLayout(cityData, showUpcoming) {
     const pad = 50;
     width = Math.round((geoBounds.lonMax - geoBounds.lonMin) * scale) + 2 * pad;
     height = Math.round((geoBounds.latMax - geoBounds.latMin) * scale) + 2 * pad;
+  } else if (cityData.id === 'bengaluru') {
+    width = hasPhase2 ? 1100 : 900;
+    height = hasPhase2 ? 1200 : 700;
   } else {
     width = hasPhase2 ? 1100 : 900;
     height = hasPhase2 ? 900 : 700;
@@ -52,6 +55,9 @@ function geoProject(lat, lon, bounds, width, height, pad = 50) {
 function generateLineCoords(cityId, line, allLines, padding, width, height, hasPhase2, geoBounds) {
   const count = line.stations.length;
   const coords = [];
+
+  const offsetY = (cityId === 'bengaluru' && hasPhase2) ? 300 : 0;
+  const baseHeight = (cityId === 'bengaluru' && hasPhase2) ? 900 : height;
 
   function interpolateWaypoints(waypoints, totalStations, coords, line) {
     const sorted = [...waypoints].sort((a, b) => a.idx - b.idx);
@@ -194,7 +200,7 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
     case 'bengaluru_purple': {
       const startX = padding + 20;
       const endX = width - padding - 20;
-      const centerY = height * 0.42;
+      const centerY = baseHeight * 0.42 + offsetY;
       for (let i = 0; i < count; i++) {
         const t = i / (count - 1);
         const x = startX + (endX - startX) * t;
@@ -205,8 +211,8 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
     }
 
     case 'bengaluru_green': {
-      const startY = padding - 30; // Shifting northward
-      const endY = height - padding - 70;
+      const startY = padding - 30 + offsetY;
+      const endY = baseHeight - padding - 70 + offsetY;
       const centerX = width * 0.40;
       for (let i = 0; i < count; i++) {
         const t = i / (count - 1);
@@ -221,14 +227,14 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
       const greenData = allLines.find(l => l.id === 'green');
       const rvIndex = greenData ? greenData.stations.findIndex(s => s.name === 'RV Road') : 23;
       const greenCount = greenData ? greenData.stations.length : 32;
-      const gStartY = padding - 30; // Match green northward shift
-      const gEndY = height - padding - 70;
-      const gCenterX = width * 0.40; // Match green westward shift
+      const gStartY = padding - 30 + offsetY;
+      const gEndY = baseHeight - padding - 70 + offsetY;
+      const gCenterX = width * 0.40;
       const rvT = rvIndex / (greenCount - 1);
       const rvY = gStartY + (gEndY - gStartY) * rvT;
       const rvX = gCenterX + Math.sin(rvT * Math.PI) * 30;
       const endX = width * 0.7;
-      const endY = height - padding;
+      const endY = baseHeight - padding + offsetY;
       for (let i = 0; i < count; i++) {
         const t = i / (count - 1);
         const x = rvX + (endX - rvX) * t;
@@ -245,13 +251,13 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
 
       const pStartX = padding + 20;
       const pEndX = width - padding - 20;
-      const pCenterY = height * 0.42;
+      const pCenterY = baseHeight * 0.42 + offsetY;
       const mgT = mgIndex / (purpleCount - 1);
       const mgX = pStartX + (pEndX - pStartX) * mgT;
 
       const greenX = width * 0.40;
-      const startY = height - padding - 40;
-      const endY = padding - 40;
+      const startY = baseHeight - padding - 40 + offsetY;
+      const endY = padding - 40 + offsetY;
 
       for (let i = 0; i < count; i++) {
         const t = i / (count - 1);
@@ -273,6 +279,62 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
         // Soft curve for better line visibility
         const curve = Math.sin(t * Math.PI) * 20;
         coords.push({ x: bX + curve, y, station: line.stations[i], line });
+      }
+      break;
+    }
+
+    case 'bengaluru_blue': {
+      // 1. SILK BOARD ANCHOR (Matches Yellow Line logic at t=4/15)
+      const greenData = allLines.find(l => l.id === 'green');
+      const rvIndex = greenData ? greenData.stations.findIndex(s => s.name === 'RV Road') : 23;
+      const greenCount = greenData ? greenData.stations.length : 32;
+      const gStartY = padding - 30 + offsetY;
+      const gEndY = baseHeight - padding - 70 + offsetY;
+      const gCenterX = width * 0.40;
+      const rvT = rvIndex / (greenCount - 1);
+      const rvY = gStartY + (gEndY - gStartY) * rvT;
+      const rvX = gCenterX + Math.sin(rvT * Math.PI) * 30;
+
+      const yEndX = width * 0.7;
+      const yEndY = baseHeight - padding + offsetY;
+      const tSilk = 4 / 15;
+      const silkX = rvX + (yEndX - rvX) * tSilk;
+      const silkY = rvY + (yEndY - rvY) * tSilk;
+
+      // 2. KR PURAM ANCHOR (Matches Purple Line logic at t=24/36)
+      const pStartX = padding + 20;
+      const pEndX = width - padding - 20;
+      const pCenterY = baseHeight * 0.42 + offsetY;
+      const tKR = 24 / 36;
+      const krX = pStartX + (pEndX - pStartX) * tKR;
+      const krY = pCenterY + Math.sin(tKR * Math.PI * 1.5) * 25;
+
+      // 3. NAGAWARA ANCHOR (Matches Pink Line end logic)
+      const purpleDataForBlue = allLines.find(l => l.id === 'purple');
+      const mgIndexForBlue = purpleDataForBlue ? purpleDataForBlue.stations.findIndex(s => s.name === 'M.G. Road') : 18;
+      const mgX = pStartX + (pEndX - pStartX) * (mgIndexForBlue / 36);
+      const nagX = mgX;
+      const nagY = padding - 40 + offsetY;
+
+      for (let i = 0; i < count; i++) {
+        let x, y;
+        if (i <= 12) { // ORR East: Silk Board to KR Puram
+          const t = i / 12;
+          x = silkX + (krX - silkX) * t;
+          y = silkY + (krY - silkY) * t;
+          x += Math.sin(t * Math.PI) * 80;
+        } else if (i <= 18) { // ORR North: KR Puram to Nagawara
+          const t = (i - 12) / (18 - 12);
+          x = krX + (nagX - krX) * t;
+          y = krY + (nagY - krY) * t;
+          x += Math.sin(t * Math.PI) * 50;
+        } else { // Airport stretch: Nagawara to KIA
+          const t = (i - 18) / (count - 1 - 18);
+          x = nagX;
+          y = nagY - t * (nagY - padding);
+          x += Math.sin(t * Math.PI) * 20;
+        }
+        coords.push({ x, y, station: line.stations[i], line });
       }
       break;
     }
