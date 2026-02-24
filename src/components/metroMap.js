@@ -504,8 +504,9 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
     // ═══════════════════════════════════════════
     case 'mumbai_yellow': {
       const wpts = [
-        { idx: 0, x: 450, y: 150 },   // Dahisar East
-        { idx: 6, x: 300, y: 350 },   // Pahadi Eksar
+        { idx: 0, x: 400, y: 100 },   // Dahisar East
+        { idx: 2, x: 300, y: 200 },   // Kandarpada
+        { idx: 14, x: 300, y: 450 },  // Oshiwara / Adarsh Nagar (Pink intersect)
         { idx: 16, x: 300, y: 600 },  // Andheri West (DN Nagar)
       ];
       interpolateWaypoints(wpts, count, coords, line);
@@ -514,8 +515,9 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
 
     case 'mumbai_red': {
       const wpts = [
-        { idx: 0, x: 450, y: 150 },   // Dahisar East
-        { idx: 5, x: 500, y: 350 },   // Poisar
+        { idx: 0, x: 400, y: 100 },   // Dahisar East
+        { idx: 2, x: 500, y: 200 },   // Rashtriya Udyan
+        { idx: 11, x: 500, y: 450 },  // Jogeshwari / JVLR (Pink intersect)
         { idx: 13, x: 500, y: 600 },  // Gundavali / WEH
       ];
       interpolateWaypoints(wpts, count, coords, line);
@@ -524,11 +526,11 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
 
     case 'mumbai_blue': {
       const wpts = [
-        { idx: 0, x: 150, y: 600 },   // Versova
+        { idx: 0, x: 230, y: 600 },   // Versova
         { idx: 1, x: 300, y: 600 },   // DN Nagar
         { idx: 4, x: 500, y: 600 },   // WEH
-        { idx: 7, x: 800, y: 600 },   // Marol Naka
-        { idx: 11, x: 1050, y: 750 }, // Ghatkopar
+        { idx: 7, x: 600, y: 600 },   // Marol Naka
+        { idx: 11, x: 800, y: 600 },  // Ghatkopar
       ];
       interpolateWaypoints(wpts, count, coords, line);
       break;
@@ -536,15 +538,65 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
 
     case 'mumbai_aqua': {
       const wpts = [
-        { idx: 0, x: 600, y: 400 },   // Aarey JVLR
-        { idx: 3, x: 800, y: 600 },   // Marol Naka
-        { idx: 4, x: 700, y: 700 },   // CSMIA T2
+        { idx: 0, x: 600, y: 350 },   // Aarey JVLR
+        { idx: 1, x: 600, y: 450 },   // SEEPZ (Pink intersect)
+        { idx: 3, x: 600, y: 600 },   // Marol Naka
+        { idx: 4, x: 550, y: 700 },   // CSMIA T2
         { idx: 9, x: 500, y: 950 },   // BKC
         { idx: 12, x: 400, y: 1100 }, // Dadar
         { idx: 17, x: 350, y: 1250 }, // Mahalaxmi
-        { idx: 22, x: 500, y: 1400 }, // CSMT
-        { idx: 24, x: 400, y: 1450 }, // Churchgate
-        { idx: 26, x: 350, y: 1550 }, // Cuffe Parade
+        { idx: 22, x: 400, y: 1400 }, // CSMT
+        { idx: 24, x: 320, y: 1450 }, // Churchgate
+        { idx: 26, x: 320, y: 1550 }, // Cuffe Parade
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'mumbai_yellow-b': {
+      const wpts = [
+        { idx: 0, x: 300, y: 620 },   // ESIC Nagar (moved closer to DN Nagar y=600)
+        { idx: 7, x: 300, y: 850 },   // Bandra Metro
+        { idx: 8, x: 500, y: 950 },   // ITO BKC
+        { idx: 12, x: 700, y: 950 },  // Kurla East
+        { idx: 14, x: 800, y: 1000 }, // Chembur
+        { idx: 19, x: 900, y: 1050 }, // Mandale
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'mumbai_green': {
+      const wpts = [
+        { idx: 0, x: 800, y: 50 },    // Kasarvadavali
+        { idx: 10, x: 800, y: 250 },  // Thane
+        { idx: 18, x: 800, y: 450 },  // Kanjurmarg
+        { idx: 24, x: 750, y: 700 },  // Pant Nagar
+        { idx: 29, x: 700, y: 1100 }, // Bhakti Park
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'mumbai_pink': {
+      const wpts = [
+        { idx: 0, x: 200, y: 450 },   // Swami Samarth Nagar
+        { idx: 1, x: 300, y: 450 },   // Adarsh Nagar 
+        { idx: 3, x: 500, y: 450 },   // JVLR Junction
+        { idx: 6, x: 600, y: 450 },   // SEEPZ 
+        { idx: 11, x: 800, y: 450 },  // Kanjurmarg West
+        { idx: 12, x: 900, y: 450 },  // Vikhroli EEH
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'mumbai_orange': {
+      const wpts = [
+        { idx: 0, x: 800, y: 150 },   // Kapurbawdi (Green intersect)
+        { idx: 7, x: 950, y: 50 },    // Bhiwandi (flexion point)
+        { idx: 15, x: 1100, y: 150 }, // Kalyan Railway Station (same horizontal line as Kapurbawdi)
+        { idx: 16, x: 1120, y: 150 }, // Kalyan APMC
       ];
       interpolateWaypoints(wpts, count, coords, line);
       break;
