@@ -95,8 +95,8 @@ export function renderLandingPage(cities, onCitySelect) {
                         <h3 class="lp-card-title">Kolkata <span class="lp-card-local">কলকাতা</span></h3>
                         <p class="lp-card-desc">The oldest metro system in India, modernizing for the city of joy.</p>
                         <div class="lp-card-stats">
-                            <div class="lp-stat"><span>4</span> Lines</div>
-                            <div class="lp-stat"><span>53</span> Stations</div>
+                            <div class="lp-stat"><span>5</span> Lines</div>
+                            <div class="lp-stat"><span>57</span> Stations</div>
                         </div>
                         <button class="lp-card-btn">Explore Network</button>
                     </div>
@@ -111,6 +111,34 @@ export function renderLandingPage(cities, onCitySelect) {
                         <div class="lp-card-stats">
                             <div class="lp-stat"><span>3</span> Lines</div>
                             <div class="lp-stat"><span>57</span> Stations</div>
+                        </div>
+                        <button class="lp-card-btn">Explore Network</button>
+                    </div>
+                </div>
+
+                <div class="lp-card available" data-city-id="pune">
+                    <div class="lp-card-image lp-img-pune"></div>
+                    <div class="lp-card-content">
+                        <div class="lp-card-status">Operational</div>
+                        <h3 class="lp-card-title">Pune <span class="lp-card-local">पुणे</span></h3>
+                        <p class="lp-card-desc">An expanding modern transit network embracing the cultural capital of Maharashtra.</p>
+                        <div class="lp-card-stats">
+                            <div class="lp-stat"><span>2</span> Lines</div>
+                            <div class="lp-stat"><span>30</span> Stations</div>
+                        </div>
+                        <button class="lp-card-btn">Explore Network</button>
+                    </div>
+                </div>
+
+                <div class="lp-card available" data-city-id="nagpur">
+                    <div class="lp-card-image lp-img-nagpur"></div>
+                    <div class="lp-card-content">
+                        <div class="lp-card-status">Operational</div>
+                        <h3 class="lp-card-title">Nagpur <span class="lp-card-local">नागपूर</span></h3>
+                        <p class="lp-card-desc">India's greenest metro system revolutionizing transit in the Orange City.</p>
+                        <div class="lp-card-stats">
+                            <div class="lp-stat"><span>2</span> Lines</div>
+                            <div class="lp-stat"><span>37</span> Stations</div>
                         </div>
                         <button class="lp-card-btn">Explore Network</button>
                     </div>

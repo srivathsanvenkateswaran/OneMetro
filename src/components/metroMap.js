@@ -39,6 +39,9 @@ function getLayout(cityData, showUpcoming) {
   } else if (cityData.id === 'kolkata') {
     width = 1200;
     height = 1400;
+  } else if (cityData.id === 'nagpur') {
+    width = 1200;
+    height = 1200;
   } else {
     width = hasPhase2 ? 1100 : 900;
     height = hasPhase2 ? 900 : 700;
@@ -667,10 +670,14 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
     // ═══════════════════════════════════════════
     case 'kolkata_blue': {
       const wpts = [
-        { idx: 0, x: 500, y: 100 },   // Dakshineswar (North)
-        { idx: 11, x: 500, y: 500 },  // Esplanade (Interchange)
-        { idx: 12, x: 500, y: 550 },  // Park Street
-        { idx: 25, x: 500, y: 1100 }, // Kavi Subhash (South)
+        { idx: 0, x: 450, y: 150 },   // Dakshineswar (North-West)
+        { idx: 2, x: 500, y: 250 },   // Noapara (Intersects Yellow)
+        { idx: 6, x: 520, y: 350 },   // Shobhabazar Sutanuti (Going south)
+        { idx: 11, x: 500, y: 550 },  // Esplanade
+        { idx: 12, x: 500, y: 600 },  // Park Street
+        { idx: 17, x: 450, y: 800 },  // Kalighat (curves slightly southwest)
+        { idx: 21, x: 550, y: 950 },  // Masterda Surya Sen (curves southeast)
+        { idx: 25, x: 600, y: 1100 }, // Kavi Subhash (South-East)
       ];
       interpolateWaypoints(wpts, count, coords, line);
       break;
@@ -678,9 +685,10 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
 
     case 'kolkata_green': {
       const wpts = [
-        { idx: 0, x: 200, y: 500 },   // Howrah Maidan (West)
-        { idx: 3, x: 500, y: 500 },   // Esplanade (Interchange)
-        { idx: 10, x: 1000, y: 500 }, // Salt Lake Sector V (East)
+        { idx: 0, x: 200, y: 550 },   // Howrah Maidan (West)
+        { idx: 3, x: 500, y: 550 },   // Esplanade (Interchange)
+        { idx: 6, x: 700, y: 500 },   // Phoolbagan
+        { idx: 10, x: 950, y: 500 }, // Salt Lake Sector V (East)
       ];
       interpolateWaypoints(wpts, count, coords, line);
       break;
@@ -688,8 +696,9 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
 
     case 'kolkata_purple': {
       const wpts = [
-        { idx: 0, x: 200, y: 1100 },  // Joka (South-West)
-        { idx: 6, x: 300, y: 800 },   // Majerhat
+        { idx: 0, x: 200, y: 1050 },  // Joka (South-West)
+        { idx: 4, x: 250, y: 950 },   // Behala Bazar
+        { idx: 6, x: 300, y: 850 },   // Majerhat
       ];
       interpolateWaypoints(wpts, count, coords, line);
       break;
@@ -697,9 +706,42 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
 
     case 'kolkata_orange': {
       const wpts = [
-        { idx: 0, x: 500, y: 1100 },  // Kavi Subhash (Interchange with Blue)
-        { idx: 4, x: 800, y: 1100 },  // Hemanta Mukhopadhyay
-        { idx: 8, x: 800, y: 700 },   // Beleghata (Going North)
+        { idx: 0, x: 600, y: 1100 },  // Kavi Subhash (Interchange with Blue)
+        { idx: 3, x: 800, y: 950 },   // EM bypass curving north
+        { idx: 8, x: 850, y: 700 },   // Beleghata (Going North)
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'kolkata_yellow': {
+      const wpts = [
+        { idx: 0, x: 500, y: 250 },   // Noapara (Interchange with Blue)
+        { idx: 1, x: 650, y: 180 },   // Dum Dum Cantonment
+        { idx: 3, x: 800, y: 150 },   // Biman Bandar
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    // ═══════════════════════════════════════════
+    // NAGPUR LAYOUTS
+    // ═══════════════════════════════════════════
+    case 'nagpur_orange': {
+      const wpts = [
+        { idx: 0, x: 600, y: 200 },   // Automotive Square (North)
+        { idx: 7, x: 600, y: 600 },   // Sitabuldi 
+        { idx: 17, x: 600, y: 1000 }, // Khapri (South)
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'nagpur_aqua': {
+      const wpts = [
+        { idx: 0, x: 1000, y: 600 },  // Prajapati Nagar (East)
+        { idx: 9, x: 600, y: 600 },   // Sitabuldi
+        { idx: 19, x: 200, y: 600 },  // Lokmanya Nagar (West)
       ];
       interpolateWaypoints(wpts, count, coords, line);
       break;

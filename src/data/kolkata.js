@@ -10,9 +10,9 @@ const kolkataMetro = {
     city: "Kolkata",
     state: "West Bengal",
     operator: "Metro Railway, Kolkata",
-    totalStations: 53,
-    totalLength: "60 km",
-    totalLines: 4,
+    totalStations: 57,
+    totalLength: "66.8 km",
+    totalLines: 5,
     established: "1984",
     website: "https://mtp.indianrailways.gov.in",
     lines: [
@@ -119,8 +119,10 @@ const kolkataMetro = {
                     name: "Noapara",
                     nameLocal: "",
                     type: "elevated",
-                    isInterchange: false,
-                    interchangeWith: [],
+                    isInterchange: true,
+                    interchangeWith: [
+                        "yellow"
+                    ],
                     landmark: "Noapara",
                     zone: 1,
                     contact: "139",
@@ -2369,6 +2371,196 @@ const kolkataMetro = {
                     isInterchange: false,
                     interchangeWith: [],
                     landmark: "Beleghata",
+                    zone: 1,
+                    contact: "139",
+                    parking: true,
+                    facilities: [
+                        "First Aid Box",
+                        "CCTV",
+                        "Restrooms",
+                        "Drinking Water",
+                        "Lifts / Escalators"
+                    ],
+                    platforms: [
+                        {
+                            no: 1,
+                            towards: "Terminal 1"
+                        },
+                        {
+                            no: 2,
+                            towards: "Terminal 2"
+                        }
+                    ],
+                    gates: [
+                        {
+                            gate: "A",
+                            landmarks: [
+                                "Main Road Entrance",
+                                "Bus Stop"
+                            ]
+                        },
+                        {
+                            gate: "B",
+                            landmarks: [
+                                "Residential Area Exit"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            id: "yellow",
+            name: "Yellow Line",
+            color: "#FBC02D",
+            colorLight: "#FFF59D",
+            corridor: "Line 4",
+            length: "6.8 km",
+            totalStations: 4,
+            status: "operational",
+            stations: [
+                {
+                    id: "y01",
+                    name: "Noapara",
+                    nameLocal: "",
+                    type: "elevated",
+                    isInterchange: true,
+                    interchangeWith: [
+                        "blue"
+                    ],
+                    landmark: "Noapara",
+                    zone: 1,
+                    contact: "139",
+                    parking: true,
+                    facilities: [
+                        "First Aid Box",
+                        "CCTV",
+                        "Restrooms",
+                        "Drinking Water",
+                        "Lifts / Escalators"
+                    ],
+                    platforms: [
+                        {
+                            no: 1,
+                            towards: "Terminal 1"
+                        },
+                        {
+                            no: 2,
+                            towards: "Terminal 2"
+                        }
+                    ],
+                    gates: [
+                        {
+                            gate: "A",
+                            landmarks: [
+                                "Main Road Entrance",
+                                "Bus Stop"
+                            ]
+                        },
+                        {
+                            gate: "B",
+                            landmarks: [
+                                "Residential Area Exit"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "y02",
+                    name: "Dum Dum Cantonment",
+                    nameLocal: "",
+                    type: "elevated",
+                    isInterchange: false,
+                    interchangeWith: [],
+                    landmark: "Dum Dum Cantonment",
+                    zone: 1,
+                    contact: "139",
+                    parking: true,
+                    facilities: [
+                        "First Aid Box",
+                        "CCTV",
+                        "Restrooms",
+                        "Drinking Water",
+                        "Lifts / Escalators"
+                    ],
+                    platforms: [
+                        {
+                            no: 1,
+                            towards: "Terminal 1"
+                        },
+                        {
+                            no: 2,
+                            towards: "Terminal 2"
+                        }
+                    ],
+                    gates: [
+                        {
+                            gate: "A",
+                            landmarks: [
+                                "Main Road Entrance",
+                                "Bus Stop"
+                            ]
+                        },
+                        {
+                            gate: "B",
+                            landmarks: [
+                                "Residential Area Exit"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "y03",
+                    name: "Jessore Road",
+                    nameLocal: "",
+                    type: "elevated",
+                    isInterchange: false,
+                    interchangeWith: [],
+                    landmark: "Jessore Road",
+                    zone: 1,
+                    contact: "139",
+                    parking: true,
+                    facilities: [
+                        "First Aid Box",
+                        "CCTV",
+                        "Restrooms",
+                        "Drinking Water",
+                        "Lifts / Escalators"
+                    ],
+                    platforms: [
+                        {
+                            no: 1,
+                            towards: "Terminal 1"
+                        },
+                        {
+                            no: 2,
+                            towards: "Terminal 2"
+                        }
+                    ],
+                    gates: [
+                        {
+                            gate: "A",
+                            landmarks: [
+                                "Main Road Entrance",
+                                "Bus Stop"
+                            ]
+                        },
+                        {
+                            gate: "B",
+                            landmarks: [
+                                "Residential Area Exit"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "y04",
+                    name: "Biman Bandar",
+                    nameLocal: "",
+                    type: "underground",
+                    isInterchange: false,
+                    interchangeWith: [],
+                    landmark: "Biman Bandar",
                     zone: 1,
                     contact: "139",
                     parking: true,

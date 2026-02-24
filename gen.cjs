@@ -26,7 +26,12 @@ const orangeLineStations = [
     "Beleghata"
 ];
 
+const yellowLineStations = [
+    "Noapara", "Dum Dum Cantonment", "Jessore Road", "Biman Bandar"
+];
+
 const blueInterchanges = {
+    'Noapara': ['yellow'],
     'Esplanade': ['green'],
     'Park Street': ['purple'],
     'Kavi Subhash': ['orange']
@@ -45,6 +50,10 @@ const orangeInterchanges = {
     'Kavi Subhash': ['blue']
 };
 
+const yellowInterchanges = {
+    'Noapara': ['blue']
+};
+
 const createStation = (idPrefix, index, name, interchangeMap) => {
     const isInterchange = interchangeMap[name] !== undefined;
     const interchangeWith = interchangeMap[name] || [];
@@ -52,7 +61,7 @@ const createStation = (idPrefix, index, name, interchangeMap) => {
         id: `${idPrefix}${String(index + 1).padStart(2, '0')}`,
         name: name,
         nameLocal: '',
-        type: ['Esplanade', 'Mahakaran', 'Howrah', 'Chandni Chowk', 'Central', 'Mahatma Gandhi Road', 'Girish Park', 'Shobhabazar Sutanuti', 'Shyambazar', 'Belgachia', 'Phoolbagan', 'Sealdah', 'Park Street', 'Maidan', 'Rabindra Sadan', 'Netaji Bhavan', 'Jatin Das Park', 'Kalighat'].includes(name) ? 'underground' : 'elevated',
+        type: ['Esplanade', 'Mahakaran', 'Howrah', 'Chandni Chowk', 'Central', 'Mahatma Gandhi Road', 'Girish Park', 'Shobhabazar Sutanuti', 'Shyambazar', 'Belgachia', 'Phoolbagan', 'Sealdah', 'Park Street', 'Maidan', 'Rabindra Sadan', 'Netaji Bhavan', 'Jatin Das Park', 'Kalighat', 'Biman Bandar'].includes(name) ? 'underground' : 'elevated',
         isInterchange,
         interchangeWith,
         landmark: name,
@@ -78,9 +87,9 @@ const kolkataMetro = {
     city: 'Kolkata',
     state: 'West Bengal',
     operator: 'Metro Railway, Kolkata',
-    totalStations: 53,
-    totalLength: '60 km',
-    totalLines: 4,
+    totalStations: 57,
+    totalLength: '66.8 km',
+    totalLines: 5,
     established: '1984',
     website: 'https://mtp.indianrailways.gov.in',
     lines: [
@@ -127,6 +136,17 @@ const kolkataMetro = {
             totalStations: orangeLineStations.length,
             status: 'operational',
             stations: orangeLineStations.map((s, i) => createStation('o', i, s, orangeInterchanges))
+        },
+        {
+            id: 'yellow',
+            name: 'Yellow Line',
+            color: '#FBC02D',
+            colorLight: '#FFF59D',
+            corridor: 'Line 4',
+            length: '6.8 km',
+            totalStations: yellowLineStations.length,
+            status: 'operational',
+            stations: yellowLineStations.map((s, i) => createStation('y', i, s, yellowInterchanges))
         }
     ]
 };
