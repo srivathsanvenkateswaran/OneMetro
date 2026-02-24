@@ -8,6 +8,7 @@ import bengaluruMetro from './data/bengaluru.js';
 import delhiMetro from './data/delhi.js';
 import mumbaiMetro from './data/mumbai.js';
 import hyderabadMetro from './data/hyderabad.js';
+import kolkataMetro from './data/kolkata.js';
 import { renderHeader } from './components/header.js';
 import { renderLineSelector, bindLineCardEvents } from './components/lineSelector.js';
 import { renderLineInfo } from './components/lineInfo.js';
@@ -24,6 +25,7 @@ const cities = {
     delhi: delhiMetro,
     mumbai: mumbaiMetro,
     hyderabad: hyderabadMetro,
+    kolkata: kolkataMetro,
 };
 
 // ── State ──

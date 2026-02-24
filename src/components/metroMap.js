@@ -33,6 +33,12 @@ function getLayout(cityData, showUpcoming) {
   } else if (cityData.id === 'mumbai') {
     width = 1300;
     height = 1700;
+  } else if (cityData.id === 'hyderabad') {
+    width = 1400;
+    height = 1000;
+  } else if (cityData.id === 'kolkata') {
+    width = 1200;
+    height = 1400;
   } else {
     width = hasPhase2 ? 1100 : 900;
     height = hasPhase2 ? 900 : 700;
@@ -622,6 +628,82 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
       break;
     }
 
+    // ═══════════════════════════════════════════
+    // HYDERABAD LAYOUTS
+    // ═══════════════════════════════════════════
+    case 'hyderabad_red': {
+      const wpts = [
+        { idx: 0, x: 200, y: 150 },   // Miyapur
+        { idx: 10, x: 600, y: 450 },  // Ameerpet
+        { idx: 19, x: 800, y: 700 },  // MGBS
+        { idx: 26, x: 1200, y: 850 }, // LB Nagar
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'hyderabad_blue': {
+      const wpts = [
+        { idx: 0, x: 1200, y: 700 },  // Nagole
+        { idx: 8, x: 800, y: 420 },   // Parade Ground
+        { idx: 13, x: 600, y: 450 },  // Ameerpet
+        { idx: 22, x: 250, y: 480 },  // Raidurg
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'hyderabad_green': {
+      const wpts = [
+        { idx: 0, x: 800, y: 420 },   // JBS Parade Ground
+        { idx: 8, x: 800, y: 700 },   // MGBS
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    // ═══════════════════════════════════════════
+    // KOLKATA LAYOUTS
+    // ═══════════════════════════════════════════
+    case 'kolkata_blue': {
+      const wpts = [
+        { idx: 0, x: 500, y: 100 },   // Dakshineswar (North)
+        { idx: 11, x: 500, y: 500 },  // Esplanade (Interchange)
+        { idx: 12, x: 500, y: 550 },  // Park Street
+        { idx: 25, x: 500, y: 1100 }, // Kavi Subhash (South)
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'kolkata_green': {
+      const wpts = [
+        { idx: 0, x: 200, y: 500 },   // Howrah Maidan (West)
+        { idx: 3, x: 500, y: 500 },   // Esplanade (Interchange)
+        { idx: 10, x: 1000, y: 500 }, // Salt Lake Sector V (East)
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'kolkata_purple': {
+      const wpts = [
+        { idx: 0, x: 200, y: 1100 },  // Joka (South-West)
+        { idx: 6, x: 300, y: 800 },   // Majerhat
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
+
+    case 'kolkata_orange': {
+      const wpts = [
+        { idx: 0, x: 500, y: 1100 },  // Kavi Subhash (Interchange with Blue)
+        { idx: 4, x: 800, y: 1100 },  // Hemanta Mukhopadhyay
+        { idx: 8, x: 800, y: 700 },   // Beleghata (Going North)
+      ];
+      interpolateWaypoints(wpts, count, coords, line);
+      break;
+    }
 
     default: {
       const startY2 = padding;

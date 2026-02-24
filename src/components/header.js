@@ -20,7 +20,7 @@ export function renderHeader(cityData, onCityChange) {
       <option value="delhi" ${currentId === 'delhi' ? 'selected' : ''}>🕌 Delhi</option>
       <option value="mumbai" ${currentId === 'mumbai' ? 'selected' : ''}>🌆 Mumbai</option>
       <option value="bengaluru" ${currentId === 'bengaluru' ? 'selected' : ''}>🌳 Bengaluru</option>
-      <option value="kolkata" disabled>🌉 Kolkata (Coming Soon)</option>
+      <option value="kolkata" ${currentId === 'kolkata' ? 'selected' : ''}>🌉 Kolkata</option>
       <option value="hyderabad" ${currentId === 'hyderabad' ? 'selected' : ''}>🏰 Hyderabad</option>
     </select>
   `;

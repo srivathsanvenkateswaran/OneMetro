@@ -88,13 +88,17 @@ export function renderLandingPage(cities, onCitySelect) {
                     </div>
                 </div>
 
-                <div class="lp-card disabled">
+                <div class="lp-card available" data-city-id="kolkata">
                     <div class="lp-card-image lp-img-kolkata"></div>
                     <div class="lp-card-content">
-                        <div class="lp-card-status soon">Coming Soon</div>
+                        <div class="lp-card-status">Operational</div>
                         <h3 class="lp-card-title">Kolkata <span class="lp-card-local">কলকাতা</span></h3>
                         <p class="lp-card-desc">The oldest metro system in India, modernizing for the city of joy.</p>
-                        <button class="lp-card-btn disabled">Stay Tuned</button>
+                        <div class="lp-card-stats">
+                            <div class="lp-stat"><span>4</span> Lines</div>
+                            <div class="lp-stat"><span>53</span> Stations</div>
+                        </div>
+                        <button class="lp-card-btn">Explore Network</button>
                     </div>
                 </div>
 
