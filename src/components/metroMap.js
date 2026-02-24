@@ -239,14 +239,24 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
     }
 
     case 'bengaluru_pink': {
+      const purpleData = allLines.find(l => l.id === 'purple');
+      const mgIndex = purpleData ? purpleData.stations.findIndex(s => s.name === 'M.G. Road') : 18;
+      const purpleCount = purpleData ? purpleData.stations.length : 37;
+
+      const pStartX = padding + 20;
+      const pEndX = width - padding - 20;
+      const pCenterY = height * 0.42;
+      const mgT = mgIndex / (purpleCount - 1);
+      const mgX = pStartX + (pEndX - pStartX) * mgT;
+      const mgY = pCenterY + Math.sin(mgT * Math.PI * 1.5) * 25;
+
       const startY = height - padding - 60;
-      const endY = padding + 30;
-      const centerX = width * 0.58;
+      const endY = padding - 40;
       for (let i = 0; i < count; i++) {
         const t = i / (count - 1);
         const y = startY + (endY - startY) * t;
-        const x = centerX + Math.sin(t * Math.PI) * 40;
-        coords.push({ x, y, station: line.stations[i], line });
+        const targetX = mgX + Math.sin((y - mgY) * 0.005) * 40;
+        coords.push({ x: targetX, y, station: line.stations[i], line });
       }
       break;
     }

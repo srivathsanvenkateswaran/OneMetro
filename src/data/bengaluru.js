@@ -140,8 +140,8 @@ const bengaluruMetro = {
         {
             id: 'yellow',
             name: 'Yellow Line',
-            color: '#FF9800',
-            colorLight: '#FFB74D',
+            color: '#FFD700',
+            colorLight: '#FFF176',
             corridor: 'South',
             length: '19.15 km',
             totalStations: 16,
