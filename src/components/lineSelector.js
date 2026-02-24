@@ -1,17 +1,32 @@
 /**
  * Line Selector Component
- * Renders line cards in the sidebar + city statistics
+ * Renders line cards in the sidebar + city statistics + upcoming toggle
  */
 
-export function renderLineSelector(cityData, activeLine, onLineSelect) {
-    return `
+function getLineGlow(line) {
+  const glowMap = {
+    blue: 'rgba(33,150,243,0.25)',
+    green: 'rgba(76,175,80,0.25)',
+    purple: 'rgba(156,39,176,0.25)',
+    yellow: 'rgba(255,152,0,0.25)',
+    red: 'rgba(244,67,54,0.25)',
+  };
+  return glowMap[line.id] || 'rgba(99,102,241,0.25)';
+}
+
+export function renderLineSelector(cityData, visibleLines, activeLine, showUpcoming, hasUpcoming, onLineSelect) {
+  const operationalLines = visibleLines.filter(l => l.status === 'operational');
+  const upcomingLines = visibleLines.filter(l => l.status !== 'operational');
+  const totalStations = visibleLines.reduce((sum, l) => sum + l.totalStations, 0);
+
+  return `
     <div class="city-stats animate-fade-in-up">
       <div class="city-stat">
-        <div class="city-stat-value">${cityData.totalLines}</div>
+        <div class="city-stat-value">${visibleLines.length}</div>
         <div class="city-stat-label">Lines</div>
       </div>
       <div class="city-stat">
-        <div class="city-stat-value">${cityData.totalStations}</div>
+        <div class="city-stat-value">${totalStations}</div>
         <div class="city-stat-label">Stations</div>
       </div>
       <div class="city-stat">
@@ -20,42 +35,82 @@ export function renderLineSelector(cityData, activeLine, onLineSelect) {
       </div>
     </div>
 
-    <div>
-      <div class="sidebar-section-title">Metro Lines</div>
-      <div class="line-cards stagger-children">
-        ${cityData.lines.map(line => `
-          <div class="line-card ${activeLine === line.id ? 'active' : ''}"
-               data-line-id="${line.id}"
-               style="--line-color: ${line.color}; --line-glow: ${line.id === 'blue' ? 'rgba(33,150,243,0.25)' : 'rgba(76,175,80,0.25)'};"
-               role="button"
-               tabindex="0"
-               aria-label="Select ${line.name}">
-            <div class="line-card-header">
-              <span class="line-card-name">${line.name}</span>
-              <span class="line-card-badge">${line.corridor}</span>
-            </div>
-            <div class="line-card-meta">
-              <span>🚉 ${line.totalStations} stations</span>
-              <span>📏 ${line.length}</span>
-            </div>
+    ${activeLine ? `
+      <button class="view-all-btn" id="view-all-btn" aria-label="View entire network">
+        <span class="view-all-icon">←</span>
+        <span>View Full Network</span>
+      </button>
+    ` : ''}
+
+    ${hasUpcoming ? `
+      <div class="upcoming-toggle-container">
+        <label class="upcoming-toggle" for="upcoming-toggle">
+          <input type="checkbox" id="upcoming-toggle" ${showUpcoming ? 'checked' : ''} />
+          <span class="toggle-slider"></span>
+          <span class="toggle-label">Show Upcoming Lines</span>
+        </label>
+        ${showUpcoming && cityData.phase2 ? `
+          <div class="upcoming-info">
+            Phase 2 • ${cityData.phase2.totalLength} • Expected ${cityData.phase2.expectedCompletion}
           </div>
-        `).join('')}
+        ` : ''}
+      </div>
+    ` : ''}
+
+    <div>
+      <div class="sidebar-section-title">Operational Lines</div>
+      <div class="line-cards stagger-children">
+        ${operationalLines.map(line => renderLineCard(line, activeLine)).join('')}
       </div>
     </div>
+
+    ${upcomingLines.length > 0 ? `
+      <div>
+        <div class="sidebar-section-title">Under Construction</div>
+        <div class="line-cards stagger-children">
+          ${upcomingLines.map(line => renderLineCard(line, activeLine)).join('')}
+        </div>
+      </div>
+    ` : ''}
 
     <div id="line-info-container"></div>
   `;
 }
 
+function renderLineCard(line, activeLine) {
+  const isUpcoming = line.status !== 'operational';
+  return `
+    <div class="line-card ${activeLine === line.id ? 'active' : ''} ${isUpcoming ? 'upcoming' : ''}"
+         data-line-id="${line.id}"
+         style="--line-color: ${line.color}; --line-glow: ${getLineGlow(line)};"
+         role="button"
+         tabindex="0"
+         aria-label="Select ${line.name}">
+      <div class="line-card-header">
+        <span class="line-card-name">${line.name}</span>
+        <div style="display:flex; gap:4px; align-items:center;">
+          ${isUpcoming ? `<span class="status-badge upcoming-badge">🚧</span>` : ''}
+          <span class="line-card-badge" style="background: ${line.color};">${line.corridor}</span>
+        </div>
+      </div>
+      <div class="line-card-meta">
+        <span>🚉 ${line.totalStations} stations</span>
+        <span>📏 ${line.length}</span>
+        ${isUpcoming && line.expectedCompletion ? `<span>📅 ${line.expectedCompletion}</span>` : ''}
+      </div>
+    </div>
+  `;
+}
+
 export function bindLineCardEvents(onLineSelect) {
-    document.querySelectorAll('.line-card').forEach(card => {
-        const handler = () => onLineSelect(card.dataset.lineId);
-        card.addEventListener('click', handler);
-        card.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                handler();
-            }
-        });
+  document.querySelectorAll('.line-card').forEach(card => {
+    const handler = () => onLineSelect(card.dataset.lineId);
+    card.addEventListener('click', handler);
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handler();
+      }
     });
+  });
 }

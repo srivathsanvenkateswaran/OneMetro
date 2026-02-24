@@ -1,148 +1,267 @@
 /**
  * Metro Map Component
  * Generates a schematic SVG metro map with interactive station dots
+ * Supports multiple lines, upcoming (dashed) lines, and interchanges
  */
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
 /**
- * Generate map layout coordinates for Chennai Metro's two lines
- * Blue Line runs roughly north-south (vertical with slight curves)
- * Green Line runs east-west then south (horizontal then turns south)
- * They intersect at Chennai Central and Alandur
+ * Generate schematic layout coordinates for Chennai Metro
+ * Blue: vertical (north to south)
+ * Green: east to west-south from Chennai Central
+ * Purple: north to far south-east (Phase 2)
+ * Yellow: east to west (Phase 2)
+ * Red: north to south-east via west (Phase 2)
  */
-function getChennaiLayout(cityData) {
-    const blue = cityData.lines.find(l => l.id === 'blue');
-    const green = cityData.lines.find(l => l.id === 'green');
+function getChennaiLayout(cityData, showUpcoming) {
+  const lines = cityData.lines.filter(l => showUpcoming || l.status === 'operational');
+  const hasPhase2 = lines.some(l => l.status !== 'operational');
 
-    const padding = 50;
-    const width = 900;
-    const height = 700;
+  const padding = 40;
+  const width = hasPhase2 ? 1100 : 900;
+  const height = hasPhase2 ? 900 : 700;
 
-    // Blue Line: vertical path from top to bottom, slight curve in the middle
-    const blueCoords = [];
-    const blueStationCount = blue.stations.length;
-    const blueStartX = 540;
-    const blueStartY = padding + 10;
-    const blueEndY = height - padding;
-    const blueVerticalSpacing = (blueEndY - blueStartY) / (blueStationCount - 1);
+  const result = { width, height, lines: [] };
 
-    for (let i = 0; i < blueStationCount; i++) {
-        // Add a gentle curve: stations in the central section shift left
+  lines.forEach(line => {
+    const coords = generateLineCoords(line, lines, padding, width, height, hasPhase2);
+    result.lines.push({ coords, line });
+  });
+
+  // Snap interchange stations to the same position
+  snapInterchanges(result.lines);
+
+  return result;
+}
+
+function generateLineCoords(line, allLines, padding, width, height, hasPhase2) {
+  const count = line.stations.length;
+  const coords = [];
+
+  switch (line.id) {
+    case 'blue': {
+      const startX = hasPhase2 ? 520 : 540;
+      const startY = padding + 10;
+      const endY = height - padding - (hasPhase2 ? 80 : 0);
+      const spacing = (endY - startY) / (count - 1);
+
+      for (let i = 0; i < count; i++) {
         let xOffset = 0;
         if (i >= 10 && i <= 20) {
-            xOffset = -Math.sin((i - 10) / 10 * Math.PI) * 60;
+          xOffset = -Math.sin((i - 10) / 10 * Math.PI) * 55;
         }
-        blueCoords.push({
-            x: blueStartX + xOffset,
-            y: blueStartY + i * blueVerticalSpacing,
-            station: blue.stations[i],
-            line: blue,
+        coords.push({
+          x: startX + xOffset,
+          y: startY + i * spacing,
+          station: line.stations[i],
+          line,
         });
+      }
+      break;
     }
 
-    // Green Line: starts at Chennai Central (shared with Blue b13), goes west then south
-    // Find Chennai Central position from blue line
-    const centralBlueIndex = blue.stations.findIndex(s => s.name === 'Chennai Central');
-    const centralPos = blueCoords[centralBlueIndex];
+    case 'green': {
+      // Find Chennai Central from blue line
+      const blueData = allLines.find(l => l.id === 'blue');
+      const blueCount = blueData ? blueData.stations.length : 26;
+      const blueStartX = hasPhase2 ? 520 : 540;
+      const blueStartY = padding + 10;
+      const blueEndY = height - padding - (hasPhase2 ? 80 : 0);
+      const blueSpacing = (blueEndY - blueStartY) / (blueCount - 1);
+      const centralIndex = blueData ? blueData.stations.findIndex(s => s.name === 'Chennai Central') : 12;
+      let centralXOffset = 0;
+      if (centralIndex >= 10 && centralIndex <= 20) {
+        centralXOffset = -Math.sin((centralIndex - 10) / 10 * Math.PI) * 55;
+      }
+      const centralX = blueStartX + centralXOffset;
+      const centralY = blueStartY + centralIndex * blueSpacing;
 
-    const greenCoords = [];
-    const greenStationCount = green.stations.length;
+      // Alandur position from blue
+      const alandurIndex = blueData ? blueData.stations.findIndex(s => s.name === 'Alandur') : 22;
+      let alandurXOffset = 0;
+      if (alandurIndex >= 10 && alandurIndex <= 20) {
+        alandurXOffset = -Math.sin((alandurIndex - 10) / 10 * Math.PI) * 55;
+      }
+      const alandurX = blueStartX + alandurXOffset;
+      const alandurY = blueStartY + alandurIndex * blueSpacing;
 
-    // Green line starts at Chennai Central and goes west (left), then curves south
-    for (let i = 0; i < greenStationCount; i++) {
+      for (let i = 0; i < count; i++) {
         let x, y;
-
         if (i === 0) {
-            // Chennai Central — same position as blue line
-            x = centralPos.x;
-            y = centralPos.y;
+          x = centralX; y = centralY;
         } else if (i <= 9) {
-            // Going west (leftward) with slight upward arc
-            const progress = i / 9;
-            x = centralPos.x - (i * 42);
-            y = centralPos.y - Math.sin(progress * Math.PI) * 40 + (i * 4);
+          const progress = i / 9;
+          x = centralX - (i * 38);
+          y = centralY - Math.sin(progress * Math.PI) * 35 + (i * 4);
         } else {
-            // After Koyambedu (index 9), curve southward toward Alandur
-            const afterKoyambeduIndex = i - 9;
-            const totalAfter = greenStationCount - 10;
-            const koyambeduX = centralPos.x - (9 * 42);
-            const koyambeduY = centralPos.y - Math.sin(1 * Math.PI) * 40 + (9 * 4);
-
-            // Curve toward Alandur position
-            const alandurBlueIndex = blue.stations.findIndex(s => s.name === 'Alandur');
-            const alandurPos = blueCoords[alandurBlueIndex];
-
-            // Last green station (St Thomas Mount) should be near Alandur
-            const endX = alandurPos.x - 40;
-            const endY = alandurPos.y + 25;
-
-            const t = afterKoyambeduIndex / totalAfter;
-            // Bezier-ish curve
-            x = koyambeduX + (endX - koyambeduX) * t;
-            y = koyambeduY + (endY - koyambeduY) * (t * t * (3 - 2 * t)); // smoothstep
+          const afterIdx = i - 9;
+          const totalAfter = count - 10;
+          const kX = centralX - (9 * 38);
+          const kY = centralY + 36;
+          const endX = alandurX - 35;
+          const endY = alandurY + 25;
+          const t = afterIdx / totalAfter;
+          x = kX + (endX - kX) * t;
+          y = kY + (endY - kY) * (t * t * (3 - 2 * t));
         }
+        coords.push({ x, y, station: line.stations[i], line });
+      }
+      break;
+    }
 
-        greenCoords.push({
-            x, y,
-            station: green.stations[i],
-            line: green,
+    case 'purple': {
+      // North to far south-east: Madhavaram → SIPCOT
+      const startX = hasPhase2 ? 620 : 600;
+      const startY = padding + 20;
+      const endX = width - padding - 20;
+      const endY = height - padding;
+
+      for (let i = 0; i < count; i++) {
+        const t = i / (count - 1);
+        // Gentle S-curve going south-east
+        const x = startX + (endX - startX) * t + Math.sin(t * Math.PI * 2) * 30;
+        const y = startY + (endY - startY) * t;
+        coords.push({ x, y, station: line.stations[i], line });
+      }
+      break;
+    }
+
+    case 'yellow': {
+      // East to West: Light House → Poonamallee
+      const startX = hasPhase2 ? 580 : 560;
+      const startY = height * 0.45;
+      const endX = padding + 20;
+      const endY = height * 0.35;
+
+      for (let i = 0; i < count; i++) {
+        const t = i / (count - 1);
+        const x = startX - (startX - endX) * t;
+        const y = startY + (endY - startY) * t - Math.sin(t * Math.PI) * 30;
+        coords.push({ x, y, station: line.stations[i], line });
+      }
+      break;
+    }
+
+    case 'red': {
+      // North to South-East via West arc: Madhavaram → Sholinganallur
+      const startX = hasPhase2 ? 660 : 640;
+      const startY = padding + 30;
+      const midX = padding + 120;
+      const midY = height * 0.5;
+      const endX = width - padding - 60;
+      const endY = height - padding - 10;
+
+      for (let i = 0; i < count; i++) {
+        const t = i / (count - 1);
+        // Quadratic bezier through mid-point
+        const x = (1 - t) * (1 - t) * startX + 2 * (1 - t) * t * midX + t * t * endX;
+        const y = (1 - t) * (1 - t) * startY + 2 * (1 - t) * t * midY + t * t * endY;
+        coords.push({ x, y, station: line.stations[i], line });
+      }
+      break;
+    }
+
+    default: {
+      // Generic vertical layout
+      const startY = padding;
+      const endY = height - padding;
+      const spacing = (endY - startY) / (count - 1);
+      for (let i = 0; i < count; i++) {
+        coords.push({
+          x: width / 2,
+          y: startY + i * spacing,
+          station: line.stations[i],
+          line,
         });
+      }
     }
+  }
 
-    // Find Alandur interchange
-    const alandurGreenIndex = green.stations.findIndex(s => s.name === 'Alandur');
-    const alandurBlueIndex = blue.stations.findIndex(s => s.name === 'Alandur');
-    if (alandurGreenIndex >= 0 && alandurBlueIndex >= 0) {
-        // Snap green Alandur to blue Alandur position
-        greenCoords[alandurGreenIndex].x = blueCoords[alandurBlueIndex].x;
-        greenCoords[alandurGreenIndex].y = blueCoords[alandurBlueIndex].y;
-    }
-
-    return { blue: blueCoords, green: greenCoords, width, height, blueData: blue, greenData: green };
+  return coords;
 }
 
-function createSVGPath(coords, color) {
-    if (coords.length < 2) return '';
+function snapInterchanges(lineEntries) {
+  // Build map of station names to their first coordinate
+  const stationPositions = {};
 
-    let d = `M ${coords[0].x} ${coords[0].y}`;
+  // First pass: record positions (prioritize operational lines)
+  const sorted = [...lineEntries].sort((a, b) => {
+    if (a.line.status === 'operational' && b.line.status !== 'operational') return -1;
+    if (b.line.status === 'operational' && a.line.status !== 'operational') return 1;
+    return 0;
+  });
 
-    for (let i = 1; i < coords.length; i++) {
-        const prev = coords[i - 1];
-        const curr = coords[i];
-        // Use quadratic bezier for smooth curves
-        const midX = (prev.x + curr.x) / 2;
-        const midY = (prev.y + curr.y) / 2;
-        d += ` Q ${prev.x} ${prev.y} ${midX} ${midY}`;
-    }
-    // End at last point
-    const last = coords[coords.length - 1];
-    d += ` L ${last.x} ${last.y}`;
+  sorted.forEach(({ coords }) => {
+    coords.forEach(coord => {
+      if (coord.station.isInterchange) {
+        const key = coord.station.name;
+        if (!stationPositions[key]) {
+          stationPositions[key] = { x: coord.x, y: coord.y };
+        }
+      }
+    });
+  });
 
-    return d;
+  // Second pass: snap all interchanges to the first recorded position
+  lineEntries.forEach(({ coords }) => {
+    coords.forEach(coord => {
+      if (coord.station.isInterchange) {
+        const key = coord.station.name;
+        const pos = stationPositions[key];
+        if (pos) {
+          coord.x = pos.x;
+          coord.y = pos.y;
+        }
+      }
+    });
+  });
 }
 
-export function renderMetroMap(cityData, activeLine, activeStation, onStationClick) {
-    const container = document.getElementById('metro-map');
-    if (!container) return;
+function createSVGPath(coords) {
+  if (coords.length < 2) return '';
 
-    const layout = getChennaiLayout(cityData);
+  let d = `M ${coords[0].x} ${coords[0].y}`;
+  for (let i = 1; i < coords.length; i++) {
+    const prev = coords[i - 1];
+    const curr = coords[i];
+    const midX = (prev.x + curr.x) / 2;
+    const midY = (prev.y + curr.y) / 2;
+    d += ` Q ${prev.x} ${prev.y} ${midX} ${midY}`;
+  }
+  const last = coords[coords.length - 1];
+  d += ` L ${last.x} ${last.y}`;
+  return d;
+}
 
-    container.innerHTML = `
+function generateGlowFilter(lineId, color) {
+  // Convert hex color to RGB ratios for feColorMatrix
+  const r = parseInt(color.slice(1, 3), 16) / 255;
+  const g = parseInt(color.slice(3, 5), 16) / 255;
+  const b = parseInt(color.slice(5, 7), 16) / 255;
+
+  return `
+    <filter id="glow-${lineId}" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 ${r.toFixed(2)}  0 0 0 0 ${g.toFixed(2)}  0 0 0 0 ${b.toFixed(2)}  0 0 0 0.6 0"/>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  `;
+}
+
+export function renderMetroMap(cityData, activeLine, activeStation, showUpcoming, onStationClick) {
+  const container = document.getElementById('metro-map');
+  if (!container) return;
+
+  const layout = getChennaiLayout(cityData, showUpcoming);
+  const renderedInterchanges = new Set();
+
+  container.innerHTML = `
     <div class="metro-map-container">
       <div class="metro-map-title">Network Map — ${cityData.name} ${cityData.nameLocal}</div>
       <svg class="metro-map-svg" viewBox="0 0 ${layout.width} ${layout.height}" xmlns="${SVG_NS}">
         <defs>
-          <filter id="glow-blue" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
-            <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.13  0 0 0 0 0.59  0 0 0 0 0.95  0 0 0 0.6 0"/>
-            <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <filter id="glow-green" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
-            <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.30  0 0 0 0 0.69  0 0 0 0 0.31  0 0 0 0.6 0"/>
-            <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
+          ${layout.lines.map(({ line }) => generateGlowFilter(line.id, line.color)).join('')}
         </defs>
 
         <!-- Grid dots background -->
@@ -151,83 +270,82 @@ export function renderMetroMap(cityData, activeLine, activeStation, onStationCli
         </pattern>
         <rect width="100%" height="100%" fill="url(#grid-dots)" rx="16"/>
 
-        <!-- Blue Line Path -->
-        <path d="${createSVGPath(layout.blue, layout.blueData.color)}"
-              stroke="${layout.blueData.color}" stroke-width="5" fill="none"
-              stroke-linecap="round" stroke-linejoin="round"
-              opacity="${!activeLine || activeLine === 'blue' ? 1 : 0.25}"
-              filter="${activeLine === 'blue' ? 'url(#glow-blue)' : ''}"
-              class="metro-line-path" />
+        <!-- Line Paths -->
+        ${layout.lines.map(({ coords, line }) => {
+    const isActive = !activeLine || activeLine === line.id;
+    const isUpcoming = line.status !== 'operational';
+    return `
+            <path d="${createSVGPath(coords)}"
+                  stroke="${line.color}" stroke-width="${isActive ? 5 : 3}" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  opacity="${isActive ? 1 : 0.2}"
+                  ${isUpcoming ? 'stroke-dasharray="12 6"' : ''}
+                  filter="${activeLine === line.id ? `url(#glow-${line.id})` : ''}"
+                  class="metro-line-path" />
+          `;
+  }).join('')}
 
-        <!-- Green Line Path -->
-        <path d="${createSVGPath(layout.green, layout.greenData.color)}"
-              stroke="${layout.greenData.color}" stroke-width="5" fill="none"
-              stroke-linecap="round" stroke-linejoin="round"
-              opacity="${!activeLine || activeLine === 'green' ? 1 : 0.25}"
-              filter="${activeLine === 'green' ? 'url(#glow-green)' : ''}"
-              class="metro-line-path" />
-
-        <!-- Blue Line Stations -->
-        ${layout.blue.map((coord, i) => renderMapStation(coord, i, activeLine, activeStation, 'blue', layout.blue.length)).join('')}
-
-        <!-- Green Line Stations -->
-        ${layout.green.map((coord, i) => {
-        // Skip Chennai Central and Alandur on green line to avoid duplicates
-        if (coord.station.isInterchange) {
-            return renderMapInterchange(coord, activeLine, activeStation);
-        }
-        return renderMapStation(coord, i, activeLine, activeStation, 'green', layout.green.length);
-    }).join('')}
+        <!-- Station Dots -->
+        ${layout.lines.map(({ coords, line }) => {
+    return coords.map((coord, i) => {
+      if (coord.station.isInterchange) {
+        const key = coord.station.name;
+        if (renderedInterchanges.has(key)) return '';
+        renderedInterchanges.add(key);
+        return renderMapInterchange(coord, activeLine, activeStation);
+      }
+      return renderMapStation(coord, i, activeLine, activeStation, line.id, coords.length);
+    }).join('');
+  }).join('')}
       </svg>
     </div>
   `;
 
-    // Bind click events to station dots
-    container.querySelectorAll('.map-station-dot').forEach(dot => {
-        dot.addEventListener('click', () => {
-            const stationId = dot.dataset.stationId;
-            if (onStationClick) onStationClick(stationId, dot.dataset.lineId);
-        });
-
-        // Tooltip on hover
-        dot.addEventListener('mouseenter', (e) => showTooltip(e, dot.dataset.stationName, container));
-        dot.addEventListener('mouseleave', () => hideTooltip(container));
+  // Bind events
+  container.querySelectorAll('.map-station-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      if (onStationClick) onStationClick(dot.dataset.stationId, dot.dataset.lineId);
     });
+    dot.addEventListener('mouseenter', (e) => showTooltip(e, dot.dataset.stationName, container));
+    dot.addEventListener('mouseleave', () => hideTooltip(container));
+  });
 }
 
 function renderMapStation(coord, index, activeLine, activeStation, lineId, totalStations) {
-    const station = coord.station;
-    const line = coord.line;
-    const isActive = activeStation === station.id;
-    const isLineActive = !activeLine || activeLine === lineId;
-    const radius = station.isInterchange ? 8 : 5;
+  const station = coord.station;
+  const line = coord.line;
+  const isActive = activeStation === station.id;
+  const isLineActive = !activeLine || activeLine === lineId;
+  const isUpcoming = line.status !== 'operational';
+  const radius = 5;
 
-    // Skip rendering if this is an interchange (handled separately)
-    if (station.isInterchange) return '';
+  // Label positioning based on line direction
+  const labelPositions = {
+    blue: { dx: 14, dy: 4, anchor: 'start' },
+    green: { dx: 0, dy: -12, anchor: 'middle' },
+    purple: { dx: -14, dy: 4, anchor: 'end' },
+    yellow: { dx: 0, dy: -12, anchor: 'middle' },
+    red: { dx: 14, dy: 4, anchor: 'start' },
+  };
+  const lp = labelPositions[lineId] || { dx: 14, dy: 4, anchor: 'start' };
 
-    // Determine label position
-    const isBlue = lineId === 'blue';
-    const labelX = isBlue ? coord.x + 14 : coord.x;
-    const labelY = isBlue ? coord.y + 4 : coord.y - 12;
-    const anchor = isBlue ? 'start' : 'middle';
+  // Show labels for key stations only
+  const showLabel = isActive || index === 0 || index === totalStations - 1 || index % 3 === 0;
 
-    // Only show labels for every other station or active station
-    const showLabel = index % 2 === 0 || isActive || index === 0 || index === totalStations - 1;
-
-    return `
+  return `
     <circle class="map-station-dot ${isActive ? 'active' : ''}"
             cx="${coord.x}" cy="${coord.y}" r="${isActive ? 7 : radius}"
-            fill="${isActive ? line.color : '#0a0e1a'}"
+            fill="${isActive ? line.color : (isUpcoming ? line.color : '#0a0e1a')}"
             stroke="${line.color}" stroke-width="${isActive ? 3 : 2}"
-            opacity="${isLineActive ? 1 : 0.25}"
+            opacity="${isLineActive ? (isUpcoming ? 0.7 : 1) : 0.15}"
             data-station-id="${station.id}"
             data-station-name="${station.name}"
             data-line-id="${lineId}"
-            style="animation: stationPop 0.3s ease both; animation-delay: ${index * 30}ms;" />
+            style="animation: stationPop 0.3s ease both; animation-delay: ${index * 20}ms; cursor: pointer;" />
     ${showLabel ? `
-      <text class="map-station-label" x="${labelX}" y="${labelY}"
-            text-anchor="${anchor}" opacity="${isLineActive ? 1 : 0.2}"
-            style="font-size: ${isActive ? '11px' : '9px'}; font-weight: ${isActive ? '700' : '400'};">
+      <text class="map-station-label" x="${coord.x + lp.dx}" y="${coord.y + lp.dy}"
+            text-anchor="${lp.anchor}" opacity="${isLineActive ? (isUpcoming ? 0.5 : 0.85) : 0.1}"
+            style="font-size: ${isActive ? '10px' : '8px'}; font-weight: ${isActive ? '700' : '400'};">
         ${station.name}
       </text>
     ` : ''}
@@ -235,55 +353,48 @@ function renderMapStation(coord, index, activeLine, activeStation, lineId, total
 }
 
 function renderMapInterchange(coord, activeLine, activeStation) {
-    const station = coord.station;
-    const isActive = activeStation === station.id;
+  const station = coord.station;
+  const isActive = activeStation === station.id;
 
-    return `
+  return `
     <g class="map-station-dot" data-station-id="${station.id}" data-station-name="${station.name} (Interchange)" data-line-id="interchange" style="cursor: pointer;">
       <circle cx="${coord.x}" cy="${coord.y}" r="12"
-              fill="#0a0e1a" stroke="white" stroke-width="2.5"
-              opacity="1" />
+              fill="#0a0e1a" stroke="white" stroke-width="2.5" opacity="1" />
       <circle cx="${coord.x}" cy="${coord.y}" r="7"
               fill="${isActive ? 'white' : '#0a0e1a'}"
-              stroke="white" stroke-width="2"
-              opacity="1" />
+              stroke="white" stroke-width="2" opacity="1" />
       <text class="map-station-label" x="${coord.x}" y="${coord.y - 17}"
             text-anchor="middle"
-            style="font-size: 11px; font-weight: 700; fill: #f1f5f9;">
+            style="font-size: 10px; font-weight: 700; fill: #f1f5f9;">
         ${station.name}
-      </text>
-      <text x="${coord.x}" y="${coord.y - 6}"
-            text-anchor="middle"
-            style="font-size: 7px; font-weight: 600; fill: rgba(241,245,249,0.4); letter-spacing: 0.5px;">
       </text>
     </g>
   `;
 }
 
 function showTooltip(event, name, container) {
-    hideTooltip(container);
-    const rect = container.getBoundingClientRect();
-    const svgContainer = container.querySelector('.metro-map-container');
-    const svgRect = svgContainer.getBoundingClientRect();
+  hideTooltip(container);
+  const svgContainer = container.querySelector('.metro-map-container');
+  const svgRect = svgContainer.getBoundingClientRect();
 
-    const tooltip = document.createElement('div');
-    tooltip.className = 'map-tooltip';
-    tooltip.textContent = name;
-    tooltip.id = 'map-tooltip';
+  const tooltip = document.createElement('div');
+  tooltip.className = 'map-tooltip';
+  tooltip.textContent = name;
+  tooltip.id = 'map-tooltip';
+  svgContainer.appendChild(tooltip);
 
-    svgContainer.appendChild(tooltip);
+  const dotRect = event.target.getBoundingClientRect
+    ? event.target.getBoundingClientRect()
+    : event.target.closest('g').getBoundingClientRect();
+  const tooltipX = dotRect.left - svgRect.left + dotRect.width / 2;
+  const tooltipY = dotRect.top - svgRect.top - 10;
 
-    // Position tooltip
-    const dotRect = event.target.getBoundingClientRect();
-    const tooltipX = dotRect.left - svgRect.left + dotRect.width / 2;
-    const tooltipY = dotRect.top - svgRect.top - 10;
-
-    tooltip.style.left = `${tooltipX}px`;
-    tooltip.style.top = `${tooltipY}px`;
-    tooltip.style.transform = 'translate(-50%, -100%)';
+  tooltip.style.left = `${tooltipX}px`;
+  tooltip.style.top = `${tooltipY}px`;
+  tooltip.style.transform = 'translate(-50%, -100%)';
 }
 
 function hideTooltip(container) {
-    const existing = container.querySelector('#map-tooltip');
-    if (existing) existing.remove();
+  const existing = container.querySelector('#map-tooltip');
+  if (existing) existing.remove();
 }
