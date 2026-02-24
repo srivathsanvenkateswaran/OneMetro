@@ -63,7 +63,7 @@ const bengaluruMetro = {
                 { id: 'pp16', name: 'Sir M. Visveshwaraya', nameLocal: 'ಸರ್ ಎಂ. ವಿಶ್ವೇಶ್ವರಯ್ಯ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Central College', zone: 2 },
                 { id: 'pp17', name: 'Vidhana Soudha', nameLocal: 'ವಿಧಾನ ಸೌಧ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Vidhana Soudha', zone: 2 },
                 { id: 'pp18', name: 'Cubbon Park', nameLocal: 'ಕಬ್ಬನ್ ಪಾರ್ಕ್', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Cubbon Park', zone: 3 },
-                { id: 'pp19', name: 'M.G. Road', nameLocal: 'ಎಂ.ಜಿ. ರಸ್ತೆ', type: 'underground', isInterchange: true, interchangeWith: ['pink'], landmark: 'MG Road, Brigade Road', zone: 3 },
+                { id: 'pp19', name: 'M.G. Road', nameLocal: 'ಎಂ.ಜಿ. ರಸ್ತೆ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'MG Road, Brigade Road', zone: 3 },
                 { id: 'pp20', name: 'Trinity', nameLocal: 'ಟ್ರಿನಿಟಿ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Trinity Circle', zone: 3 },
                 { id: 'pp21', name: 'Halasuru', nameLocal: 'ಹಲಸೂರು', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Halasuru', zone: 3 },
                 { id: 'pp22', name: 'Indiranagar', nameLocal: 'ಇಂದಿರಾನಗರ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: '100 Feet Road, Indiranagar', zone: 3 },
