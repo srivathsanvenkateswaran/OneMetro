@@ -87,108 +87,107 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
     // ═══════════════════════════════════════════
     // CHENNAI LAYOUTS — Geographically accurate
     // Map orientation: x = West→East, y = North→South
+    // All waypoint coords are normalized (0-1) and scaled to canvas
     // ═══════════════════════════════════════════
     case 'chennai_blue': {
-      // Blue Line: Wimco Nagar (far NE coast) → Airport (south-center)
-      // Runs mostly north-south along the eastern side of the city
-      // Waypoints at key stations with geographic positions
-      const waypoints = [
-        { idx: 0, x: 760, y: 40 },   // Wimco Nagar Depot — far NE
-        { idx: 2, x: 740, y: 100 },   // Tiruvottriyur — NE coast
-        { idx: 6, x: 720, y: 200 },   // New Washermanpet — east
-        { idx: 9, x: 700, y: 270 },   // Washermanpet — underground start
-        { idx: 12, x: 660, y: 330 },   // Chennai Central — center-east
-        { idx: 14, x: 640, y: 400 },   // Government Estate / LIC
-        { idx: 16, x: 620, y: 450 },   // Thousand Lights
-        { idx: 19, x: 560, y: 540 },   // Nandanam / Saidapet
-        { idx: 22, x: 500, y: 640 },   // Alandur — interchange hub
-        { idx: 25, x: 490, y: 820 },   // Chennai Airport — south
+      // Blue Line: Wimco Nagar (far NE coast) → Airport (south)
+      // Runs north-south along the eastern side, curving slightly west
+      const w = [
+        { idx: 0, x: 0.72, y: 0.04 },  // Wimco Nagar Depot — far NE
+        { idx: 2, x: 0.70, y: 0.11 },  // Tiruvottriyur — NE coast
+        { idx: 6, x: 0.68, y: 0.22 },  // New Washermanpet — east
+        { idx: 9, x: 0.66, y: 0.30 },  // Washermanpet — underground start
+        { idx: 12, x: 0.62, y: 0.37 },  // Chennai Central — center-east
+        { idx: 14, x: 0.60, y: 0.44 },  // Government Estate / LIC
+        { idx: 16, x: 0.58, y: 0.50 },  // Thousand Lights
+        { idx: 19, x: 0.53, y: 0.59 },  // Nandanam / Saidapet
+        { idx: 22, x: 0.48, y: 0.70 },  // Alandur — interchange hub
+        { idx: 23, x: 0.49, y: 0.76 },  // Nanganallur Road — south (Blue continues straight)
+        { idx: 25, x: 0.50, y: 0.93 },  // Chennai Airport — south
       ];
-      interpolateWaypoints(waypoints, count, coords, line);
+      interpolateWaypoints(w.map(p => ({ idx: p.idx, x: p.x * width, y: p.y * height })), count, coords, line);
       break;
     }
 
     case 'chennai_green': {
-      // Green Line: Chennai Central (east) → Koyambedu (west) → St Thomas Mount (south)
-      // Inverted-L shape: east→west then turns south
-      const waypoints = [
-        { idx: 0, x: 660, y: 330 },   // Chennai Central — shared with Blue
-        { idx: 2, x: 600, y: 310 },   // Nehru Park / Egmore
-        { idx: 4, x: 530, y: 290 },   // Pachaiyappas College
-        { idx: 6, x: 450, y: 260 },   // Anna Nagar East
-        { idx: 8, x: 380, y: 240 },   // Thirumangalam
-        { idx: 9, x: 340, y: 250 },   // Koyambedu — turn south
-        { idx: 10, x: 330, y: 280 },   // CMBT
-        { idx: 12, x: 370, y: 380 },   // Vadapalani
-        { idx: 14, x: 430, y: 530 },   // Ekkattuthangal
-        { idx: 15, x: 500, y: 640 },   // Alandur — interchange
-        { idx: 16, x: 480, y: 690 },   // St. Thomas Mount
+      // Green Line: Chennai Central (east) → Koyambedu (west) → St Thomas Mount (southwest)
+      // Inverted-L shape: east→west then turns south-southwest
+      const w = [
+        { idx: 0, x: 0.62, y: 0.37 },  // Chennai Central — shared with Blue
+        { idx: 2, x: 0.56, y: 0.35 },  // Nehru Park / Egmore
+        { idx: 4, x: 0.49, y: 0.32 },  // Pachaiyappas College
+        { idx: 6, x: 0.42, y: 0.29 },  // Anna Nagar East
+        { idx: 8, x: 0.36, y: 0.27 },  // Thirumangalam
+        { idx: 9, x: 0.32, y: 0.28 },  // Koyambedu — turn south
+        { idx: 10, x: 0.31, y: 0.31 },  // CMBT
+        { idx: 12, x: 0.35, y: 0.42 },  // Vadapalani
+        { idx: 14, x: 0.40, y: 0.58 },  // Ekkattuthangal
+        { idx: 15, x: 0.48, y: 0.70 },  // Alandur — interchange
+        { idx: 16, x: 0.42, y: 0.76 },  // St. Thomas Mount — distinctly SW of Alandur
       ];
-      interpolateWaypoints(waypoints, count, coords, line);
+      interpolateWaypoints(w.map(p => ({ idx: p.idx, x: p.x * width, y: p.y * height })), count, coords, line);
       break;
     }
 
     case 'chennai_purple': {
       // Purple Line: Madhavaram (north) → south through center → SE along OMR → SIPCOT
-      // Goes from north, through city center, then curves southeast along OMR
-      const waypoints = [
-        { idx: 0, x: 540, y: 30 },    // Madhavaram Milk Colony — north
-        { idx: 4, x: 580, y: 130 },   // Sembiyam / Moolakadai
-        { idx: 7, x: 620, y: 210 },   // Perambur Metro — east of center
-        { idx: 11, x: 590, y: 310 },   // Purasawalkam / Kellys
-        { idx: 14, x: 600, y: 380 },   // Chetpet / Sterling Rd
-        { idx: 17, x: 620, y: 450 },   // Thousand Lights — interchange with Blue
-        { idx: 20, x: 640, y: 505 },   // Thirumayilai — interchange with Yellow
-        { idx: 24, x: 670, y: 560 },   // Adyar Junction
-        { idx: 28, x: 720, y: 620 },   // Nehru Nagar
-        { idx: 31, x: 780, y: 670 },   // Perungudi — OMR corridor
-        { idx: 37, x: 860, y: 730 },   // Sholinganallur — interchange with Red
-        { idx: 42, x: 920, y: 790 },   // Semmancheri
-        { idx: 47, x: 1000, y: 860 },  // SIPCOT 2 — far SE
+      const w = [
+        { idx: 0, x: 0.50, y: 0.03 },  // Madhavaram Milk Colony — north
+        { idx: 4, x: 0.54, y: 0.14 },  // Sembiyam / Moolakadai
+        { idx: 7, x: 0.58, y: 0.23 },  // Perambur Metro
+        { idx: 11, x: 0.55, y: 0.34 },  // Purasawalkam / Kellys
+        { idx: 14, x: 0.56, y: 0.42 },  // Chetpet / Sterling Rd
+        { idx: 17, x: 0.58, y: 0.50 },  // Thousand Lights — near Blue
+        { idx: 20, x: 0.60, y: 0.56 },  // Thirumayilai — interchange with Yellow
+        { idx: 24, x: 0.63, y: 0.62 },  // Adyar Junction
+        { idx: 28, x: 0.68, y: 0.69 },  // Nehru Nagar
+        { idx: 31, x: 0.74, y: 0.74 },  // Perungudi — OMR corridor
+        { idx: 37, x: 0.82, y: 0.81 },  // Sholinganallur — interchange with Red
+        { idx: 42, x: 0.88, y: 0.88 },  // Semmancheri
+        { idx: 47, x: 0.95, y: 0.95 },  // SIPCOT 2 — far SE
       ];
-      interpolateWaypoints(waypoints, count, coords, line);
+      interpolateWaypoints(w.map(p => ({ idx: p.idx, x: p.x * width, y: p.y * height })), count, coords, line);
       break;
     }
 
     case 'chennai_yellow': {
       // Yellow Line: Light House (east coast) → Poonamallee (far west)
-      // Purely east-west corridor with slight southward dip in the middle
-      const waypoints = [
-        { idx: 0, x: 740, y: 470 },   // Light House — Marina Beach, east
-        { idx: 2, x: 640, y: 505 },   // Thirumayilai — interchange with Purple
-        { idx: 4, x: 590, y: 490 },   // Bharathidasan Road
-        { idx: 6, x: 555, y: 500 },   // Nandanam — interchange with Blue
-        { idx: 8, x: 470, y: 460 },   // Kodambakkam
-        { idx: 11, x: 370, y: 380 },   // Vadapalani — interchange with Green
-        { idx: 14, x: 270, y: 360 },   // Avichi / Alwarthirunagar
-        { idx: 18, x: 180, y: 390 },   // Porur Junction — interchange with Red
-        { idx: 22, x: 120, y: 370 },   // Iyyapanthangal / Kattupakkam
-        { idx: 27, x: 50, y: 340 },    // Poonamallee Bus Depot — far west
+      // East-west corridor
+      const w = [
+        { idx: 0, x: 0.70, y: 0.52 },  // Light House — Marina Beach, east
+        { idx: 2, x: 0.60, y: 0.56 },  // Thirumayilai — interchange with Purple
+        { idx: 4, x: 0.55, y: 0.54 },  // Bharathidasan Road
+        { idx: 6, x: 0.52, y: 0.55 },  // Nandanam — near Blue
+        { idx: 8, x: 0.44, y: 0.51 },  // Kodambakkam
+        { idx: 11, x: 0.35, y: 0.42 },  // Vadapalani — interchange with Green
+        { idx: 14, x: 0.25, y: 0.40 },  // Avichi / Alwarthirunagar
+        { idx: 18, x: 0.17, y: 0.43 },  // Porur Junction — interchange with Red
+        { idx: 22, x: 0.11, y: 0.41 },  // Iyyapanthangal / Kattupakkam
+        { idx: 27, x: 0.05, y: 0.38 },  // Poonamallee Bus Depot — far west
       ];
-      interpolateWaypoints(waypoints, count, coords, line);
+      interpolateWaypoints(w.map(p => ({ idx: p.idx, x: p.x * width, y: p.y * height })), count, coords, line);
       break;
     }
 
     case 'chennai_red': {
-      // Red Line: Madhavaram (north) → south via west → Alandur → SE to Sholinganallur
-      // Big arc: north → southwest through western suburbs → then curves southeast
-      const waypoints = [
-        { idx: 0, x: 540, y: 30 },    // Madhavaram Milk Colony — shared with Purple
-        { idx: 4, x: 510, y: 120 },   // Velmurugan Nagar
-        { idx: 8, x: 470, y: 190 },   // Retteri / Kolathur
-        { idx: 14, x: 380, y: 240 },   // Thirumangalam — interchange with Green
-        { idx: 17, x: 320, y: 320 },   // Sai Nagar / Elango Nagar
-        { idx: 20, x: 270, y: 370 },   // Alwartiru Nagar
-        { idx: 23, x: 180, y: 390 },   // Porur Junction — interchange with Yellow
-        { idx: 26, x: 300, y: 470 },   // DLF IT SEZ / Sathya Nagar
-        { idx: 29, x: 500, y: 640 },   // Alandur — interchange with Blue & Green
-        { idx: 30, x: 480, y: 690 },   // St. Thomas Mount — interchange with Green
-        { idx: 33, x: 530, y: 740 },   // Puzhuthivakkam / Vanuvampet
-        { idx: 38, x: 650, y: 780 },   // Kovilabakkam / Vellakkal
-        { idx: 42, x: 770, y: 810 },   // Medavakkam / Perumbakkam
-        { idx: 45, x: 860, y: 730 },   // Sholinganallur — interchange with Purple
+      // Red Line: Madhavaram (north) → west arc → Alandur → SE to Sholinganallur
+      const w = [
+        { idx: 0, x: 0.50, y: 0.03 },  // Madhavaram Milk Colony — shared with Purple
+        { idx: 4, x: 0.48, y: 0.13 },  // Velmurugan Nagar
+        { idx: 8, x: 0.44, y: 0.21 },  // Retteri / Kolathur
+        { idx: 14, x: 0.36, y: 0.27 },  // Thirumangalam — interchange with Green
+        { idx: 17, x: 0.30, y: 0.35 },  // Sai Nagar / Elango Nagar
+        { idx: 20, x: 0.25, y: 0.41 },  // Alwartiru Nagar
+        { idx: 23, x: 0.17, y: 0.43 },  // Porur Junction — interchange with Yellow
+        { idx: 26, x: 0.28, y: 0.52 },  // DLF IT SEZ / Sathya Nagar
+        { idx: 29, x: 0.48, y: 0.70 },  // Alandur — interchange with Blue & Green
+        { idx: 30, x: 0.42, y: 0.76 },  // St. Thomas Mount — interchange with Green
+        { idx: 33, x: 0.50, y: 0.82 },  // Puzhuthivakkam / Vanuvampet
+        { idx: 38, x: 0.62, y: 0.87 },  // Kovilabakkam / Vellakkal
+        { idx: 42, x: 0.74, y: 0.90 },  // Medavakkam / Perumbakkam
+        { idx: 45, x: 0.82, y: 0.81 },  // Sholinganallur — interchange with Purple
       ];
-      interpolateWaypoints(waypoints, count, coords, line);
+      interpolateWaypoints(w.map(p => ({ idx: p.idx, x: p.x * width, y: p.y * height })), count, coords, line);
       break;
     }
 
