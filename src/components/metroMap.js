@@ -248,15 +248,31 @@ function generateLineCoords(cityId, line, allLines, padding, width, height, hasP
       const pCenterY = height * 0.42;
       const mgT = mgIndex / (purpleCount - 1);
       const mgX = pStartX + (pEndX - pStartX) * mgT;
-      const mgY = pCenterY + Math.sin(mgT * Math.PI * 1.5) * 25;
 
-      const startY = height - padding - 60;
+      const greenX = width * 0.40;
+      const startY = height - padding - 40;
       const endY = padding - 40;
+
       for (let i = 0; i < count; i++) {
         const t = i / (count - 1);
         const y = startY + (endY - startY) * t;
-        const targetX = mgX + Math.sin((y - mgY) * 0.005) * 40;
-        coords.push({ x: targetX, y, station: line.stations[i], line });
+
+        let bX;
+        if (i <= 4) {
+          // Southern stations: Position strictly between Green and Yellow
+          bX = greenX + 45;
+        } else if (i <= 10) {
+          // Slide from southern anchor to MG Road junction
+          const localT = (i - 4) / (10 - 4);
+          const sX = greenX + 45;
+          bX = sX + (mgX - sX) * localT;
+        } else {
+          bX = mgX;
+        }
+
+        // Soft curve for better line visibility
+        const curve = Math.sin(t * Math.PI) * 20;
+        coords.push({ x: bX + curve, y, station: line.stations[i], line });
       }
       break;
     }
