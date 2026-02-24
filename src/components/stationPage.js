@@ -3,7 +3,7 @@
  * Renders the detailed view for a single metro station.
  */
 
-export function renderStationPage(station, line, onBack) {
+export function renderStationPage(station, line, prevStation, nextStation) {
     if (!station) return '';
 
     const {
@@ -39,6 +39,11 @@ export function renderStationPage(station, line, onBack) {
                     </span>
                     ${isInterchange ? `<span class="interchange-badge">⇄ Interchange</span>` : ''}
                 </div>
+            </div>
+            
+            <div class="station-nav-controls">
+                ${prevStation ? `<button class="btn-nav btn-prev" data-target="${prevStation.id}" aria-label="Previous station">← ${prevStation.name}</button>` : '<div class="btn-nav empty"></div>'}
+                ${nextStation ? `<button class="btn-nav btn-next" data-target="${nextStation.id}" aria-label="Next station">${nextStation.name} →</button>` : '<div class="btn-nav empty"></div>'}
             </div>
         </div>
 
@@ -104,9 +109,16 @@ export function renderStationPage(station, line, onBack) {
     `;
 }
 
-export function bindStationPageEvents(onBack) {
+export function bindStationPageEvents({ onBack, onNavigate }) {
     const backBtn = document.getElementById('btn-back-to-line');
-    if (backBtn) {
+    if (backBtn && onBack) {
         backBtn.addEventListener('click', onBack);
     }
+
+    // Bind previous and next station buttons
+    document.querySelectorAll('.btn-nav[data-target]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (onNavigate) onNavigate(btn.dataset.target);
+        });
+    });
 }

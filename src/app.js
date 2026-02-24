@@ -329,13 +329,24 @@ function renderContent() {
     // Check if we have an active station to show the detail page
     if (state.activeStation && state.activeLine) {
         const line = state.city.lines.find(l => l.id === state.activeLine);
-        const station = line ? line.stations.find(s => s.id === state.activeStation) : null;
+        const stationIdx = line ? line.stations.findIndex(s => s.id === state.activeStation) : -1;
+        const station = stationIdx !== -1 ? line.stations[stationIdx] : null;
         if (station) {
-            content.innerHTML = renderStationPage(station, line);
-            bindStationPageEvents(() => {
-                state.activeStation = null;
-                setHash(state.cityId, state.activeLine, null);
-                renderContent();
+            const prevStation = stationIdx > 0 ? line.stations[stationIdx - 1] : null;
+            const nextStation = stationIdx < line.stations.length - 1 ? line.stations[stationIdx + 1] : null;
+
+            content.innerHTML = renderStationPage(station, line, prevStation, nextStation);
+            bindStationPageEvents({
+                onBack: () => {
+                    state.activeStation = null;
+                    setHash(state.cityId, state.activeLine, null);
+                    renderContent();
+                },
+                onNavigate: (stationId) => {
+                    state.activeStation = stationId;
+                    setHash(state.cityId, state.activeLine, stationId);
+                    renderContent();
+                }
             });
             return;
         }

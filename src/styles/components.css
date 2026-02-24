@@ -1591,3 +1591,40 @@
     font-size: var(--fs-xs);
     color: var(--text-muted);
 }
+
+/* ── Station Navigation Controls ── */
+.station-nav-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--bg-glass-border);
+}
+
+.btn-nav {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--bg-glass-border);
+    border-radius: var(--radius-full);
+    padding: 0.5rem 1.25rem;
+    color: var(--text-primary);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-out);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-nav:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.btn-nav.empty {
+    visibility: hidden;
+    pointer-events: none;
+}
