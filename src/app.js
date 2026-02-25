@@ -77,6 +77,42 @@ function getVisibleLines() {
     return filtered ? filtered.lines : [];
 }
 
+// ── SEO / Document Meta ───────────────────────────────────────────────────────
+function updateDocumentMeta() {
+    let title = 'OneMetro — Indian Metro Systems';
+    let description = "Explore India's metro rail systems. Interactive maps, stations, and line details.";
+
+    if (state.city) {
+        title = `${state.city.name} — OneMetro`;
+        description = `Explore the ${state.city.name} network. View interactive maps, operational lines, and upcoming stations.`;
+
+        if (state.activeLine) {
+            const line = state.city.lines.find(l => l.id === state.activeLine);
+            if (line) {
+                title = `${line.name} | ${state.city.name} — OneMetro`;
+                description = `Stations and interactive map for the ${line.name} of ${state.city.name}.`;
+
+                if (state.activeStation) {
+                    const station = line.stations.find(s => s.id === state.activeStation);
+                    if (station) {
+                        title = `${station.name} Station | ${line.name} — OneMetro`;
+                        description = `Details for ${station.name} Station on the ${line.name} of ${state.city.name}.`;
+                    }
+                }
+            }
+        }
+    }
+
+    document.title = title;
+    let metaDesc = document.querySelector('meta[name="description"]');
+    if (!metaDesc) {
+        metaDesc = document.createElement('meta');
+        metaDesc.name = 'description';
+        document.head.appendChild(metaDesc);
+    }
+    metaDesc.content = description;
+}
+
 // ── URL Routing ───────────────────────────────────────────────────────────────
 // Format: #/cityId  |  #/cityId/lineId  |  #/cityId/lineId/stationId
 function parseHash() {
@@ -220,6 +256,8 @@ async function handleHashChange() {
 
 // ── Render All ────────────────────────────────────────────────────────────────
 function renderAll() {
+    updateDocumentMeta();
+
     const sidebar = document.getElementById('sidebar');
     const content = document.getElementById('content');
 
