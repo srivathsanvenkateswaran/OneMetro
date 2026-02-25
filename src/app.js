@@ -1,62 +1,75 @@
 /**
  * OneMetro — Main Application Controller
- * Orchestrates all components, handles routing and state
+ * Orchestrates all components, handles routing, state, and city data loading.
+ *
+ * City data is now LAZY-LOADED: individual city JS chunks are only fetched
+ * when the user first selects that city, dramatically reducing initial bundle size.
+ *
+ * To add a new city:
+ *   1. Add metadata to src/data/cityRegistry.js
+ *   2. Create src/data/<cityId>.js with full station data
+ *   3. Add one entry to cityLoaders below
  */
 
-import chennaiMetro from './data/chennai.js';
-import bengaluruMetro from './data/bengaluru.js';
-import delhiMetro from './data/delhi.js';
-import mumbaiMetro from './data/mumbai.js';
-import hyderabadMetro from './data/hyderabad.js';
-import kolkataMetro from './data/kolkata.js';
-import puneMetro from './data/pune.js';
-import nagpurMetro from './data/nagpur.js';
-import ahmedabadMetro from './data/ahmedabad.js';
 import { renderHeader } from './components/header.js';
 import { renderLineSelector, bindLineCardEvents } from './components/lineSelector.js';
 import { renderLineInfo } from './components/lineInfo.js';
 import { renderStationList, bindStationEvents } from './components/stationList.js';
 import { renderMetroMap } from './components/metroMap.js';
 import { renderStationPage, bindStationPageEvents } from './components/stationPage.js';
-
 import { renderLandingPage } from './components/landingPage.js';
 
-// ── City Registry ──
-const cities = {
-    chennai: chennaiMetro,
-    bengaluru: bengaluruMetro,
-    delhi: delhiMetro,
-    mumbai: mumbaiMetro,
-    hyderabad: hyderabadMetro,
-    kolkata: kolkataMetro,
-    pune: puneMetro,
-    nagpur: nagpurMetro,
-    ahmedabad: ahmedabadMetro,
+// ── City Loaders ──────────────────────────────────────────────────────────────
+// Dynamic imports create separate JS chunks, loaded only when a city is selected.
+// Each entry returns a Promise that resolves to the city's default export.
+// NOTE: Vite requires these to be explicit (not template-literal) so the bundler
+// can statically analyze and code-split each city into its own chunk.
+const cityLoaders = {
+    chennai: () => import('./data/chennai.js').then(m => m.default),
+    bengaluru: () => import('./data/bengaluru.js').then(m => m.default),
+    delhi: () => import('./data/delhi.js').then(m => m.default),
+    mumbai: () => import('./data/mumbai.js').then(m => m.default),
+    hyderabad: () => import('./data/hyderabad.js').then(m => m.default),
+    kolkata: () => import('./data/kolkata.js').then(m => m.default),
+    pune: () => import('./data/pune.js').then(m => m.default),
+    nagpur: () => import('./data/nagpur.js').then(m => m.default),
+    ahmedabad: () => import('./data/ahmedabad.js').then(m => m.default),
 };
 
-// ── State ──
+// ── City Data Cache ───────────────────────────────────────────────────────────
+// Once a city is loaded, its data is cached here so subsequent visits are instant.
+const cityCache = {};
+
+/**
+ * Resolves city data for a given cityId.
+ * Returns cached data if already loaded, otherwise fetches the chunk.
+ * Returns null if cityId is unknown.
+ */
+async function getCity(cityId) {
+    if (!cityLoaders[cityId]) return null;
+    if (!cityCache[cityId]) {
+        cityCache[cityId] = await cityLoaders[cityId]();
+    }
+    return cityCache[cityId];
+}
+
+// ── State ─────────────────────────────────────────────────────────────────────
 const state = {
     cityId: null,
     city: null,
     activeLine: null,
     activeStation: null,
-    showUpcoming: false, // toggle for Phase 2 lines
+    showUpcoming: false,
 };
 
-// ── Helpers ──
+// ── Helpers ───────────────────────────────────────────────────────────────────
 function getFilteredCity() {
-    // Return city data filtered by showUpcoming toggle
     if (!state.city) return null;
-    const city = state.city;
-    if (state.showUpcoming) return city;
+    if (state.showUpcoming) return state.city;
     return {
-        ...city,
-        lines: city.lines.filter(l => l.status === 'operational'),
+        ...state.city,
+        lines: state.city.lines.filter(l => l.status === 'operational'),
     };
-}
-
-function getAllLines() {
-    return state.city ? state.city.lines : [];
 }
 
 function getVisibleLines() {
@@ -64,16 +77,15 @@ function getVisibleLines() {
     return filtered ? filtered.lines : [];
 }
 
-// ── URL Routing ──
-// Format: #/cityId or #/cityId/lineId
+// ── URL Routing ───────────────────────────────────────────────────────────────
+// Format: #/cityId  |  #/cityId/lineId  |  #/cityId/lineId/stationId
 function parseHash() {
     const hash = window.location.hash.replace('#/', '').replace('#', '');
     const parts = hash.split('/').filter(Boolean);
-
     return {
         cityId: parts[0] || null,
         lineId: parts[1] || null,
-        stationId: parts[2] || null
+        stationId: parts[2] || null,
     };
 }
 
@@ -91,83 +103,122 @@ function setHash(cityId, lineId, stationId) {
     }
 }
 
-// ── Initialize ──
-function init() {
-    // Parse initial URL
-    const route = parseHash();
-    state.cityId = route.cityId;
-    state.city = cities[route.cityId] || null;
-
-    // If the line from URL exists, select it
-    if (state.city && route.lineId) {
-        const line = state.city.lines.find(l => l.id === route.lineId);
-        if (line) {
-            state.activeLine = route.lineId;
-            // Auto-enable upcoming if the line is under construction
-            if (line.status !== 'operational') {
-                state.showUpcoming = true;
-            }
-            if (route.stationId) {
-                const station = line.stations.find(s => s.id === route.stationId);
-                if (station) {
-                    state.activeStation = route.stationId;
-                }
-            }
-        }
+// ── Loading State ─────────────────────────────────────────────────────────────
+/** Shows a spinner while city JS chunk is being fetched */
+function showLoadingState() {
+    const sidebar = document.getElementById('sidebar');
+    const content = document.getElementById('content');
+    if (sidebar) sidebar.style.display = 'none';
+    if (content) {
+        content.style.display = '';
+        content.innerHTML = `
+            <div class="loading-state">
+                <div class="loading-spinner"></div>
+                <p class="loading-text">Loading city data…</p>
+            </div>
+        `;
     }
+    const lp = document.getElementById('landing-page');
+    if (lp) lp.style.opacity = '0.4';
+}
 
-    renderHeader(state.city, handleCityChange);
+// ── Apply route state ─────────────────────────────────────────────────────────
+/** After city data is loaded, apply any line/station from the URL route */
+function applyRoute(route) {
+    if (!state.city || !route.lineId) return;
+    const line = state.city.lines.find(l => l.id === route.lineId);
+    if (!line) return;
+
+    state.activeLine = route.lineId;
+    if (line.status !== 'operational') state.showUpcoming = true;
+
+    if (route.stationId) {
+        const station = line.stations.find(s => s.id === route.stationId);
+        if (station) state.activeStation = route.stationId;
+    }
+}
+
+// ── Initialize ────────────────────────────────────────────────────────────────
+async function init() {
+    // Render the header shell immediately (no city selected yet)
+    renderHeader(null, handleCityChange);
 
     const main = document.getElementById('app-main');
     main.className = 'app-main';
 
-    renderAll();
+    const route = parseHash();
 
-    // Handle hash changes
-    window.addEventListener('hashchange', () => {
-        const route = parseHash();
-        const newCity = cities[route.cityId];
-
-        if (!route.cityId) {
-            state.city = null;
-            state.cityId = null;
-            state.activeLine = null;
-            state.activeStation = null;
-            renderHeader(null, handleCityChange);
-        } else if (newCity && (!state.city || newCity.id !== state.city.id)) {
-            state.city = newCity;
+    if (route.cityId) {
+        // A city was in the URL — load it before first render
+        showLoadingState();
+        const city = await getCity(route.cityId);
+        if (city) {
             state.cityId = route.cityId;
-            state.activeLine = null;
-            state.activeStation = null;
+            state.city = city;
+            applyRoute(route);
             renderHeader(state.city, handleCityChange);
         }
+    }
 
-        if (state.city && route.lineId) {
-            const line = state.city.lines.find(l => l.id === route.lineId);
-            if (line) {
-                state.activeLine = route.lineId;
-                if (line.status !== 'operational') state.showUpcoming = true;
+    renderAll();
 
-                if (route.stationId) {
-                    const station = line.stations.find(s => s.id === route.stationId);
-                    if (station) {
-                        state.activeStation = route.stationId;
-                    } else {
-                        state.activeStation = null;
-                    }
-                } else {
-                    state.activeStation = null;
-                }
-            }
-        } else {
-            state.activeLine = null;
-            state.activeStation = null;
-        }
-        renderAll();
-    });
+    // Handle all subsequent URL changes
+    window.addEventListener('hashchange', handleHashChange);
 }
 
-// ── Render All ──
+// ── Hash Change Handler ───────────────────────────────────────────────────────
+async function handleHashChange() {
+    const route = parseHash();
+
+    if (!route.cityId) {
+        // Navigate back to home / landing page
+        state.city = null;
+        state.cityId = null;
+        state.activeLine = null;
+        state.activeStation = null;
+        state.showUpcoming = false;
+        renderHeader(null, handleCityChange);
+        renderAll();
+        return;
+    }
+
+    // City changed — load its data
+    if (!state.city || state.cityId !== route.cityId) {
+        showLoadingState();
+        const newCity = await getCity(route.cityId);
+        if (!newCity) return; // Unknown cityId in URL — do nothing
+
+        state.city = newCity;
+        state.cityId = route.cityId;
+        state.activeLine = null;
+        state.activeStation = null;
+        state.showUpcoming = false;
+        renderHeader(state.city, handleCityChange);
+    }
+
+    // Apply line / station from URL (handles deep links and back-navigation)
+    if (route.lineId) {
+        const line = state.city.lines.find(l => l.id === route.lineId);
+        if (line) {
+            state.activeLine = route.lineId;
+            if (line.status !== 'operational') state.showUpcoming = true;
+
+            if (route.stationId) {
+                const station = line.stations.find(s => s.id === route.stationId);
+                state.activeStation = station ? route.stationId : null;
+            } else {
+                state.activeStation = null;
+            }
+        }
+    } else {
+        state.activeLine = null;
+        state.activeStation = null;
+    }
+
+    renderAll();
+}
+
+// ── Render All ────────────────────────────────────────────────────────────────
 function renderAll() {
     const sidebar = document.getElementById('sidebar');
     const content = document.getElementById('content');
@@ -175,15 +226,15 @@ function renderAll() {
     if (!state.city) {
         if (sidebar) sidebar.style.display = 'none';
         if (content) content.style.display = 'none';
-        renderLandingPage(cities, handleCityChange);
+        renderLandingPage(handleCityChange);
         return;
     }
 
-    // Restore layout
+    // Restore app layout (sidebar + content)
     if (sidebar) sidebar.style.display = '';
     if (content) content.style.display = '';
 
-    // Clear landing page if it exists
+    // Remove landing page if it exists
     const lp = document.getElementById('landing-page');
     if (lp) lp.remove();
 
@@ -191,7 +242,7 @@ function renderAll() {
     renderContent();
 }
 
-// ── Smooth content transition helper ──
+// ── Smooth content transition helper ─────────────────────────────────────────
 function crossfadeContent(updateFn) {
     const content = document.getElementById('content');
     content.style.opacity = '0';
@@ -199,14 +250,13 @@ function crossfadeContent(updateFn) {
 
     setTimeout(() => {
         updateFn();
-        // Force reflow
-        void content.offsetHeight;
+        void content.offsetHeight; // Force reflow
         content.style.opacity = '1';
         content.style.transform = 'scale(1)';
     }, 150);
 }
 
-// ── Sidebar ──
+// ── Sidebar ───────────────────────────────────────────────────────────────────
 function renderSidebar() {
     const sidebar = document.getElementById('sidebar');
     sidebar.className = 'sidebar';
@@ -226,28 +276,24 @@ function renderSidebar() {
     bindLineCardEvents(handleLineSelect);
     bindSidebarEvents();
 
-    // Render line info if a line is selected
     const lineInfoContainer = sidebar.querySelector('#line-info-container');
     if (state.activeLine && lineInfoContainer) {
         const line = state.city.lines.find(l => l.id === state.activeLine);
-        if (line) {
-            lineInfoContainer.innerHTML = renderLineInfo(line);
-        }
+        if (line) lineInfoContainer.innerHTML = renderLineInfo(line);
     }
 }
 
-// ── Partial sidebar update (for toggle — avoids rebuilding the toggle itself) ──
+// ── Partial sidebar update (for toggle — avoids rebuilding the toggle itself) ─
 function updateSidebarLines() {
     const sidebar = document.getElementById('sidebar');
     const visibleLines = getVisibleLines();
 
-    // Update stats
+    // Update stats display
     const statsContainer = sidebar.querySelector('.city-stats');
     if (statsContainer) {
         const totalStations = visibleLines.reduce((sum, l) => sum + l.totalStations, 0);
         const totalLength = visibleLines.reduce((sum, l) => {
-            const numericLength = parseFloat(l.length.replace(/[^0-9.]/g, '')) || 0;
-            return sum + numericLength;
+            return sum + (parseFloat(l.length.replace(/[^0-9.]/g, '')) || 0);
         }, 0);
 
         const statValues = statsContainer.querySelectorAll('.city-stat-value');
@@ -256,33 +302,26 @@ function updateSidebarLines() {
         if (statValues[2]) statValues[2].textContent = `${totalLength.toFixed(1)} km`;
     }
 
-    // Update upcoming info text
+    // Toggle upcoming info text
     const upcomingInfo = sidebar.querySelector('.upcoming-info');
-    if (upcomingInfo) {
-        upcomingInfo.style.display = state.showUpcoming ? '' : 'none';
-    }
-
-    // Rebuild line cards sections only
-    const operationalSection = sidebar.querySelectorAll('.line-cards')[0];
-    const upcomingSection = sidebar.querySelectorAll('.line-cards')[1];
-    const upcomingSectionTitle = sidebar.querySelectorAll('.sidebar-section-title')[1];
-
-    const operationalLines = visibleLines.filter(l => l.status === 'operational');
-    const upcomingLines = visibleLines.filter(l => l.status !== 'operational');
+    if (upcomingInfo) upcomingInfo.style.display = state.showUpcoming ? '' : 'none';
 
     // Update operational line cards active state
+    const operationalSection = sidebar.querySelectorAll('.line-cards')[0];
     if (operationalSection) {
         operationalSection.querySelectorAll('.line-card').forEach(card => {
             card.classList.toggle('active', state.activeLine === card.dataset.lineId);
         });
     }
 
-    // Show/hide upcoming section
+    // Show/hide / rebuild upcoming section as needed
+    const upcomingSection = sidebar.querySelectorAll('.line-cards')[1];
+    const upcomingLines = visibleLines.filter(l => l.status !== 'operational');
+
     if (upcomingSection) {
         upcomingSection.parentElement.style.display = upcomingLines.length > 0 ? '' : 'none';
     } else if (state.showUpcoming && upcomingLines.length > 0) {
-        // Need to add the upcoming section — do a full sidebar render
-        renderSidebar();
+        renderSidebar(); // Full rebuild needed to add the upcoming section
         return;
     }
 
@@ -290,30 +329,26 @@ function updateSidebarLines() {
         upcomingSection.parentElement.style.display = 'none';
     }
 
-    // Update line info
+    // Refresh line info panel
     const lineInfoContainer = sidebar.querySelector('#line-info-container');
     if (lineInfoContainer) {
         if (state.activeLine) {
             const line = state.city.lines.find(l => l.id === state.activeLine);
-            if (line) {
-                lineInfoContainer.innerHTML = renderLineInfo(line);
-            }
+            if (line) lineInfoContainer.innerHTML = renderLineInfo(line);
         } else {
             lineInfoContainer.innerHTML = '';
         }
     }
 }
 
-// ── Bind sidebar events (separated so we can call after full render) ──
+// ── Sidebar event binding ─────────────────────────────────────────────────────
 function bindSidebarEvents() {
     const sidebar = document.getElementById('sidebar');
 
-    // Bind "Show Upcoming" toggle
     const toggle = sidebar.querySelector('#upcoming-toggle');
     if (toggle) {
         toggle.addEventListener('change', (e) => {
             state.showUpcoming = e.target.checked;
-            // If active line is now hidden, deselect it
             if (state.activeLine) {
                 const line = state.city.lines.find(l => l.id === state.activeLine);
                 if (line && line.status !== 'operational' && !state.showUpcoming) {
@@ -322,13 +357,11 @@ function bindSidebarEvents() {
                     setHash(state.cityId, null, null);
                 }
             }
-            // Perform full render to ensure all sections (operational/upcoming) are correctly handled
             renderSidebar();
             crossfadeContent(renderContent);
         });
     }
 
-    // Bind "View All Network" button
     const viewAllBtn = sidebar.querySelector('#view-all-btn');
     if (viewAllBtn) {
         viewAllBtn.addEventListener('click', () => {
@@ -340,13 +373,13 @@ function bindSidebarEvents() {
     }
 }
 
-// ── Content ──
+// ── Content ───────────────────────────────────────────────────────────────────
 function renderContent() {
     const content = document.getElementById('content');
     content.className = 'content';
     const displayCity = state.showUpcoming ? state.city : getFilteredCity();
 
-    // Check if we have an active station to show the detail page
+    // Station detail view
     if (state.activeStation && state.activeLine) {
         const line = state.city.lines.find(l => l.id === state.activeLine);
         const stationIdx = line ? line.stations.findIndex(s => s.id === state.activeStation) : -1;
@@ -366,38 +399,39 @@ function renderContent() {
                     state.activeStation = stationId;
                     setHash(state.cityId, state.activeLine, stationId);
                     renderContent();
-                }
+                },
             });
             return;
         }
     }
 
+    // Full network map (no line selected)
     if (!state.activeLine) {
-        // Show welcome state with full network map
         content.innerHTML = `
-      <div id="metro-map"></div>
-      <div class="welcome-state">
-        <div class="welcome-icon">🚇</div>
-        <h2 class="welcome-title">Welcome to ${state.city.name}</h2>
-        <p class="welcome-text">
-          Explore ${state.city.nameLocal} — ${getVisibleLines().length} lines, spanning across the city.
-          <br/><br/>
-          Select a metro line from the sidebar to view its route and stations.
-          ${state.city.phase2 ? `<br/><span style="color: var(--text-muted); font-size: var(--fs-xs);">Toggle "Show Upcoming" to see Phase 2 under-construction lines.</span>` : ''}
-        </p>
-      </div>
-    `;
+            <div id="metro-map"></div>
+            <div class="welcome-state">
+                <div class="welcome-icon">🚇</div>
+                <h2 class="welcome-title">Welcome to ${state.city.name}</h2>
+                <p class="welcome-text">
+                    Explore ${state.city.nameLocal} — ${getVisibleLines().length} lines, spanning across the city.
+                    <br/><br/>
+                    Select a metro line from the sidebar to view its route and stations.
+                    ${state.city.phase2 ? `<br/><span style="color: var(--text-muted); font-size: var(--fs-xs);">Toggle "Show Upcoming" to see Phase 2 under-construction lines.</span>` : ''}
+                </p>
+            </div>
+        `;
         renderMetroMap(displayCity, null, null, state.showUpcoming, handleMapStationClick);
         return;
     }
 
+    // Line view with station list
     const line = state.city.lines.find(l => l.id === state.activeLine);
     if (!line) return;
 
     content.innerHTML = `
-    <div id="metro-map"></div>
-    <div id="station-list"></div>
-  `;
+        <div id="metro-map"></div>
+        <div id="station-list"></div>
+    `;
 
     renderMetroMap(displayCity, state.activeLine, state.activeStation, state.showUpcoming, handleMapStationClick);
 
@@ -406,24 +440,20 @@ function renderContent() {
     bindStationEvents(handleStationClick);
 }
 
-// ── Event Handlers ──
+// ── Event Handlers ────────────────────────────────────────────────────────────
+
+/**
+ * Called from header dropdown and landing page cards.
+ * Simply updates the URL — all loading and rendering is driven by handleHashChange.
+ */
 function handleCityChange(cityId) {
-    const newCity = cities[cityId];
-    if (newCity) {
-        state.city = newCity;
-        state.cityId = cityId;
-        state.activeLine = null;
-        state.activeStation = null;
-        state.showUpcoming = false;
+    if (cityLoaders[cityId]) {
         setHash(cityId, null, null);
-        renderHeader(state.city, handleCityChange);
-        renderAll();
     }
 }
 
 function handleLineSelect(lineId) {
     if (state.activeLine === lineId) {
-        // Deselect → back to full network view
         state.activeLine = null;
         state.activeStation = null;
         setHash(state.cityId, null, null);
@@ -436,11 +466,7 @@ function handleLineSelect(lineId) {
 }
 
 function handleStationClick(stationId) {
-    if (state.activeStation === stationId) {
-        state.activeStation = null;
-    } else {
-        state.activeStation = stationId;
-    }
+    state.activeStation = state.activeStation === stationId ? null : stationId;
     setHash(state.cityId, state.activeLine, state.activeStation);
     renderContent();
 }
@@ -449,20 +475,13 @@ function handleMapStationClick(stationId, lineId) {
     if (lineId && lineId !== 'interchange') {
         state.activeLine = lineId;
     } else if (lineId === 'interchange') {
-        if (!state.activeLine) {
-            state.activeLine = 'blue';
-        }
+        if (!state.activeLine) state.activeLine = 'blue';
     }
 
-    if (state.activeStation === stationId) {
-        state.activeStation = null;
-    } else {
-        state.activeStation = stationId;
-    }
-
+    state.activeStation = state.activeStation === stationId ? null : stationId;
     setHash(state.cityId, state.activeLine, state.activeStation);
     renderAll();
 }
 
-// ── Boot ──
+// ── Boot ──────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', init);
