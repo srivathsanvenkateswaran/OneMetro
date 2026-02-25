@@ -204,6 +204,18 @@ export const cityRegistry = {
         status: 'available',
         stats: { lines: 2, stations: '29', length: '29.6 km' },
     },
+    patna: {
+        id: 'patna',
+        displayName: 'Patna',
+        nameLocal: 'पटना',
+        metroName: 'Patna Metro',
+        tagline: 'The City of Pataliputra gets its modern rapid transit with the Ganga-side metro network.',
+        state: 'Bihar',
+        emoji: '🏛️',
+        imageClass: 'lp-img-patna',
+        status: 'available',
+        stats: { lines: 2, stations: '26', length: '30.9 km' },
+    },
 };
 
 /**
@@ -227,6 +239,7 @@ export const cityOrder = [
     "indore",
     "lucknow",
     "agra",
+    "patna",
 ];
 
 /** Returns ordered array of city metadata objects, skipping any unknown keys. */

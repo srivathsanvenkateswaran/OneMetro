@@ -1379,6 +1379,12 @@
     url("/assets/Bhopal.webp");
 }
 
+.lp-img-patna {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+    url("/assets/Patna.webp");
+}
+
 .lp-card-content {
   padding: var(--space-xl);
   flex: 1;
