@@ -1,6 +1,6 @@
-# BharatOne (OneMetro) — India's Integrated Metro Portal
+# OneMetro — India's Integrated Metro Portal
 
-**BharatOne** is a high-performance, aesthetically premium web application designed to be the single source of truth for all metro and rapid transit systems across India. Built with a focus on speed, clarity, and visual excellence, it provides detailed information on lines, stations, and geographic map layouts for cities nationwide.
+**OneMetro** is a high-performance, aesthetically premium web application designed to be the single source of truth for all metro and rapid transit systems across India. Built with a focus on speed, clarity, and visual excellence, it provides detailed information on lines, stations, and geographic map layouts for cities nationwide.
 
 ![OneMetro Banner](public/assets/Delhi.webp)
 
@@ -30,7 +30,7 @@
 ## 📂 Project Structure
 
 ```text
-BharatOne/
+OneMetro/
 ├── src/
 │   ├── app.js            # Main application controller & router
 │   ├── components/       # UI Components (Headless & Functional)
@@ -59,8 +59,8 @@ The project is designed for trivial scalability. To add a new city:
 
 ### Installation
 ```bash
-git clone https://github.com/srivathsanvenkateswaran/BharatOne.git
-cd BharatOne
+git clone https://github.com/srivathsanvenkateswaran/OneMetro.git
+cd OneMetro
 npm install
 ```
 
