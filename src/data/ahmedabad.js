@@ -1,6 +1,8 @@
 /**
  * Ahmedabad Metro Rail — Station & Line Data
  */
+import { getStationCoords } from './stationCoords.js';
+
 
 const ahmedabadMetro = {
     id: 'ahmedabad',
@@ -146,5 +148,13 @@ const ahmedabadMetro = {
         }
     ]
 };
+
+ahmedabadMetro.lines.forEach(line => {
+    line.stations = line.stations.map((st, i) => ({
+        ...st,
+        ...getStationCoords('ahmedabad', line.id, i),
+        fareZone: null
+    }));
+});
 
 export default ahmedabadMetro;

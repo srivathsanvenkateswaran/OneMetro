@@ -3,6 +3,8 @@
  * Source: CMRL Official + Wikipedia
  * Includes Phase 1 (operational) + Phase 2 (under construction)
  */
+import { getStationCoords } from './stationCoords.js';
+
 
 const chennaiMetro = {
     id: 'chennai',
@@ -2431,5 +2433,13 @@ const chennaiMetro = {
         },
     ],
 };
+
+chennaiMetro.lines.forEach(line => {
+    line.stations = line.stations.map((st, i) => ({
+        ...st,
+        ...getStationCoords('chennai', line.id, i),
+        fareZone: null
+    }));
+});
 
 export default chennaiMetro;
