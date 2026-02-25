@@ -39,7 +39,18 @@ const blueLineStationsData = [
     { name: 'Kalindi Vihar', nameLocal: 'कालिंदी विहार', type: 'elevated', landmark: 'Kalindi Vihar Residential' }
 ];
 
-function buildStation(st, idPrefix, idx) {
+function buildStation(st, idPrefix, idx, lineId) {
+    let towards1 = 'Terminal 1';
+    let towards2 = 'Terminal 2';
+
+    if (lineId === 'yellow' || lineId === 'yellow-uc') {
+        towards1 = 'Sikandra';
+        towards2 = 'Taj East Gate';
+    } else if (lineId === 'blue') {
+        towards1 = 'Kalindi Vihar';
+        towards2 = 'Agra Cantt';
+    }
+
     return {
         id: `${idPrefix}${String(idx + 1).padStart(2, '0')}`,
         name: st.name,
@@ -50,14 +61,14 @@ function buildStation(st, idPrefix, idx) {
         landmark: st.landmark,
         zone: 1,
         parking: true,
-        facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms', 'Drinking Water', 'Token Vending Machines'],
+        facilities: ['Lifts', 'Escalators', 'CCTV & AI Surveillance', 'Restrooms', 'Drinking Water', 'Token Vending Machines', 'First Aid Box'],
         platforms: [
-            { no: 1, towards: 'Terminal 1' },
-            { no: 2, towards: 'Terminal 2' }
+            { no: 1, towards: towards1 },
+            { no: 2, towards: towards2 }
         ],
-        gates: [
-            { gate: 'A', landmarks: ['Main Entrance', 'Bus Stop'] },
-            { gate: 'B', landmarks: ['Exit Area'] }
+        gates: st.gates || [
+            { gate: '1', landmarks: ['Main Entrance', 'Ticket Counter Area'] },
+            { gate: '2', landmarks: ['Exit Gate', 'Auto/Taxi Stand'] }
         ]
     };
 }
@@ -97,7 +108,7 @@ const data = {
             lastTrain: '10:00 PM',
             gauge: 'Standard Gauge (1435 mm)',
             rollingStock: 'Alstom',
-            stations: yellowLineStationsData.map((st, i) => buildStation(st, 'y', i))
+            stations: yellowLineStationsData.map((st, i) => buildStation(st, 'y', i, 'yellow'))
         },
         {
             id: 'yellow-uc',
@@ -110,7 +121,7 @@ const data = {
             status: 'under-construction',
             expectedCompletion: '2026',
             gauge: 'Standard Gauge (1435 mm)',
-            stations: yellowUcStationsData.map((st, i) => buildStation(st, 'yuc', i))
+            stations: yellowUcStationsData.map((st, i) => buildStation(st, 'yuc', i, 'yellow-uc'))
         },
         {
             id: 'blue',
@@ -123,7 +134,7 @@ const data = {
             status: 'under-construction',
             expectedCompletion: '2026',
             gauge: 'Standard Gauge (1435 mm)',
-            stations: blueLineStationsData.map((st, i) => buildStation(st, 'b', i))
+            stations: blueLineStationsData.map((st, i) => buildStation(st, 'b', i, 'blue'))
         }
     ]
 };

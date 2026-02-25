@@ -33,18 +33,18 @@ const mumbaiMetro = {
             gauge: 'Standard Gauge (1435 mm)',
             rollingStock: 'CRRC Nanjing Puzhen',
             stations: [
-                { id: 'm1_01', name: 'Versova', nameLocal: 'वर्सोवा', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
-                { id: 'm1_02', name: 'Andheri West / DN Nagar', nameLocal: 'डी एन नगर', type: 'elevated', isInterchange: true, interchangeWith: ['yellow'], landmark: '', zone: 1 },
-                { id: 'm1_03', name: 'Azad Nagar', nameLocal: 'आझाद नगर', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
-                { id: 'm1_04', name: 'Andheri', nameLocal: 'अंधेरी', type: 'elevated', isInterchange: true, interchangeWith: ['rail'], landmark: 'Andheri Station (WR)', zone: 1 },
-                { id: 'm1_05', name: 'Gundavali / WEH', nameLocal: 'पश्चिम द्रुतगती महामार्ग', type: 'elevated', isInterchange: true, interchangeWith: ['red'], landmark: '', zone: 1 },
-                { id: 'm1_06', name: 'Chakala (J.B. Nagar)', nameLocal: 'चकाला (जे बी नगर)', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
-                { id: 'm1_07', name: 'Airport Road', nameLocal: 'विमानतळ रस्ता', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
-                { id: 'm1_08', name: 'Marol Naka', nameLocal: 'मरोळ नाका', type: 'elevated', isInterchange: true, interchangeWith: ['aqua'], landmark: '', zone: 1 },
-                { id: 'm1_09', name: 'Saki Naka', nameLocal: 'साकी नाका', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
-                { id: 'm1_10', name: 'Asalpha', nameLocal: 'असाल्फा', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
-                { id: 'm1_11', name: 'Jagruti Nagar', nameLocal: 'जागृती नगर', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
-                { id: 'm1_12', name: 'Ghatkopar', nameLocal: 'घाटकोपर', type: 'elevated', isInterchange: true, interchangeWith: ['rail'], landmark: 'Ghatkopar Station (CR)', zone: 1 }
+                { id: 'm1_01', name: 'Versova', nameLocal: 'वर्सोवा', type: 'elevated', isInterchange: false, landmark: '', zone: 1, platforms: [{ no: 1, towards: 'Ghatkopar' }, { no: 2, towards: 'Terminal' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] },
+                { id: 'm1_02', name: 'Andheri West / DN Nagar', nameLocal: 'डी एन नगर', type: 'elevated', isInterchange: true, interchangeWith: ['yellow'], landmark: '', zone: 1, platforms: [{ no: 1, towards: 'Ghatkopar' }, { no: 2, towards: 'Versova' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] },
+                { id: 'm1_03', name: 'Azad Nagar', nameLocal: 'आझाद नगर', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1, platforms: [{ no: 1, towards: 'Ghatkopar' }, { no: 2, towards: 'Versova' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] },
+                { id: 'm1_04', name: 'Andheri', nameLocal: 'अंधेरी', type: 'elevated', isInterchange: true, interchangeWith: ['rail'], landmark: 'Andheri Station (WR)', zone: 1, platforms: [{ no: 1, towards: 'Ghatkopar' }, { no: 2, towards: 'Versova' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] },
+                { id: 'm1_05', name: 'Gundavali / WEH', nameLocal: 'पश्चिम द्रुतगती महामार्ग', type: 'elevated', isInterchange: true, interchangeWith: ['red'], landmark: '', zone: 1, platforms: [{ no: 1, towards: 'Ghatkopar' }, { no: 2, towards: 'Versova' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] },
+                { id: 'm1_06', name: 'Chakala (J.B. Nagar)', nameLocal: 'चकाला (जे बी नगर)', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1, platforms: [{ no: 1, towards: 'Ghatkopar' }, { no: 2, towards: 'Versova' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] },
+                { id: 'm1_07', name: 'Airport Road', nameLocal: 'विमानतळ रस्ता', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1, platforms: [{ no: 1, towards: 'Ghatkopar' }, { no: 2, towards: 'Versova' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] },
+                { id: 'm1_08', name: 'Marol Naka', nameLocal: 'मरोळ नाका', type: 'elevated', isInterchange: true, interchangeWith: ['aqua'], landmark: '', zone: 1, platforms: [{ no: 1, towards: 'Ghatkopar' }, { no: 2, towards: 'Versova' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] },
+                { id: 'm1_09', name: 'Saki Naka', nameLocal: 'साकी नाका', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1, platforms: [{ no: 1, towards: 'Ghatkopar' }, { no: 2, towards: 'Versova' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] },
+                { id: 'm1_10', name: 'Asalpha', nameLocal: 'असाल्फा', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1, platforms: [{ no: 1, towards: 'Ghatkopar' }, { no: 2, towards: 'Versova' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] },
+                { id: 'm1_11', name: 'Jagruti Nagar', nameLocal: 'जागृती नगर', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1, platforms: [{ no: 1, towards: 'Ghatkopar' }, { no: 2, towards: 'Versova' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] },
+                { id: 'm1_12', name: 'Ghatkopar', nameLocal: 'घाटकोपर', type: 'elevated', isInterchange: true, interchangeWith: ['rail'], landmark: 'Ghatkopar Station (CR)', zone: 1, platforms: [{ no: 1, towards: 'Terminal' }, { no: 2, towards: 'Versova' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] }
             ]
         },
         {

@@ -1,7 +1,7 @@
 import { getStationCoords } from "./stationCoords.js";
 
 const redLineStations = [
-    { name: 'CCS Airport', nameLocal: 'चौधरी चरण सिंह हवाई अड्डा', type: 'elevated', landmark: 'CCS International Airport' },
+    { name: 'CCS Airport', nameLocal: 'चौधरी चरण सिंह हवाई अड्डा', type: 'underground', landmark: 'CCS International Airport' },
     { name: 'Amausi', nameLocal: 'अमौसी', type: 'elevated', landmark: 'Amausi Railway Station' },
     { name: 'Transport Nagar', nameLocal: 'ट्रांसपोर्ट नगर', type: 'elevated', landmark: 'RTO Lucknow' },
     { name: 'Krishna Nagar', nameLocal: 'कृष्णा नगर', type: 'elevated', landmark: 'Dream World Amusement Park' },
@@ -13,7 +13,18 @@ const redLineStations = [
     { name: 'Charbagh', nameLocal: 'चारबाग', type: 'elevated', landmark: 'Lucknow NR Railway Station', isInterchange: true, interchangeWith: ['blue'] },
     { name: 'Hussainganj', nameLocal: 'हुसैनगंज', type: 'underground', landmark: 'Burlington Crossing' },
     { name: 'Sachivalaya', nameLocal: 'सचिवालय', type: 'underground', landmark: 'UP Vishan Sabha' },
-    { name: 'Hazratganj', nameLocal: 'हजरतगंज', type: 'underground', landmark: 'Hazratganj Main Market' },
+    {
+        name: 'Hazratganj',
+        nameLocal: 'हजरतगंज',
+        type: 'underground',
+        landmark: 'Hazratganj Main Market',
+        gates: [
+            { gate: '1', landmarks: ['Janpath Market', 'Northern Railway DRM Office'] },
+            { gate: '2', landmarks: ['Naza Market', 'Mayfair'] },
+            { gate: '3', landmarks: ['St. Joseph Cathedral Church', 'Halwasiya Market'] },
+            { gate: '4', landmarks: ['Atal Chowk', 'Sahu Cinema'] }
+        ]
+    },
     { name: 'KD Singh Babu Stadium', nameLocal: 'केडी सिंह बाबू स्टेडियम', type: 'elevated', landmark: 'KD Singh Babu Stadium' },
     { name: 'Vishwavidyalaya', nameLocal: 'विश्वविद्यालय', type: 'elevated', landmark: 'University of Lucknow' },
     { name: 'IT College', nameLocal: 'आईटी कॉलेज', type: 'elevated', landmark: 'Isabella Thoburn College' },
@@ -39,7 +50,15 @@ const blueLineStations = [
     { name: 'Vasant Kunj', nameLocal: 'वसंत कुंज', type: 'elevated', landmark: 'Vasant Kunj' }
 ];
 
-function buildStation(st, idPrefix, idx) {
+function buildStation(st, idPrefix, idx, lineId) {
+    const platforms = lineId === 'red' ? [
+        { no: 1, towards: 'Munshipulia' },
+        { no: 2, towards: 'CCS Airport' }
+    ] : [
+        { no: 1, towards: 'Vasant Kunj' },
+        { no: 2, towards: 'Charbagh' }
+    ];
+
     return {
         id: `${idPrefix}${String(idx + 1).padStart(2, '0')}`,
         name: st.name,
@@ -50,12 +69,9 @@ function buildStation(st, idPrefix, idx) {
         landmark: st.landmark,
         zone: 1,
         parking: true,
-        facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
-        platforms: [
-            { no: 1, towards: 'Terminal 1' },
-            { no: 2, towards: 'Terminal 2' }
-        ],
-        gates: [
+        facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water (Pi-Lo)', 'Lifts / Escalators', 'Free Wi-Fi (Smart Card)'],
+        platforms: platforms,
+        gates: st.gates || [
             { gate: 'A', landmarks: ['Main Road Entrance'] },
             { gate: 'B', landmarks: ['Exit'] }
         ]
@@ -97,7 +113,7 @@ const data = {
             lastTrain: '10:00 PM',
             gauge: 'Standard Gauge (1435 mm)',
             rollingStock: 'Alstom',
-            stations: redLineStations.map((st, i) => buildStation(st, 'r', i))
+            stations: redLineStations.map((st, i) => buildStation(st, 'r', i, 'red'))
         },
         {
             id: 'blue',
@@ -110,7 +126,7 @@ const data = {
             status: 'under-construction',
             expectedCompletion: 'Proposed',
             gauge: 'Standard Gauge (1435 mm)',
-            stations: blueLineStations.map((st, i) => buildStation(st, 'b', i))
+            stations: blueLineStations.map((st, i) => buildStation(st, 'b', i, 'blue'))
         }
     ]
 };

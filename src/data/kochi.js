@@ -54,7 +54,7 @@ const kochiData = {
                 zone: 1,
                 parking: true,
                 facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms', 'Drinking Water', 'WiFi'],
-                platforms: [{ no: 1, towards: 'Terminal 1' }, { no: 2, towards: 'Terminal 2' }],
+                platforms: [{ no: 1, towards: 'Tripunithura Terminal' }, { no: 2, towards: 'Aluva' }],
                 gates: [{ gate: 'A', landmarks: ['Main Entrance'] }, { gate: 'B', landmarks: ['Exit'] }]
             }))
         },
