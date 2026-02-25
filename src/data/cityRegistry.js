@@ -139,7 +139,7 @@ export const cityRegistry = {
         emoji: "🐪",
         imageClass: "lp-img-jaipur",
         status: "available",
-        stats: { lines: 2, stations: "34", length: "36+ km" },
+        stats: { lines: 3, stations: "36", length: "36+ km" },
     },
     kochi: {
         id: "kochi",
@@ -164,7 +164,7 @@ export const cityRegistry = {
         emoji: "🦢",
         imageClass: "lp-img-bhopal",
         status: "available",
-        stats: { lines: 2, stations: "16", length: "15+ km" },
+        stats: { lines: 2, stations: "30", length: "31 km" },
     },
     indore: {
         id: "indore",

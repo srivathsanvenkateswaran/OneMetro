@@ -1,36 +1,53 @@
 import { getStationCoords } from "./stationCoords.js";
 
 const redLineStations = [
-    'CCS Airport', 'Amausi', 'Transport Nagar', 'Krishna Nagar', 'Singar Nagar',
-    'Alambagh', 'Alambagh ISBT', 'Mawaiya', 'Durgapuri', 'Charbagh',
-    'Hussainganj', 'Sachivalaya', 'Hazratganj', 'KD Singh Babu Stadium',
-    'Vishwavidyalaya', 'IT College', 'Badshah Nagar', 'Lekhraj Market',
-    'Bhootnath Market', 'Indira Nagar', 'Munshipulia'
+    { name: 'CCS Airport', nameLocal: 'चौधरी चरण सिंह हवाई अड्डा', type: 'elevated', landmark: 'CCS International Airport' },
+    { name: 'Amausi', nameLocal: 'अमौसी', type: 'elevated', landmark: 'Amausi Railway Station' },
+    { name: 'Transport Nagar', nameLocal: 'ट्रांसपोर्ट नगर', type: 'elevated', landmark: 'RTO Lucknow' },
+    { name: 'Krishna Nagar', nameLocal: 'कृष्णा नगर', type: 'elevated', landmark: 'Dream World Amusement Park' },
+    { name: 'Singar Nagar', nameLocal: 'सिंगार नगर', type: 'elevated', landmark: 'Singar Nagar Market' },
+    { name: 'Alambagh', nameLocal: 'आलमबाग', type: 'elevated', landmark: 'Alambagh Market' },
+    { name: 'Alambagh ISBT', nameLocal: 'आलमबाग बस स्टैंड', type: 'elevated', landmark: 'Alambagh Inter State Bus Terminus' },
+    { name: 'Mawaiya', nameLocal: 'मवैया', type: 'elevated', landmark: 'Mawaiya Railway Crossing' },
+    { name: 'Durgapuri', nameLocal: 'दुर्गापुरी', type: 'elevated', landmark: 'Lucknow Junction Railway Station' },
+    { name: 'Charbagh', nameLocal: 'चारबाग', type: 'elevated', landmark: 'Lucknow NR Railway Station', isInterchange: true, interchangeWith: ['blue'] },
+    { name: 'Hussainganj', nameLocal: 'हुसैनगंज', type: 'underground', landmark: 'Burlington Crossing' },
+    { name: 'Sachivalaya', nameLocal: 'सचिवालय', type: 'underground', landmark: 'UP Vishan Sabha' },
+    { name: 'Hazratganj', nameLocal: 'हजरतगंज', type: 'underground', landmark: 'Hazratganj Main Market' },
+    { name: 'KD Singh Babu Stadium', nameLocal: 'केडी सिंह बाबू स्टेडियम', type: 'elevated', landmark: 'KD Singh Babu Stadium' },
+    { name: 'Vishwavidyalaya', nameLocal: 'विश्वविद्यालय', type: 'elevated', landmark: 'University of Lucknow' },
+    { name: 'IT College', nameLocal: 'आईटी कॉलेज', type: 'elevated', landmark: 'Isabella Thoburn College' },
+    { name: 'Badshah Nagar', nameLocal: 'बादशाह नगर', type: 'elevated', landmark: 'Badshahnagar Railway Station' },
+    { name: 'Lekhraj Market', nameLocal: 'लेखराज मार्केट', type: 'elevated', landmark: 'Lekhraj Market' },
+    { name: 'Bhootnath Market', nameLocal: 'भूतनाथ मार्केट', type: 'elevated', landmark: 'Bhootnath Temple' },
+    { name: 'Indira Nagar', nameLocal: 'इंदिरा नगर', type: 'elevated', landmark: 'Indira Nagar Residential Area' },
+    { name: 'Munshipulia', nameLocal: 'मुंशीपुलिया', type: 'elevated', landmark: 'Munshi Pulia Chauraha' }
 ];
 
 const blueLineStations = [
-    'Charbagh', 'Gautam Buddha Marg', 'Aminabad', 'Pandeyganj', 'City Railway Station',
-    'Medical Chauraha', 'Nawazganj', 'Thakurganj', 'Balaganj', 'Sarfarazganj',
-    'Musabagh', 'Vasant Kunj'
+    { name: 'Charbagh', nameLocal: 'चारबाग', type: 'elevated', landmark: 'Lucknow NR Railway Station', isInterchange: true, interchangeWith: ['red'] },
+    { name: 'Gautam Buddha Marg', nameLocal: 'गौतम बुद्ध मार्ग', type: 'elevated', landmark: 'Gautam Buddha Marg' },
+    { name: 'Aminabad', nameLocal: 'अमीनाबाद', type: 'underground', landmark: 'Aminabad Market' },
+    { name: 'Pandeyganj', nameLocal: 'पांडेयगंज', type: 'underground', landmark: 'Pandeyganj' },
+    { name: 'City Railway Station', nameLocal: 'सिटी रेलवे स्टेशन', type: 'underground', landmark: 'Lucknow City Railway Station' },
+    { name: 'Medical Chauraha', nameLocal: 'मेडिकल चौराहा', type: 'underground', landmark: 'KGMC' },
+    { name: 'Nawazganj', nameLocal: 'नवाज़गंज', type: 'elevated', landmark: 'Nawazganj' },
+    { name: 'Thakurganj', nameLocal: 'ठाकुरगंज', type: 'elevated', landmark: 'Thakurganj' },
+    { name: 'Balaganj', nameLocal: 'बालागंज', type: 'elevated', landmark: 'Balaganj' },
+    { name: 'Sarfarazganj', nameLocal: 'सरफ़राज़गंज', type: 'elevated', landmark: 'Sarfarazganj' },
+    { name: 'Musabagh', nameLocal: 'मूसाबाग', type: 'elevated', landmark: 'Musabagh' },
+    { name: 'Vasant Kunj', nameLocal: 'वसंत कुंज', type: 'elevated', landmark: 'Vasant Kunj' }
 ];
 
-function buildStation(name, idPrefix, idx, lineColor) {
-    let isInterchange = false;
-    let interchangeWith = [];
-
-    if (name === 'Charbagh') {
-        isInterchange = true;
-        interchangeWith = lineColor === 'red' ? ['blue'] : ['red'];
-    }
-
+function buildStation(st, idPrefix, idx) {
     return {
         id: `${idPrefix}${String(idx + 1).padStart(2, '0')}`,
-        name: name,
-        lat: null,
-        lon: null,
-        type: 'elevated',
-        isInterchange,
-        interchangeWith,
+        name: st.name,
+        nameLocal: st.nameLocal,
+        type: st.type,
+        isInterchange: st.isInterchange || false,
+        interchangeWith: st.interchangeWith || [],
+        landmark: st.landmark,
         zone: 1,
         parking: true,
         facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
@@ -80,7 +97,7 @@ const data = {
             lastTrain: '10:00 PM',
             gauge: 'Standard Gauge (1435 mm)',
             rollingStock: 'Alstom',
-            stations: redLineStations.map((name, i) => buildStation(name, 'r', i, 'red'))
+            stations: redLineStations.map((st, i) => buildStation(st, 'r', i))
         },
         {
             id: 'blue',
@@ -93,7 +110,7 @@ const data = {
             status: 'under-construction',
             expectedCompletion: 'Proposed',
             gauge: 'Standard Gauge (1435 mm)',
-            stations: blueLineStations.map((name, i) => buildStation(name, 'b', i, 'blue'))
+            stations: blueLineStations.map((st, i) => buildStation(st, 'b', i))
         }
     ]
 };
