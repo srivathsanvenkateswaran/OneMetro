@@ -224,22 +224,22 @@ export const cityRegistry = {
  * To add a new city: add its key to cityRegistry above AND append its id here.
  */
 export const cityOrder = [
-    "chennai",
     "delhi",
-    "mumbai",
     "bengaluru",
-    "kolkata",
-    "hyderabad",
-    "pune",
-    "nagpur",
+    "chennai",
+    "mumbai",
     "ahmedabad",
-    "jaipur",
+    "hyderabad",
+    "kolkata",
+    "pune",
     "kochi",
-    "bhopal",
+    "nagpur",
+    "jaipur",
     "indore",
-    "lucknow",
-    "agra",
+    "bhopal",
     "patna",
+    "agra",
+    "lucknow",
 ];
 
 /** Returns ordered array of city metadata objects, skipping any unknown keys. */
