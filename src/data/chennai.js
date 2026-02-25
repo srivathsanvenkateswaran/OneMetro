@@ -54,12 +54,11 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Side' },
+                        { no: 2, towards: 'Terminal', type: 'Side' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'E1', landmarks: ['ITC Company', 'Minjur', 'Ennore'] }
                     ]
                 },
                 {
@@ -68,12 +67,12 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Side' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Side' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'E1', landmarks: ['Wimco Nagar Railway Station', 'Bus Stop'] },
+                        { gate: 'E3', landmarks: ['Fish Market', 'Bus Stop'] }
                     ]
                 },
                 {
@@ -82,12 +81,12 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Side' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Side' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'E2', landmarks: ['Thiruvotriyur Bus Depot', 'BSNL'] },
+                        { gate: 'E3', landmarks: ['TNEB Office', 'Royal Enfield Factory', 'Schools'] }
                     ]
                 },
                 {
@@ -96,12 +95,12 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Side' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Side' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'E1', landmarks: ['Vadivudaiamman Temple', 'Bus Stop', 'Post Office'] },
+                        { gate: 'E2', landmarks: ['Ellaiyamman Temple', 'Bus Stop', 'The A2B Hotel'] }
                     ]
                 },
                 {
@@ -110,12 +109,13 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Side' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Side' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'E1', landmarks: ['Kaladipet Market', 'Revoor School', 'Bus Stop'] },
+                        { gate: 'E2', landmarks: ['Rohit Hospital', 'Bus Stop'] },
+                        { gate: 'E3', landmarks: ['Metro TURF'] }
                     ]
                 },
                 {
@@ -124,12 +124,13 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Side' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Side' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'E1', landmarks: ['Post Office', 'Thangam Mahal', 'UCO Bank'] },
+                        { gate: 'E2', landmarks: ['ESI Hospital', 'Thangal Bus Stop'] },
+                        { gate: 'E3', landmarks: ['Metro Bus Depot', 'N4 Beach'] }
                     ]
                 },
                 {
@@ -138,40 +139,44 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Side' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Side' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'E1', landmarks: ['Soundarapandi School'] },
+                        { gate: 'E2', landmarks: ['Ennore Bus Stop', 'Lakshmi Kovil', 'Police Station'] },
+                        { gate: 'E3', landmarks: ['Mint', 'Apollo Hospital'] },
+                        { gate: 'E4', landmarks: ['Temple Park School'] }
                     ]
                 },
                 {
-                    id: 'b08', name: 'Tondiarpet', nameLocal: 'தொண்டியார்பேட்டை', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Tondiarpet Market', zone: 2,
+                    id: 'b08', name: 'Tondiarpet', nameLocal: 'தொண்டியார்பேட்டை', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Tondiarpet Market', zone: 2,
                     contact: '1860-425-1515, 155370',
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Island' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'E1', landmarks: ['Akasthya Apartments'] },
+                        { gate: 'E3', landmarks: ['Bus Stop', 'Divyang Friendly'] },
+                        { gate: 'E4', landmarks: ['Police Station', 'Parking'] }
                     ]
                 },
                 {
-                    id: 'b09', name: 'Sir Theagaraya College', nameLocal: 'சர் தியாகராயா கல்லூரி', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Sir Theagaraya College', zone: 2,
+                    id: 'b09', name: 'Sir Theagaraya College', nameLocal: 'சர் தியாகராயா கல்லூரி', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Sir Theagaraya College', zone: 2,
                     contact: '1860-425-1515, 155370',
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Island' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'E2', landmarks: ['Sir Theagaraya College', 'Maharani Theatre', 'Bus Stop'] },
+                        { gate: 'E3', landmarks: ['Parking', 'Divyang Friendly'] },
+                        { gate: 'E4', landmarks: ['Bombay Hotel'] }
                     ]
                 },
                 {
@@ -180,12 +185,13 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Island' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1', landmarks: ['Suburban Railway Station', 'H1 Police Station'] },
+                        { gate: 'A2', landmarks: ['Railway Quarters', 'Dakshinamoorthy Kovil'] },
+                        { gate: 'B2', landmarks: ['Mint Bus Terminus', 'Stanley Hospital'] }
                     ]
                 },
                 {
@@ -194,12 +200,13 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Island' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1', landmarks: ['Masjid E Muhalla', 'Post Office', 'Sowkarpet'] },
+                        { gate: 'B1', landmarks: ['Church', 'Kalikambal Temple'] },
+                        { gate: 'B2', landmarks: ['Police Station', 'Sri Kanyaka Parameswari College'] }
                     ]
                 },
                 {
@@ -208,12 +215,17 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Island' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1', landmarks: ['Madras High Court', 'Beach Station', 'Divyang Friendly'] },
+                        { gate: 'A2', landmarks: ['Broadway Bus Stand', 'Sowcarpet', 'Divyang Friendly'] },
+                        { gate: 'A3', landmarks: ['Parrys Corner', 'Sowcarpet'] },
+                        { gate: 'A4', landmarks: ['Beach Station', 'Divyang Friendly'] },
+                        { gate: 'B1', landmarks: ['Fort Railway Station'] },
+                        { gate: 'B2', landmarks: ['IOB Bank', 'LIC'] },
+                        { gate: 'B3', landmarks: ['Raja Annamalai Mandram'] }
                     ]
                 },
                 {
@@ -222,12 +234,15 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Island' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1/A2', landmarks: ['Egmore Railway Station', 'Hospital'] },
+                        { gate: 'A3', landmarks: ['Chennai Central Railway Station', 'Southern Railway HQ'] },
+                        { gate: 'B1/B2', landmarks: ['Park Railway Station'] },
+                        { gate: 'B3/B4', landmarks: ['Allikulam Court Complex'] },
+                        { gate: 'B5', landmarks: ['Ripon Building'] }
                     ]
                 },
                 {
@@ -236,12 +251,14 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Island' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1', landmarks: ['Omandurar Hospital', 'Bus Stop'] },
+                        { gate: 'A4', landmarks: ['Kalaivanar Arangam'] },
+                        { gate: 'B1', landmarks: ['Walajah Road', 'Marina Beach', 'Stadium'] },
+                        { gate: 'B2', landmarks: ['Ritchie Street', 'Khadi Craft'] }
                     ]
                 },
                 {
@@ -250,12 +267,14 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Island' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1', landmarks: ['Lift Access'] },
+                        { gate: 'A3', landmarks: ['Passport Office', 'Higginbothams', 'Poompuhar'] },
+                        { gate: 'B1/B2', landmarks: ['SBI', 'LIC Office', 'Express Avenue'] },
+                        { gate: 'B3/B4', landmarks: ['TNEB', 'IOB Bank', 'Spencer Plaza'] }
                     ]
                 },
                 {
@@ -264,12 +283,15 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Island' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1', landmarks: ['Bus Stop'] },
+                        { gate: 'A2/A3', landmarks: ['Express Avenue', 'LIC'] },
+                        { gate: 'A4', landmarks: ['Spencer Plaza', 'TNEB'] },
+                        { gate: 'B1', landmarks: ['CMRL Parking'] },
+                        { gate: 'B2/B3', landmarks: ['Apollo Hospital', 'British Council', 'Ibis Hotel'] }
                     ]
                 },
                 {
@@ -278,12 +300,15 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Island' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1', landmarks: ['DMS Office', 'Bus Stop'] },
+                        { gate: 'A2', landmarks: ['Stella Maris College', 'Divyang Friendly'] },
+                        { gate: 'A3', landmarks: ['Mount Road Bus stop', 'Courtyard Marriott'] },
+                        { gate: 'B1', landmarks: ['AG Office', 'Ramee Mall', 'Anna Arivalayam'] },
+                        { gate: 'B2/B3', landmarks: ['Century Plaza'] }
                     ]
                 },
                 {
@@ -292,12 +317,14 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Island' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1/A2', landmarks: ['Eldams Road', 'Food Inspection Unit'] },
+                        { gate: 'A3', landmarks: ['Pondy Bazar', 'T. Nagar'] },
+                        { gate: 'B1', landmarks: ['Cenotaph Road', 'Alwarpet', 'Apollo Hospital'] },
+                        { gate: 'B2/B3', landmarks: ['Metro Parking', 'Bus Stand', 'Raintree'] }
                     ]
                 },
                 {
@@ -306,12 +333,12 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Island' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1', landmarks: ['Apollo'] },
+                        { gate: 'A2/B1/B2/B3', landmarks: ['Teynampet Bus Stop', 'Alwarpet'] }
                     ]
                 },
                 {
@@ -320,12 +347,13 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Island' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1', landmarks: ['Todd Hunter Nagar'] },
+                        { gate: 'A2/A3', landmarks: ['Bus Stand'] },
+                        { gate: 'B3/B4', landmarks: ['Bazaar Road'] }
                     ]
                 },
                 {
@@ -341,8 +369,8 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators', 'Differently abled Parking', 'Customer Care Office'],
                     platforms: [
-                        { no: 1, towards: 'Chennai International Airport' },
-                        { no: 2, towards: 'Wimco Nagar Depot' }
+                        { no: 1, towards: 'Airport', type: 'Side' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Side' }
                     ],
                     gates: [
                         { gate: 'A', landmarks: ['Ramada Plaza', 'Anna University', 'CMRL Parking'] },
@@ -350,17 +378,17 @@ const chennaiMetro = {
                     ]
                 },
                 {
-                    id: 'b22', name: 'Guindy', nameLocal: 'கிண்டி', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Guindy National Park, IIT', zone: 4,
+                    id: 'b22', name: 'Guindy', nameLocal: 'கிண்டி', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Guindy National Park, IIT', zone: 4,
                     contact: '1860-425-1515, 155370',
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Side' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Side' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: '1', landmarks: ['Guindy Railway Station', 'Guindy Industrial Estate'] },
+                        { gate: '2', landmarks: ['Hotel Hablis', 'Phoenix Mall'] }
                     ]
                 },
                 {
@@ -369,12 +397,14 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Side' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Side' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A', landmarks: ['Urban Square', 'DLF Cyber City'] },
+                        { gate: 'B', landmarks: ['Bus Stop'] },
+                        { gate: 'C', landmarks: ['REMCO College', 'DLF Cyber City'] },
+                        { gate: 'D', landmarks: ['RTO Office'] }
                     ]
                 },
                 {
@@ -383,12 +413,12 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Side' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Side' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1', landmarks: ['Bus Stop', 'Saravana Bhavan', 'Radisson Blu'] },
+                        { gate: 'A2', landmarks: ['Alandur Post Office', 'Sankarnethralaya Eye Hospital', 'St. Mount Church'] }
                     ]
                 },
                 {
@@ -397,12 +427,13 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport', type: 'Side' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Side' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1/A2', landmarks: ['Suburban Railway Station', 'A.M. Jain College'] },
+                        { gate: 'B1', landmarks: ['Post Office', 'International Air Cargo'] },
+                        { gate: 'B2', landmarks: ['Bus Stop Towards Nanganallur'] }
                     ]
                 },
                 {
@@ -411,12 +442,12 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Terminal', type: 'Side' },
+                        { no: 2, towards: 'Wimco Nagar Depot', type: 'Side' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A', landmarks: ['Aero Hub Mall', 'Tirusulam Railway Station', 'GST Road'] },
+                        { gate: 'B', landmarks: ['Chennai Airport Terminals', 'Apollo Pharmacy', 'Aero Hub Fast Food'] }
                     ]
                 },
             ],
@@ -443,12 +474,15 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Airport / St. Thomas Mount', type: 'Island' },
+                        { no: 2, towards: 'Airport / St. Thomas Mount', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1/A2', landmarks: ['Egmore Railway Station', 'Hospital'] },
+                        { gate: 'A3', landmarks: ['Chennai Central Railway Station', 'Southern Railway HQ'] },
+                        { gate: 'B1/B2', landmarks: ['Park Railway Station'] },
+                        { gate: 'B3/B4', landmarks: ['Allikulam Court Complex'] },
+                        { gate: 'B5', landmarks: ['Ripon Building'] }
                     ]
                 },
                 {
@@ -457,12 +491,12 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'St. Thomas Mount', type: 'Island' },
+                        { no: 2, towards: 'Central', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1/A3', landmarks: ['Egmore Railway Station'] },
+                        { gate: 'B2', landmarks: ['Dina Thanthi', 'Periyar Book House'] }
                     ]
                 },
                 {
@@ -471,12 +505,13 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'St. Thomas Mount', type: 'Island' },
+                        { no: 2, towards: 'Central', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1', landmarks: ['Flowers Road', 'EVR Periyar Road', 'Divyang Friendly'] },
+                        { gate: 'A2', landmarks: ['Metro Parking', 'Hotel Abu Palace', 'Indusland Bank'] },
+                        { gate: 'A3', landmarks: ['Sports Development Authority', 'District Library', 'Gengu Reddy Subway'] }
                     ]
                 },
                 {
@@ -485,12 +520,15 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'St. Thomas Mount', type: 'Island' },
+                        { no: 2, towards: 'Central', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1', landmarks: ['Kilpauk Medical College', 'Fire Station', 'KKR Hospital'] },
+                        { gate: 'A2', landmarks: ['Apollo Hospital', 'Divyang Friendly'] },
+                        { gate: 'A3', landmarks: ['Apollo Hospital'] },
+                        { gate: 'B1', landmarks: ['Kilpauk Hospital', 'ECO Park'] },
+                        { gate: 'B2/B3', landmarks: ['VS Hospital', 'New Hope Hospital', 'EGA Theatre'] }
                     ]
                 },
                 {
@@ -499,12 +537,13 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'St. Thomas Mount', type: 'Island' },
+                        { no: 2, towards: 'Central', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1', landmarks: ['CMRL Parking'] },
+                        { gate: 'B2', landmarks: ['Pachaiyappa\'s College', 'Maharishi School'] },
+                        { gate: 'B3', landmarks: ['St. George School', 'St. George Arts & Science College', 'St. George Church'] }
                     ]
                 },
                 {
@@ -513,12 +552,14 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'St. Thomas Mount', type: 'Island' },
+                        { no: 2, towards: 'Central', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1', landmarks: ['Aminjikarai Signal', 'Aminjikarai Market', 'Sky Walk', 'Hande Hospital', 'Divyang Friendly'] },
+                        { gate: 'A2', landmarks: ['Thiru Vi.Ka. Park', 'Corporation Regional Office', 'Billroth Hospital'] },
+                        { gate: 'B1', landmarks: ['Thiru.vi.ka Park', 'K3 Police Station', 'Skating park', 'Sai Baba Temple'] },
+                        { gate: 'B2', landmarks: ['Post Office'] }
                     ]
                 },
                 {
@@ -527,12 +568,14 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'St. Thomas Mount', type: 'Island' },
+                        { no: 2, towards: 'Central', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1', landmarks: ['Apollo Clinic', 'Chinthamani', 'Valliammal College', 'Divyang Friendly'] },
+                        { gate: 'A2', landmarks: ['Valliammal College'] },
+                        { gate: 'A3', landmarks: ['Angels Shop', 'Amma Arangam'] },
+                        { gate: 'B1', landmarks: ['Krishna Sweet Shop', 'McRennett Bakery'] }
                     ]
                 },
                 {
@@ -541,12 +584,14 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'St. Thomas Mount', type: 'Island' },
+                        { no: 2, towards: 'Central', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1/A2', landmarks: ['Anna Nagar Tower Park', 'Luke Church', 'Iyyappan Kovil'] },
+                        { gate: 'A3', landmarks: ['Shanthi Colony', 'Anna Adarsh College'] },
+                        { gate: 'B1/B2', landmarks: ['Anna Nagar Post Office', 'Chaya & Kadi'] },
+                        { gate: 'B3', landmarks: ['Saravana Bhavan Hotel', 'Kora Food Street'] }
                     ]
                 },
                 {
@@ -555,12 +600,15 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'St. Thomas Mount', type: 'Island' },
+                        { no: 2, towards: 'Central', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1', landmarks: ['Thirumangalam Flyover', 'GRT Jewellers'] },
+                        { gate: 'A2', landmarks: ['Anna Nagar Roundtana'] },
+                        { gate: 'A3/A4', landmarks: ['IAS Academy', 'GST Office'] },
+                        { gate: 'B1', landmarks: ['VR Chennai Mall'] },
+                        { gate: 'B2', landmarks: ['Koyambedu Market Road'] }
                     ]
                 },
                 {
@@ -569,12 +617,15 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'St. Thomas Mount', type: 'Side' },
+                        { no: 2, towards: 'Central', type: 'Island' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A', landmarks: ['Maduravoyal', 'Poonamallee', 'Omni Bus Stand'] },
+                        { gate: 'B', landmarks: ['Koyambedu Omni Bus Stand', 'CMDA Building'] },
+                        { gate: 'C', landmarks: ['CMRL Depot / Admin Building', 'Koyambedu Market'] },
+                        { gate: 'D', landmarks: ['Kurungaleeswarar Temple', 'Post Office'] },
+                        { gate: 'E', landmarks: ['Rohini Theatre', 'VR Mall'] }
                     ]
                 },
                 {
@@ -583,12 +634,11 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'St. Thomas Mount', type: 'Side' },
+                        { no: 2, towards: 'Central', type: 'Side' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A', landmarks: ['Omni Bus Stand', 'Koyambedu Market', 'Divyang Friendly'] }
                     ]
                 },
                 {
@@ -597,12 +647,14 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'St. Thomas Mount', type: 'Side' },
+                        { no: 2, towards: 'Central', type: 'Side' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A', landmarks: ['HDFC Bank', 'DDGD Vaishnav College', 'Hotel Green Grande Inn'] },
+                        { gate: 'B', landmarks: ['Aishwarya Mahal', 'Hotel Radha Regent', 'AR Rahman KM College'] },
+                        { gate: 'C', landmarks: ['Annamal Institute Of Hotel Management', 'Hotel Green Grande Inn', 'Divyang Friendly'] },
+                        { gate: 'D', landmarks: ['SV High School'] }
                     ]
                 },
                 {
@@ -611,12 +663,14 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'St. Thomas Mount', type: 'Side' },
+                        { no: 2, towards: 'Central', type: 'Side' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A', landmarks: ['Vadapalani Market', 'SIMS Hospital', 'Vijaya Hospital'] },
+                        { gate: 'B', landmarks: ['NEXUS Mall', 'Vadapalani Bus Depot'] },
+                        { gate: 'C', landmarks: ['Murugan Temple', 'Vadapalani Post Office', 'Forum Vijaya Mall'] },
+                        { gate: 'D', landmarks: ['Murugan Temple', 'Vadapalani Post Office'] }
                     ]
                 },
                 {
@@ -625,12 +679,14 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'St. Thomas Mount', type: 'Side' },
+                        { no: 2, towards: 'Central', type: 'Side' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'C', landmarks: ['ESI Hospital', 'Ashok Nagar Bus Stop', 'KK Nagar Bus Depot'] },
+                        { gate: 'D', landmarks: ['ESI Hospital', 'Post Office', 'KV School', 'The Gokulam Park Hotel'] },
+                        { gate: 'E', landmarks: ['ESI Hospital', 'BHEL Staff Quarters'] },
+                        { gate: 'F', landmarks: ['Udhayam Theatre'] }
                     ]
                 },
                 {
@@ -639,12 +695,12 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'St. Thomas Mount', type: 'Side' },
+                        { no: 2, towards: 'Central', type: 'Side' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1', landmarks: ['BNR', 'SIDCO Industrial Estate'] },
+                        { gate: 'B1', landmarks: ['Bus Stop Towards Koyambedu', 'Hilton Hotel', 'Olympia Tech Park'] }
                     ]
                 },
                 {
@@ -653,12 +709,14 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 3, towards: 'St. Thomas Mount', type: 'Side' },
+                        { no: 4, towards: 'Central', type: 'Side' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A', landmarks: ['Urban Square', 'DLF Cyber City'] },
+                        { gate: 'B', landmarks: ['Bus Stop'] },
+                        { gate: 'C', landmarks: ['REMCO College', 'DLF Cyber City'] },
+                        { gate: 'D', landmarks: ['RTO Office'] }
                     ]
                 },
                 {
@@ -667,14 +725,12 @@ const chennaiMetro = {
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
                     platforms: [
-                        { no: 1, towards: 'Airport / St. Thomas Mount' },
-                        { no: 2, towards: 'Wimco Nagar Depot / Central' }
+                        { no: 1, towards: 'Central', type: 'Side' }
                     ],
                     gates: [
-                        { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
-                        { gate: 'B', landmarks: ['Residential Area Exit'] }
+                        { gate: 'A1', landmarks: ['CMRL Parking', 'Guindy Railway Station', 'Hotel Hablis'] }
                     ]
-                },
+                }
             ],
         },
 

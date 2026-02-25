@@ -86,6 +86,20 @@ function buildStation(name, idPrefix, idx, lineColor) {
         interchangeWith = lineColor === 'blue' ? ['green'] : ['blue'];
     }
 
+    let towards1 = 'Terminal 1';
+    let towards2 = 'Terminal 2';
+
+    if (lineColor === 'red') {
+        towards1 = 'LB Nagar';
+        towards2 = 'Miyapur';
+    } else if (lineColor === 'blue') {
+        towards1 = 'Nagole';
+        towards2 = 'Raidurg';
+    } else if (lineColor === 'green') {
+        towards1 = 'MG Bus Station';
+        towards2 = 'JBS Parade Ground';
+    }
+
     const { lat = null, lon = null } = stationCoords[name] ?? {};
     return {
         id: `${idPrefix}${String(idx + 1).padStart(2, '0')}`,
@@ -101,10 +115,10 @@ function buildStation(name, idPrefix, idx, lineColor) {
         fareZone: null,
         contact: '1860-258-2580',
         parking: true,
-        facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
+        facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators', 'Smart Card Vending', 'Public Address System'],
         platforms: [
-            { no: 1, towards: 'Terminal 1' },
-            { no: 2, towards: 'Terminal 2' }
+            { no: 1, towards: towards1 },
+            { no: 2, towards: towards2 }
         ],
         gates: [
             { gate: 'A', landmarks: ['Main Road Entrance', 'Bus Stop'] },
@@ -116,14 +130,14 @@ function buildStation(name, idPrefix, idx, lineColor) {
 const data = {
     id: 'hyderabad',
     name: 'Hyderabad Metro',
-    nameLocal: 'హైదరాబాద్ మెట్రో',
+    nameLocal: 'హైదరాబాద్ మెટ્રો',
     city: 'Hyderabad',
     state: 'Telangana',
-    operator: 'Hyderabad Metro Rail Limited (HMRL)',
+    operator: 'Hyderabad Metro Rail Limited (HMRL) / L&T Metro',
     totalStations: 57,
     totalLength: '69 km',
     totalLines: 3,
-    phase: 'Phase 1 (Operational)',
+    phase: 'Phase 1',
     established: '2017',
     website: 'https://www.ltmetro.com/',
     lines: [
@@ -132,11 +146,11 @@ const data = {
             name: 'Red Line',
             color: '#F44336',
             colorLight: '#EF9A9A',
-            corridor: 'Corridor 1',
+            corridor: 'Miyapur - LB Nagar',
             length: '29.21 km',
             totalStations: 27,
             status: 'operational',
-            operationalSince: '2017',
+            operationalSince: '2017-11-29',
             frequency: '5–8 min',
             firstTrain: '6:00 AM',
             lastTrain: '11:00 PM',
@@ -149,11 +163,11 @@ const data = {
             name: 'Blue Line',
             color: '#2196F3',
             colorLight: '#64B5F6',
-            corridor: 'Corridor 3',
+            corridor: 'Nagole - Raidurg',
             length: '27.00 km',
             totalStations: 23,
             status: 'operational',
-            operationalSince: '2017',
+            operationalSince: '2017-11-29',
             frequency: '5–8 min',
             firstTrain: '6:00 AM',
             lastTrain: '11:00 PM',
@@ -166,11 +180,11 @@ const data = {
             name: 'Green Line',
             color: '#4CAF50',
             colorLight: '#81C784',
-            corridor: 'Corridor 2',
+            corridor: 'JBS - MGBS',
             length: '11.00 km',
             totalStations: 9,
             status: 'operational',
-            operationalSince: '2020',
+            operationalSince: '2020-02-07',
             frequency: '5–8 min',
             firstTrain: '6:00 AM',
             lastTrain: '11:00 PM',
