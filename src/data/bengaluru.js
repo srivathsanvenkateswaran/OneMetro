@@ -1,8 +1,184 @@
 /**
  * Bengaluru Namma Metro — Complete Station & Line Data
- * Source: BMRCL Official + Wikipedia
- * Includes Phase 1+2 (operational) + Phase 2 (under construction)
+ * Enriched with gate landmarks, platform directions, and facility data.
  */
+import { getStationCoords } from "./stationCoords.js";
+
+const purpleLineStationsData = [
+    { name: 'Challaghatta', nameLocal: 'ಚಳ್ಳಘಟ್ಟ', type: 'elevated', landmark: 'Challaghatta Junction' },
+    { name: 'Kengeri Bus Terminal', nameLocal: 'ಕೆಂಗೇರಿ ಬಸ್ ಟರ್ಮಿನಲ್', type: 'elevated', landmark: 'Kengeri Bus Stand', gates: [{ gate: '1', landmarks: ['Mysuru Road'] }, { gate: '2', landmarks: ['Kengeri Bus Terminal'] }] },
+    { name: 'Kengeri', nameLocal: 'ಕೆಂಗೇರಿ', type: 'elevated', landmark: 'Kengeri Town' },
+    { name: 'Pattanagere', nameLocal: 'ಪಟ್ಟಣಗೆರೆ', type: 'elevated', landmark: 'Global Village Tech Park' },
+    { name: 'Jnanabharathi', nameLocal: 'ಜ್ಞಾನಭಾರತಿ', type: 'elevated', landmark: 'Bangalore University Main Gate' },
+    { name: 'Rajarajeshwari Nagar', nameLocal: 'ರಾಜರಾಜೇಶ್ವರಿ ನಗರ', type: 'elevated', landmark: 'RR Nagar Arch' },
+    { name: 'Mysuru Road', nameLocal: 'ಮೈಸೂರು ರಸ್ತೆ', type: 'elevated', landmark: 'Mysuru Road Satellite Bus Station' },
+    { name: 'Deepanjali Nagar', nameLocal: 'ದೀಪಾಂಜಲಿ ನಗರ', type: 'elevated', landmark: 'Deepanjali Nagar' },
+    { name: 'Attiguppe', nameLocal: 'ಅಟ್ಟಿಗುಪ್ಪೆ', type: 'elevated', landmark: 'Attiguppe' },
+    { name: 'Vijayanagar', nameLocal: 'ವಿಜಯನಗರ', type: 'elevated', landmark: 'Vijayanagar BDA Complex' },
+    { name: 'Hosahalli', nameLocal: 'ಹೊಸಹಳ್ಳಿ', type: 'elevated', landmark: 'Hosahalli' },
+    { name: 'Magadi Road', nameLocal: 'ಮಾಗಡಿ ರಸ್ತೆ', type: 'elevated', landmark: 'Magadi Road Crossing' },
+    { name: 'Krantivira Sangolli Rayanna Railway Station', nameLocal: 'ಕ್ರಾಂತಿವೀರ ಸಂಗೊಳ್ಳಿ ರಾಯಣ್ಣ ರೈಲ್ವೆ ನಿಲ್ದಾಣ', type: 'underground', isIsland: true, landmark: 'KSR Bengaluru City Railway Station', gates: [{ gate: '1', landmarks: ['Railway Station Main Entry'] }, { gate: '2', landmarks: ['Okalipuram'] }] },
+    {
+        name: 'Nadaprabhu Kempegowda Station, Majestic',
+        nameLocal: 'ನಡಪ್ರಭು ಕೆಂಪೇಗೌಡ ನಿಲ್ದಾಣ, ಮೆಜೆಸ್ಟಿಕ್',
+        type: 'underground',
+        isIsland: true,
+        isInterchange: true,
+        interchangeWith: ['green'],
+        landmark: 'Kempegowda Bus Station (Majestic)',
+        gates: [
+            { gate: 'A', landmarks: ['KSR Railway Station Entry'] },
+            { gate: 'B', landmarks: ['Majestic Bus Stand (KSRTC)'] },
+            { gate: 'C', landmarks: ['BMTC Bus Stand'] },
+            { gate: 'D', landmarks: ['Dhanvanthri Road'] }
+        ]
+    },
+    { name: 'Sir M. Visveshwaraya', nameLocal: 'ಸರ್ ಎಂ. ವಿಶ್ವೇಶ್ವರಯ್ಯ', type: 'underground', isIsland: true, landmark: 'Central College', gates: [{ gate: '1', landmarks: ['Central College'] }, { gate: '2', landmarks: ['Maharani College'] }] },
+    { name: 'Vidhana Soudha', nameLocal: 'ವಿಧಾನ ಸೌಧ', type: 'underground', isIsland: true, landmark: 'Karnataka High Court', gates: [{ gate: 'A', landmarks: ['Vidhana Soudha'] }, { gate: 'B', landmarks: ['High Court / GPO'] }] },
+    { name: 'Cubbon Park', nameLocal: 'ಕಬ್ಬನ್ ಪಾರ್ಕ್', type: 'underground', isIsland: true, landmark: 'Cubbon Park Entrance', gates: [{ gate: '1', landmarks: ['Cubbon Park'] }, { gate: '2', landmarks: ['Chinnaswamy Stadium'] }] },
+    { name: 'Dr. B.R. Ambedkar Station, Vidhana Soudha', nameLocal: 'ಡಾ. ಬಿ.ಆರ್. ಅಂಬೇಡ್ಕರ್ ನಿಲ್ದಾಣ, ವಿಧಾನ ಸೌಧ', type: 'underground', isIsland: true, landmark: 'Vikasa Soudha' },
+    { name: 'MG Road', nameLocal: 'ಎಂ.ಜಿ. ರಸ್ತೆ', type: 'underground', isIsland: true, isInterchange: true, interchangeWith: ['pink'], landmark: 'Brigade Road Junction', gates: [{ gate: 'A', landmarks: ['Brigade Road', 'MG Road'] }, { gate: 'B', landmarks: ['Church Street'] }] },
+    { name: 'Trinity', nameLocal: 'ಟ್ರಿನಿಟಿ', type: 'elevated', landmark: 'Trinity Circle' },
+    { name: 'Halasuru', nameLocal: 'ಹಲಸೂರು', type: 'elevated', landmark: 'Halasuru Lake' },
+    { name: 'Indiranagar', nameLocal: 'ಇಂದಿರಾನಗರ', type: 'elevated', landmark: '100 Feet Road', gates: [{ gate: '1', landmarks: ['100 FT Road'] }, { gate: '2', landmarks: ['CMH Road'] }] },
+    { name: 'Swami Vivekananda Road', nameLocal: 'ಸ್ವಾಮಿ ವಿವೇಕಾನಂದ ರಸ್ತೆ', type: 'elevated', landmark: 'Old Madras Road' },
+    { name: 'Baiyappanahalli', nameLocal: 'ಬೈಯಪ್ಪನಹಳ್ಳಿ', type: 'elevated', landmark: 'Namma Metro Depot' },
+    { name: 'Benniganahalli', nameLocal: 'ಬೆಣ್ಣಿಗನಹಳ್ಳಿ', type: 'elevated', landmark: 'Benniganahalli Flyover' },
+    { name: 'K.R. Puram', nameLocal: 'ಕೆ.ಆರ್. ಪುರಂ', type: 'elevated', isInterchange: true, interchangeWith: ['blue'], landmark: 'KR Puram Railway Station', gates: [{ gate: '1', landmarks: ['Railway Station'] }, { gate: '2', landmarks: ['Tin Factory Side'] }] },
+    { name: 'Garudacharpalya', nameLocal: 'ಗರುಡಾಚಾರ್ಪಾಳ್ಯ', type: 'elevated', landmark: 'Garudacharpalya' },
+    { name: 'Hoodi', nameLocal: 'ಹೂಡಿ', type: 'elevated', landmark: 'Hoodi Junction' },
+    { name: 'Seetharamapalya', nameLocal: 'ಸೀತಾರಾಮಪಾಳ್ಯ', type: 'elevated', landmark: 'Seetharamapalya' },
+    { name: 'Kundalahalli', nameLocal: 'ಕುಂದಲಹಳ್ಳಿ', type: 'elevated', landmark: 'Kundalahalli Gate' },
+    { name: 'Nallurhalli', nameLocal: 'ನಲ್ಲೂರ್‌ಹಳ್ಳಿ', type: 'elevated', landmark: 'Nallurhalli' },
+    { name: 'Sri Sathya Sai Hospital', nameLocal: 'ಶ್ರೀ ಸತ್ಯ ಸಾಯಿ ಆಸ್ಪತ್ರೆ', type: 'elevated', landmark: 'Sathya Sai Ashram/Hospital' },
+    { name: 'Pattanduru Agrahara', nameLocal: 'ಪಟ್ಟಂದೂರ್ ಅಗ್ರಹಾರ', type: 'elevated', landmark: 'ITPL Back Gate' },
+    { name: 'Kadugodi Tree Park', nameLocal: 'ಕಡುಗೋಡಿ ಟ್ರೀ ಪಾರ್ಕ್', type: 'elevated', landmark: 'Kadugodi' },
+    { name: 'Hopefarm Channasandra', nameLocal: 'ಹೋಪ್‌ಫಾರ್ಮ್ ಚನ್ನಸಂದ್ರ', type: 'elevated', landmark: 'Hope Farm Circle' },
+    { name: 'Whitefield (Kadugodi)', nameLocal: 'ವೈಟ್‌ಫೀಲ್ಡ್ (ಕಡುಗೋಡಿ)', type: 'elevated', landmark: 'Whitefield Railway Station', gates: [{ gate: '1', landmarks: ['Railway Station Entry'] }, { gate: '2', landmarks: ['Kadugodi Bus Stand'] }] }
+];
+
+const greenLineStationsData = [
+    { name: 'Madavara (BIEC)', nameLocal: 'ಮಾದಾವರ (BIEC)', type: 'elevated', landmark: 'Bangalore International Exhibition Centre' },
+    { name: 'Chikkabidarakallu', nameLocal: 'ಚಿಕ್ಕಬಿದರಕಲ್ಲು', type: 'elevated', landmark: 'Jindal Naturecure' },
+    { name: 'Manjunathanagar', nameLocal: 'ಮಂಜುನಾಥನಗರ', type: 'elevated', landmark: 'Manjunathanagar' },
+    { name: 'Nagasandra', nameLocal: 'ನಾಗಸಂದ್ರ', type: 'elevated', landmark: 'Nagasandra' },
+    { name: 'Dasarahalli', nameLocal: 'ದಾಸರಹಳ್ಳಿ', type: 'elevated', landmark: 'Dasarahalli' },
+    { name: 'Jalahalli', nameLocal: 'ಜಲಹಳ್ಳಿ', type: 'elevated', landmark: 'Jalahalli Cross' },
+    { name: 'Peenya Industry', nameLocal: 'ಪೀಣ್ಯ ಇಂಡಸ್ಟ್ರಿ', type: 'elevated', landmark: 'Peenya Industrial Area' },
+    { name: 'Peenya', nameLocal: 'ಪೀಣ್ಯ', type: 'elevated', landmark: 'Peenya Village' },
+    { name: 'Goraguntepalya', nameLocal: 'ಗೊರಗುಂಟೆಪಾಳ್ಯ', type: 'elevated', landmark: 'Taj Yeshwantpur' },
+    { name: 'Yeshwanthpur', nameLocal: 'ಯಶವಂತಪುರ', type: 'elevated', landmark: 'Yeshwanthpur Railway Station', gates: [{ gate: '1', landmarks: ['Railway Station Entry'] }, { gate: '2', landmarks: ['Tumkur Road'] }] },
+    { name: 'Sandal Soap Factory', nameLocal: 'ಶ್ರೀಗಂಧ ಸೋಪ್ ಕಾರ್ಖಾನೆ', type: 'elevated', landmark: 'ISKCON Temple' },
+    { name: 'Mahalakshmi', nameLocal: 'ಮಹಾಲಕ್ಷ್ಮಿ', type: 'elevated', landmark: 'Mahalakshmi Layout' },
+    { name: 'Rajajinagar', nameLocal: 'ರಾಜಾಜಿನಗರ', type: 'elevated', landmark: 'Rajajinagar' },
+    { name: 'Mahakavi Kuvempu Road', nameLocal: 'ಮಹಾಕವಿ ಕುವೆಂಪು ರಸ್ತೆ', type: 'elevated', landmark: 'Kuvempu Road' },
+    { name: 'Srirampura', nameLocal: 'ಶ್ರೀರಾಂಪುರ', type: 'elevated', landmark: 'Srirampura' },
+    { name: 'Mantri Square Sampige Road', nameLocal: 'ಮಂತ್ರಿ ಸ್ಕ್ವೇರ್ ಸಂಪಿಗೆ ರಸ್ತೆ', type: 'elevated', landmark: 'Mantri Square Mall' },
+    {
+        name: 'Nadaprabhu Kempegowda Station, Majestic',
+        nameLocal: 'ನಡಪ್ರಭು ಕೆಂಪೇಗೌಡ ನಿಲ್ದಾಣ, ಮೆಜೆಸ್ಟಿಕ್',
+        type: 'underground',
+        isIsland: true,
+        isInterchange: true,
+        interchangeWith: ['purple'],
+        landmark: 'Interchange Junction',
+        gates: [{ gate: 'A', landmarks: ['Railway Station'] }, { gate: 'B', landmarks: ['Bus Stand'] }]
+    },
+    { name: 'Chickpete', nameLocal: 'ಚಿಕ್ಕಪೇಟೆ', type: 'underground', isIsland: true, landmark: 'Chickpete Market' },
+    { name: 'Krishna Rajendra Market', nameLocal: 'ಕೃಷ್ಣ ರಾಜೇಂದ್ರ ಮಾರುಕಟ್ಟೆ', type: 'underground', isIsland: true, landmark: 'K.R. Market' },
+    { name: 'National College', nameLocal: 'ನ್ಯಾಷನಲ್ ಕಾಲೇಜ್', type: 'elevated', landmark: 'National College Basavanagudi' },
+    { name: 'Lalbagh', nameLocal: 'ಲಾಲ್‌ಬಾಗ್', type: 'elevated', landmark: 'Lalbagh West Gate' },
+    { name: 'South End Circle', nameLocal: 'ಸೌತ್ ಎಂಡ್ ಸರ್ಕಲ್', type: 'elevated', landmark: 'South End Circle' },
+    { name: 'Jayanagar', nameLocal: 'ಜಯನಗರ', type: 'elevated', landmark: 'Jayanagar 4th Block' },
+    { name: 'Rashtreeya Vidyalaya Road', nameLocal: 'ರಾಷ್ಟ್ರೀಯ ವಿದ್ಯಾಲಯ ರಸ್ತೆ', type: 'elevated', isInterchange: true, interchangeWith: ['yellow'], landmark: 'RV Road' },
+    { name: 'Banashankari', nameLocal: 'ಬನಶಂಕರಿ', type: 'elevated', landmark: 'Banashankari Temple' },
+    { name: 'J.P. Nagar', nameLocal: 'ಜೆ.ಪಿ. ನಗರ', type: 'elevated', landmark: 'JP Nagar 1st Phase' },
+    { name: 'Yelachenahalli', nameLocal: 'ಯಲೆಚೇನಹಳ್ಳಿ', type: 'elevated', landmark: 'Yelachenahalli' },
+    { name: 'Konanakunte Cross', nameLocal: 'ಕೊಣನಕುಂಟೆ ಕ್ರಾಸ್', type: 'elevated', landmark: 'Forum Mall South' },
+    { name: 'Doddakallasandra', nameLocal: 'ದೊಡ್ಡಕಲ್ಲಸಂದ್ರ', type: 'elevated', landmark: 'Doddakallasandra' },
+    { name: 'Vajrahalli', nameLocal: 'ವಜ್ರಹಳ್ಳಿ', type: 'elevated', landmark: 'Vajrahalli' },
+    { name: 'Thalaghattapura', nameLocal: 'ತಲಘಟ್ಟಪುರ', type: 'elevated', landmark: 'Thalaghattapura' },
+    { name: 'Silk Institute', nameLocal: 'ಸಿಲ್ಕ್ ಇನ್‌ಸ್ಟಿಟ್ಯೂಟ್', type: 'elevated', landmark: 'Silk Institute Terminus' }
+];
+
+const yellowLineStationsData = [
+    { name: 'Rashtreeya Vidyalaya Road', nameLocal: 'ರಾಷ್ಟ್ರೀಯ ವಿದ್ಯಾಲಯ ರಸ್ತೆ', type: 'elevated', isInterchange: true, interchangeWith: ['green'], landmark: 'RV Road Interchange' },
+    { name: 'Ragigudda', nameLocal: 'ರಾಗಿಗುಡ್ಡ', type: 'elevated', landmark: 'Ragigudda Anjaneya Temple' },
+    { name: 'Jayadeva Hospital', nameLocal: 'ಜಯದೇವ ಆಸ್ಪತ್ರೆ', type: 'elevated', isInterchange: true, interchangeWith: ['pink'], landmark: 'Jayadeva Interchange' },
+    { name: 'BTM Layout', nameLocal: 'ಬಿಟಿಎಂ ಲೇಔಟ್', type: 'elevated', landmark: 'BTM 2nd Stage' },
+    { name: 'Central Silk Board', nameLocal: 'ಸೆಂಟ್ರಲ್ ಸಿಲ್ಕ್ ಬೋರ್ಡ್', type: 'elevated', isInterchange: true, interchangeWith: ['blue'], landmark: 'Silk Board Junction' },
+    { name: 'Bommanahalli', nameLocal: 'ಬೊಮ್ಮನಹಳ್ಳಿ', type: 'elevated', landmark: 'Bommanahalli' },
+    { name: 'Hongasandra', nameLocal: 'ಹೊಂಗಸಂದ್ರ', type: 'elevated', landmark: 'Hongasandra' },
+    { name: 'Kudlu Gate', nameLocal: 'ಕುಡ್ಲು ಗೇಟ್', type: 'elevated', landmark: 'Kudlu Gate' },
+    { name: 'Singasandra', nameLocal: 'ಸಿಂಗಸಂದ್ರ', type: 'elevated', landmark: 'Singasandra' },
+    { name: 'Hosa Road', nameLocal: 'ಹೊಸ ರಸ್ತೆ', type: 'elevated', landmark: 'Hosa Road' },
+    { name: 'Beratena Agrahara', nameLocal: 'ಬೆರಟೇನ ಅಗ್ರಹಾರ', type: 'elevated', landmark: 'Beratena Agrahara' },
+    { name: 'Electronic City', nameLocal: 'ಎಲೆಕ್ಟ್ರಾನಿಕ್ ಸಿಟಿ', type: 'elevated', landmark: 'ECity Phase 1' },
+    { name: 'Konappana Agrahara', nameLocal: 'ಕೊಣಪ್ಪನ ಅಗ್ರಹಾರ', type: 'elevated', landmark: 'Infosys Foundation', gates: [{ gate: '1', landmarks: ['Infosys Campus'] }, { gate: '2', landmarks: ['Electronic City Phase 2'] }] },
+    { name: 'Huskur Road', nameLocal: 'ಹುಸ್ಕೂರ್ ರಸ್ತೆ', type: 'elevated', landmark: 'Huskur Road' },
+    { name: 'Hebbagodi', nameLocal: 'ಹೆಬ್ಬಗೋಡಿ', type: 'elevated', landmark: 'Hebbagodi' },
+    { name: 'Bommasandra', nameLocal: 'ಬೊಮ್ಮಸಂದ್ರ', type: 'elevated', landmark: 'Bommasandra Industrial Area' }
+];
+
+function buildStation(st, idPrefix, idx, lineId) {
+    let towards1 = 'Terminal 1';
+    let towards2 = 'Terminal 2';
+
+    if (lineId === 'purple') {
+        towards1 = 'Whitefield (Kadugodi)';
+        towards2 = 'Challaghatta';
+    } else if (lineId === 'green') {
+        towards1 = 'Silk Institute';
+        towards2 = 'Madavara (BIEC)';
+    } else if (lineId === 'yellow') {
+        towards1 = 'Bommasandra';
+        towards2 = 'Rashtreeya Vidyalaya Road';
+    } else if (lineId === 'pink') {
+        towards1 = 'Nagawara';
+        towards2 = 'Kalena Agrahara';
+    } else if (lineId === 'blue') {
+        towards1 = 'KIA Terminals';
+        towards2 = 'Central Silk Board';
+    }
+
+    const baseFacilities = [
+        'Lifts',
+        'Escalators',
+        'CCTV',
+        'Restrooms',
+        'Drinking Water',
+        'First Aid',
+        'Customer Care',
+        'Smart Card Top-up'
+    ];
+
+    if (lineId === 'pink' && st.type === 'underground') {
+        baseFacilities.push('Full-height Platform Screen Doors (PSDs)');
+    } else if (lineId === 'yellow') {
+        baseFacilities.push('Half-height Platform Screen Doors (PSDs)');
+    }
+
+    return {
+        id: `${idPrefix}${String(idx + 1).padStart(2, '0')}`,
+        name: st.name,
+        nameLocal: st.nameLocal,
+        type: st.type,
+        isInterchange: st.isInterchange || false,
+        interchangeWith: st.interchangeWith || [],
+        landmark: st.landmark,
+        zone: 1,
+        parking: true,
+        facilities: baseFacilities,
+        platforms: [
+            { no: 1, towards: towards1, type: st.isIsland ? 'Island' : 'Side' },
+            { no: 2, towards: towards2, type: st.isIsland ? 'Island' : 'Side' }
+        ],
+        gates: st.gates || [
+            { gate: 'A', landmarks: [st.landmark || 'Main Entrance'] },
+            { gate: 'B', landmarks: ['Secondary Exit'] }
+        ]
+    };
+}
 
 const bengaluruMetro = {
     id: 'bengaluru',
@@ -11,24 +187,14 @@ const bengaluruMetro = {
     city: 'Bengaluru',
     state: 'Karnataka',
     operator: 'Bangalore Metro Rail Corporation Limited (BMRCL)',
-    totalStations: 69,
-    totalLength: '76.95 km',
-    totalLines: 2,
+    totalStations: 83,
+    totalLength: '85 km',
+    totalLines: 3,
     phase: 'Phase 1 + 2 (Operational)',
     established: '2011',
     website: 'https://english.bmrc.co.in',
 
-    phase2: {
-        totalLines: 2,
-        totalStations: 34,
-        totalLength: '40.40 km',
-        expectedCompletion: '2025–2026',
-    },
-
     lines: [
-        // ═══════════════════════════════════════════
-        // OPERATIONAL LINES
-        // ═══════════════════════════════════════════
         {
             id: 'purple',
             name: 'Purple Line',
@@ -38,50 +204,13 @@ const bengaluruMetro = {
             length: '43.49 km',
             totalStations: 37,
             status: 'operational',
-            operationalSince: '2011',
-            frequency: '5 min (peak), 10 min (off-peak)',
+            operationalSince: '2011-10-20',
+            frequency: '5–10 min',
             firstTrain: '5:00 AM',
             lastTrain: '11:00 PM',
             gauge: 'Standard Gauge (1435 mm)',
             rollingStock: 'BEML',
-            stations: [
-                { id: 'pp01', name: 'Challaghatta', nameLocal: 'ಚಳ್ಳಘಟ್ಟ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Challaghatta', zone: 1 },
-                { id: 'pp02', name: 'Kengeri Bus Terminal', nameLocal: 'ಕೆಂಗೇರಿ ಬಸ್ ಟರ್ಮಿನಲ್', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Kengeri Bus Terminal', zone: 1 },
-                { id: 'pp03', name: 'Kengeri', nameLocal: 'ಕೆಂಗೇರಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Kengeri', zone: 1 },
-                { id: 'pp04', name: 'Pattanagere', nameLocal: 'ಪಟ್ಟಣಗೆರೆ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Pattanagere', zone: 1 },
-                { id: 'pp05', name: 'Jnanabharathi', nameLocal: 'ಜ್ಞಾನಭಾರತಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Bangalore University', zone: 1 },
-                { id: 'pp06', name: 'Magadi Road', nameLocal: 'ಮಾಗಡಿ ರಸ್ತೆ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Magadi Road', zone: 1 },
-                { id: 'pp07', name: 'Hosahalli', nameLocal: 'ಹೊಸಹಳ್ಳಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Hosahalli', zone: 1 },
-                { id: 'pp08', name: 'Vijayanagar', nameLocal: 'ವಿಜಯನಗರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Vijayanagar', zone: 1 },
-                { id: 'pp09', name: 'Attiguppe', nameLocal: 'ಅಟ್ಟಿಗುಪ್ಪೆ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Attiguppe', zone: 2 },
-                { id: 'pp10', name: 'Deepanjali Nagar', nameLocal: 'ದೀಪಾಂಜಲಿ ನಗರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Deepanjali Nagar', zone: 2 },
-                { id: 'pp11', name: 'Mysuru Road', nameLocal: 'ಮೈಸೂರು ರಸ್ತೆ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Mysuru Road', zone: 2 },
-                { id: 'pp12', name: 'National College', nameLocal: 'ನ್ಯಾಷನಲ್ ಕಾಲೇಜ್', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'National College', zone: 2 },
-                { id: 'pp13', name: 'Krishna Rajendra Market', nameLocal: 'ಕೃಷ್ಣ ರಾಜೇಂದ್ರ ಮಾರುಕಟ್ಟೆ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'KR Market, City Market', zone: 2 },
-                { id: 'pp14', name: 'Chikkapete', nameLocal: 'ಚಿಕ್ಕಪೇಟೆ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Chikkapete', zone: 2 },
-                { id: 'pp15', name: 'Majestic', nameLocal: 'ಮೆಜೆಸ್ಟಿಕ್', type: 'underground', isInterchange: true, interchangeWith: ['green'], landmark: 'Kempegowda Bus Station', zone: 2 },
-                { id: 'pp16', name: 'Sir M. Visveshwaraya', nameLocal: 'ಸರ್ ಎಂ. ವಿಶ್ವೇಶ್ವರಯ್ಯ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Central College', zone: 2 },
-                { id: 'pp17', name: 'Vidhana Soudha', nameLocal: 'ವಿಧಾನ ಸೌಧ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Vidhana Soudha', zone: 2 },
-                { id: 'pp18', name: 'Cubbon Park', nameLocal: 'ಕಬ್ಬನ್ ಪಾರ್ಕ್', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Cubbon Park', zone: 3 },
-                { id: 'pp19', name: 'M.G. Road', nameLocal: 'ಎಂ.ಜಿ. ರಸ್ತೆ', type: 'underground', isInterchange: true, interchangeWith: ['pink'], landmark: 'MG Road, Brigade Road', zone: 3 },
-                { id: 'pp20', name: 'Trinity', nameLocal: 'ಟ್ರಿನಿಟಿ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Trinity Circle', zone: 3 },
-                { id: 'pp21', name: 'Halasuru', nameLocal: 'ಹಲಸೂರು', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Halasuru', zone: 3 },
-                { id: 'pp22', name: 'Indiranagar', nameLocal: 'ಇಂದಿರಾನಗರ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: '100 Feet Road, Indiranagar', zone: 3 },
-                { id: 'pp23', name: 'Swami Vivekananda Road', nameLocal: 'ಸ್ವಾಮಿ ವಿವೇಕಾನಂದ ರಸ್ತೆ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Swami Vivekananda Road', zone: 3 },
-                { id: 'pp24', name: 'Baiyappanahalli', nameLocal: 'ಬೈಯಪ್ಪನಹಳ್ಳಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Baiyappanahalli Depot', zone: 3 },
-                { id: 'pp25', name: 'K.R. Puram', nameLocal: 'ಕೆ.ಆರ್. ಪುರಂ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'KR Puram Railway Station', zone: 4 },
-                { id: 'pp26', name: 'Benniganahalli', nameLocal: 'ಬೆಣ್ಣಿಗನಹಳ್ಳಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Benniganahalli', zone: 4 },
-                { id: 'pp27', name: 'Garudacharpalya', nameLocal: 'ಗರುಡಾಚಾರ್ಪಾಳ್ಯ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Garudacharpalya', zone: 4 },
-                { id: 'pp28', name: 'Hoodi', nameLocal: 'ಹೂಡಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Hoodi', zone: 4 },
-                { id: 'pp29', name: 'Seetharamapalya', nameLocal: 'ಸೀತಾರಾಮಪಾಳ್ಯ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Seetharamapalya', zone: 4 },
-                { id: 'pp30', name: 'Kundalahalli', nameLocal: 'ಕುಂದಲಹಳ್ಳಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Kundalahalli', zone: 4 },
-                { id: 'pp31', name: 'Nallurhalli', nameLocal: 'ನಲ್ಲೂರ್‌ಹಳ್ಳಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Nallurhalli', zone: 4 },
-                { id: 'pp32', name: 'Sri Sathya Sai Hospital', nameLocal: 'ಶ್ರೀ ಸತ್ಯ ಸಾಯಿ ಆಸ್ಪತ್ರೆ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Sri Sathya Sai Hospital', zone: 4 },
-                { id: 'pp33', name: 'Pattanduru Agrahara', nameLocal: 'ಪಟ್ಟಂದೂರ್ ಅಗ್ರಹಾರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Pattanduru Agrahara', zone: 5 },
-                { id: 'pp34', name: 'Kadugodi Tree Park', nameLocal: 'ಕಡುಗೋಡಿ ಟ್ರೀ ಪಾರ್ಕ್', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Kadugodi Tree Park', zone: 5 },
-                { id: 'pp35', name: 'Hopefarm Channasandra', nameLocal: 'ಹೋಪ್‌ಫಾರ್ಮ್ ಚನ್ನಸಂದ್ರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Hope Farm Junction', zone: 5 },
-                { id: 'pp36', name: 'Whitefield', nameLocal: 'ವೈಟ್‌ಫೀಲ್ಡ್', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'ITPL, Whitefield', zone: 5 },
-            ],
+            stations: purpleLineStationsData.map((st, i) => buildStation(st, 'pp', i, 'purple'))
         },
         {
             id: 'green',
@@ -92,162 +221,55 @@ const bengaluruMetro = {
             length: '33.46 km',
             totalStations: 32,
             status: 'operational',
-            operationalSince: '2014',
-            frequency: '5 min (peak), 10 min (off-peak)',
+            operationalSince: '2014-03-01',
+            frequency: '5–10 min',
             firstTrain: '5:00 AM',
             lastTrain: '11:00 PM',
             gauge: 'Standard Gauge (1435 mm)',
             rollingStock: 'BEML',
-            stations: [
-                { id: 'gn01', name: 'Madavara', nameLocal: 'ಮಾದಾವರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'BIEC', zone: 1 },
-                { id: 'gn02', name: 'Chikkabidarakallu', nameLocal: 'ಚಿಕ್ಕಬಿದರಕಲ್ಲು', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Chikkabidarakallu', zone: 1 },
-                { id: 'gn03', name: 'Manjunathnagar', nameLocal: 'ಮಂಜುನಾಥನಗರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Manjunathnagar', zone: 1 },
-                { id: 'gn04', name: 'Nagasandra', nameLocal: 'ನಾಗಸಂದ್ರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Nagasandra', zone: 1 },
-                { id: 'gn05', name: 'Dasarahalli', nameLocal: 'ದಾಸರಹಳ್ಳಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Dasarahalli', zone: 1 },
-                { id: 'gn06', name: 'Jalahalli', nameLocal: 'ಜಲಹಳ್ಳಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Jalahalli', zone: 1 },
-                { id: 'gn07', name: 'Peenya Industry', nameLocal: 'ಪೀಣ್ಯ ಇಂಡಸ್ಟ್ರಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Peenya Industrial Area', zone: 1 },
-                { id: 'gn08', name: 'Peenya', nameLocal: 'ಪೀಣ್ಯ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Peenya', zone: 1 },
-                { id: 'gn09', name: 'Goraguntepalya', nameLocal: 'ಗೊರಗುಂಟೆಪಾಳ್ಯ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Goraguntepalya', zone: 2 },
-                { id: 'gn10', name: 'Yeshwanthpur', nameLocal: 'ಯಶವಂತಪುರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Yeshwanthpur Railway Station', zone: 2 },
-                { id: 'gn11', name: 'Sandal Soap Factory', nameLocal: 'ಶ್ರೀಗಂಧ ಸೋಪ್ ಕಾರ್ಖಾನೆ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Sandal Soap Factory', zone: 2 },
-                { id: 'gn12', name: 'Mahalakshmi', nameLocal: 'ಮಹಾಲಕ್ಷ್ಮಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Mahalakshmi Layout', zone: 2 },
-                { id: 'gn13', name: 'Rajajinagar', nameLocal: 'ರಾಜಾಜಿನಗರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Rajajinagar', zone: 2 },
-                { id: 'gn14', name: 'Mahakavi Kuvempu Road', nameLocal: 'ಮಹಾಕವಿ ಕುವೆಂಪು ರಸ್ತೆ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Kuvempu Road', zone: 2 },
-                { id: 'gn15', name: 'Srirampura', nameLocal: 'ಶ್ರೀರಾಂಪುರ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Srirampura', zone: 2 },
-                { id: 'gn16', name: 'Mantri Square Sampige Road', nameLocal: 'ಮಂತ್ರಿ ಸ್ಕ್ವೇರ್ ಸಂಪಿಗೆ ರಸ್ತೆ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Mantri Square Mall', zone: 2 },
-                { id: 'gn17', name: 'Majestic', nameLocal: 'ಮೆಜೆಸ್ಟಿಕ್', type: 'underground', isInterchange: true, interchangeWith: ['purple'], landmark: 'Kempegowda Bus Station', zone: 2 },
-                { id: 'gn18', name: 'Chickpete', nameLocal: 'ಚಿಕ್ಕಪೇಟೆ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Chickpete', zone: 2 },
-                { id: 'gn19', name: 'Krishna Rajendra Market', nameLocal: 'ಕೃಷ್ಣ ರಾಜೇಂದ್ರ ಮಾರುಕಟ್ಟೆ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'City Market', zone: 3 },
-                { id: 'gn20', name: 'National College', nameLocal: 'ನ್ಯಾಷನಲ್ ಕಾಲೇಜ್', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'National College', zone: 3 },
-                { id: 'gn21', name: 'Lalbagh', nameLocal: 'ಲಾಲ್‌ಬಾಗ್', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Lalbagh Botanical Garden', zone: 3 },
-                { id: 'gn22', name: 'South End Circle', nameLocal: 'ಸೌತ್ ಎಂಡ್ ಸರ್ಕಲ್', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'South End Circle', zone: 3 },
-                { id: 'gn23', name: 'Jayanagar', nameLocal: 'ಜಯನಗರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Jayanagar 4th Block', zone: 3 },
-                { id: 'gn24', name: 'RV Road', nameLocal: 'ಆರ್.ವಿ. ರಸ್ತೆ', type: 'elevated', isInterchange: true, interchangeWith: ['yellow'], landmark: 'RV Road, Interchange with Yellow Line', zone: 3 },
-                { id: 'gn25', name: 'Banashankari', nameLocal: 'ಬನಶಂಕರಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Banashankari Temple', zone: 3 },
-                { id: 'gn26', name: 'JP Nagar', nameLocal: 'ಜೆ.ಪಿ. ನಗರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'JP Nagar', zone: 4 },
-                { id: 'gn27', name: 'Puttenahalli', nameLocal: 'ಪುಟ್ಟೇನಹಳ್ಳಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Puttenahalli', zone: 4 },
-                { id: 'gn28', name: 'Anjanapura Road Cross', nameLocal: 'ಅಂಜನಾಪುರ ರಸ್ತೆ ಕ್ರಾಸ್', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Anjanapura Cross', zone: 4 },
-                { id: 'gn29', name: 'Konanakunte Cross', nameLocal: 'ಕೊಣನಕುಂಟೆ ಕ್ರಾಸ್', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Konanakunte', zone: 4 },
-                { id: 'gn30', name: 'Vajrahalli', nameLocal: 'ವಜ್ರಹಳ್ಳಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Vajrahalli', zone: 4 },
-                { id: 'gn31', name: 'Thalaghattapura', nameLocal: 'ತಲಘಟ್ಟಪುರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Thalaghattapura', zone: 4 },
-                { id: 'gn32', name: 'Silk Institute', nameLocal: 'ಸಿಲ್ಕ್ ಇನ್‌ಸ್ಟಿಟ್ಯೂಟ್', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Silk Institute', zone: 4 },
-            ],
+            stations: greenLineStationsData.map((st, i) => buildStation(st, 'gn', i, 'green'))
         },
-
-        // ═══════════════════════════════════════════
-        // PHASE 2 — UNDER CONSTRUCTION / RECENTLY OPENED
-        // ═══════════════════════════════════════════
         {
             id: 'yellow',
             name: 'Yellow Line',
             color: '#FFD700',
             colorLight: '#FFF176',
-            corridor: 'South',
+            corridor: 'South (RV Road - Bommasandra)',
             length: '19.15 km',
             totalStations: 16,
             status: 'operational',
             operationalSince: '2025',
-            frequency: '8–10 min',
+            frequency: '8–12 min',
             firstTrain: '5:00 AM',
             lastTrain: '11:00 PM',
             gauge: 'Standard Gauge (1435 mm)',
             rollingStock: 'BEML / CRRC',
-            stations: [
-                { id: 'yl01', name: 'RV Road', nameLocal: 'ಆರ್.ವಿ. ರಸ್ತೆ', type: 'elevated', isInterchange: true, interchangeWith: ['green'], landmark: 'Interchange with Green Line', zone: 3 },
-                { id: 'yl02', name: 'Ragigudda', nameLocal: 'ರಾಗಿಗುಡ್ಡ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Ragigudda Anjaneya Temple', zone: 3 },
-                { id: 'yl03', name: 'Jayadeva Hospital', nameLocal: 'ಜಯದೇವ ಆಸ್ಪತ್ರೆ', type: 'elevated', isInterchange: true, interchangeWith: ['pink'], landmark: 'Jayadeva Hospital, Interchange with Pink Line', zone: 3 },
-                { id: 'yl04', name: 'BTM Layout', nameLocal: 'ಬಿಟಿಎಂ ಲೇಔಟ್', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'BTM Layout', zone: 3 },
-                { id: 'yl05', name: 'Central Silk Board', nameLocal: 'ಸೆಂಟ್ರಲ್ ಸಿಲ್ಕ್ ಬೋರ್ಡ್', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Silk Board Junction', zone: 4 },
-                { id: 'yl06', name: 'Bommanahalli', nameLocal: 'ಬೊಮ್ಮನಹಳ್ಳಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Bommanahalli', zone: 4 },
-                { id: 'yl07', name: 'Hongasandra', nameLocal: 'ಹೊಂಗಸಂದ್ರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Hongasandra', zone: 4 },
-                { id: 'yl08', name: 'Kudlu Gate', nameLocal: 'ಕುಡ್ಲು ಗೇಟ್', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Kudlu Gate', zone: 4 },
-                { id: 'yl09', name: 'Singasandra', nameLocal: 'ಸಿಂಗಸಂದ್ರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Singasandra', zone: 4 },
-                { id: 'yl10', name: 'Hosa Road', nameLocal: 'ಹೊಸ ರಸ್ತೆ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Hosa Road', zone: 4 },
-                { id: 'yl11', name: 'Beratena Agrahara', nameLocal: 'ಬೆರಟೇನ ಅಗ್ರಹಾರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Beratena Agrahara', zone: 5 },
-                { id: 'yl12', name: 'Electronic City', nameLocal: 'ಎಲೆಕ್ಟ್ರಾನಿಕ್ ಸಿಟಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Electronic City', zone: 5 },
-                { id: 'yl13', name: 'Konappana Agrahara', nameLocal: 'ಕೊಣಪ್ಪನ ಅಗ್ರಹಾರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Infosys Foundation', zone: 5 },
-                { id: 'yl14', name: 'Huskur Road', nameLocal: 'ಹುಸ್ಕೂರ್ ರಸ್ತೆ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Huskur Road', zone: 5 },
-                { id: 'yl15', name: 'Hebbagodi', nameLocal: 'ಹೆಬ್ಬಗೋಡಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Hebbagodi', zone: 5 },
-                { id: 'yl16', name: 'Bommasandra', nameLocal: 'ಬೊಮ್ಮಸಂದ್ರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Bommasandra Industrial Area', zone: 5 },
-            ],
+            stations: yellowLineStationsData.map((st, i) => buildStation(st, 'yl', i, 'yellow'))
         },
         {
             id: 'pink',
             name: 'Pink Line',
             color: '#E91E63',
             colorLight: '#F48FB1',
-            corridor: 'South-North',
+            corridor: 'South-North (UC)',
             length: '21.25 km',
             totalStations: 18,
             status: 'under-construction',
             expectedCompletion: '2026',
-            gauge: 'Standard Gauge (1435 mm)',
             stations: [
-                { id: 'pk01', name: 'Kalena Agrahara', nameLocal: 'ಕಳೇನ ಅಗ್ರಹಾರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Kalena Agrahara', zone: 4 },
-                { id: 'pk02', name: 'Hulimavu', nameLocal: 'ಹುಳಿಮಾವು', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Hulimavu', zone: 4 },
-                { id: 'pk03', name: 'IIM Bangalore', nameLocal: 'ಐಐಎಂ ಬೆಂಗಳೂರು', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'IIM Bangalore', zone: 4 },
-                { id: 'pk04', name: 'JP Nagar 4th Phase', nameLocal: 'ಜೆ.ಪಿ. ನಗರ 4ನೇ ಹಂತ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'JP Nagar 4th Phase', zone: 3 },
-                { id: 'pk05', name: 'Jayadeva Hospital', nameLocal: 'ಜಯದೇವ ಆಸ್ಪತ್ರೆ', type: 'elevated', isInterchange: true, interchangeWith: ['yellow'], landmark: 'Interchange with Yellow Line', zone: 3 },
-                { id: 'pk06', name: 'Tavarekere', nameLocal: 'ತಾವರೆಕೆರೆ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Swagath Road Cross', zone: 3 },
-                { id: 'pk07', name: 'Dairy Circle', nameLocal: 'ಡೈರಿ ಸರ್ಕಲ್', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Dairy Circle', zone: 3 },
-                { id: 'pk08', name: 'Lakkasandra', nameLocal: 'ಲಕ್ಕಸಂದ್ರ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Lakkasandra', zone: 3 },
-                { id: 'pk09', name: 'Langford Town', nameLocal: 'ಲ್ಯಾಂಗ್‌ಫರ್ಡ್ ಟೌನ್', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Langford Town', zone: 3 },
-                { id: 'pk10', name: 'Rashtriya Military School', nameLocal: 'ರಾಷ್ಟ್ರೀಯ ಮಿಲಿಟರಿ ಸ್ಕೂಲ್', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'RMS', zone: 3 },
-                { id: 'pk11', name: 'M.G. Road', nameLocal: 'ಎಂ.ಜಿ. ರಸ್ತೆ', type: 'underground', isInterchange: true, interchangeWith: ['purple'], landmark: 'Interchange with Purple Line', zone: 3 },
-                { id: 'pk12', name: 'Shivaji Nagar', nameLocal: 'ಶಿವಾಜಿ ನಗರ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Shivaji Nagar', zone: 2 },
-                { id: 'pk13', name: 'Cantonment', nameLocal: 'ಕ್ಯಾಂಟೋನ್ಮೆಂಟ್', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Bangalore Cantonment Railway Station', zone: 2 },
-                { id: 'pk14', name: 'Pottery Town', nameLocal: 'ಪಾಟರಿ ಟೌನ್', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Pottery Town', zone: 2 },
-                { id: 'pk15', name: 'Tannery Road', nameLocal: 'ಟ್ಯಾನರಿ ರಸ್ತೆ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Tannery Road', zone: 2 },
-                { id: 'pk16', name: 'Venkateshpura', nameLocal: 'ವೆಂಕಟೇಶಪುರ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Venkateshpura', zone: 2 },
-                { id: 'pk17', name: 'Kadugondanahalli', nameLocal: 'ಕಡುಗೊಂಡನಹಳ್ಳಿ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Kadugondanahalli', zone: 1 },
-                { id: 'pk18', name: 'Nagawara', nameLocal: 'ನಾಗವಾರ', type: 'underground', isInterchange: true, interchangeWith: ['blue'], landmark: 'Nagawara', zone: 1 },
-            ],
-        },
-        {
-            id: 'blue',
-            name: 'Blue Line',
-            color: '#2196F3',
-            colorLight: '#64B5F6',
-            corridor: 'ORR-Airport',
-            length: '58.19 km',
-            totalStations: 30,
-            status: 'under-construction',
-            expectedCompletion: '2026–2027',
-            gauge: 'Standard Gauge (1435 mm)',
-            stations: [
-                { id: 'bl01', name: 'Central Silk Board', nameLocal: 'ಸೆಂಟ್ರಲ್ ಸಿಲ್ಕ್ ಬೋರ್ಡ್', type: 'elevated', isInterchange: true, interchangeWith: ['yellow'], landmark: 'Silk Board Junction', zone: 4 },
-                { id: 'bl02', name: 'HSR Layout', nameLocal: 'ಎಚ್.ಎಸ್.ಆರ್ ಲೇಔಟ್', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
-                { id: 'bl03', name: 'Agara Lake', nameLocal: 'ಅಗರ ಕೆರೆ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
-                { id: 'bl04', name: 'Ibbaluru', nameLocal: 'ಇಬ್ಬಲೂರು', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
-                { id: 'bl05', name: 'Bellandur', nameLocal: 'ಬೆಳ್ಳಂದೂರು', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
-                { id: 'bl06', name: 'Kadubeesanahalli', nameLocal: 'ಕಾಡುಬೀಸನಹಳ್ಳಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
-                { id: 'bl07', name: 'Kodibeesanahalli', nameLocal: 'ಕೊಡೀಬೀಸನಹಳ್ಳಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
-                { id: 'bl08', name: 'Marathahalli', nameLocal: 'ಮಾರತಹಳ್ಳಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
-                { id: 'bl09', name: 'ISRO', nameLocal: 'ಇಸ್ರೋ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'ISRO Headquarters', zone: 4 },
-                { id: 'bl10', name: 'Doddanekkundi', nameLocal: 'ದೊಡ್ಡನೆಕ್ಕುಂದಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
-                { id: 'bl11', name: 'DRDO Sports Complex', nameLocal: 'ಡಿ.ಆರ್.ಡಿ.ಒ ಸ್ಪೋರ್ಟ್ಸ್ ಕಾಂಪ್ಲೆಕ್ಸ್', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
-                { id: 'bl12', name: 'Saraswathi Nagar', nameLocal: 'ಸರಸ್ವತಿ ನಗರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
-                { id: 'bl13', name: 'KR Puram', nameLocal: 'ಕೆ.ಆರ್ ಪುರಂ', type: 'elevated', isInterchange: true, interchangeWith: ['purple'], landmark: 'Interchange with Purple Line', zone: 4 },
-                { id: 'bl14', name: 'Kasturi Nagar', nameLocal: 'ಕಸ್ತೂರಿ ನಗರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
-                { id: 'bl15', name: 'Horamavu', nameLocal: 'ಹೊರಮಾವು', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
-                { id: 'bl16', name: 'HRBR Layout', nameLocal: 'ಎಚ್.ಆರ್.ಬಿ.ಆರ್ ಲೇಔಟ್', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
-                { id: 'bl17', name: 'Kalyan Nagar', nameLocal: 'ಕಲ್ಯಾಣ ನಗರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
-                { id: 'bl18', name: 'HBR Layout', nameLocal: 'ಎಚ್.ಬಿ.ಆರ್ ಲೇಔಟ್', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 3 },
-                { id: 'bl19', name: 'Nagawara', nameLocal: 'ನಾಗವಾರ', type: 'elevated', isInterchange: true, interchangeWith: ['pink'], landmark: 'Interchange with Pink Line', zone: 1 },
-                { id: 'bl20', name: 'Veerannapalya', nameLocal: 'ವೀರಣ್ಣಪಾಳ್ಯ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
-                { id: 'bl21', name: 'Kempapura', nameLocal: 'ಕೆಂಪಾಪುರ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
-                { id: 'bl22', name: 'Hebbal', nameLocal: 'ಹೆಬ್ಬಾಳ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Hebbal Flyover', zone: 1 },
-                { id: 'bl23', name: 'Kodigehalli', nameLocal: 'ಕೊಡಿಗೇಹಳ್ಳಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
-                { id: 'bl24', name: 'Jakkur Cross', nameLocal: 'ಜಕ್ಕೂರು ಕ್ರಾಸ್', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
-                { id: 'bl25', name: 'Yelahanka', nameLocal: 'ಯಲಹಂಕ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
-                { id: 'bl26', name: 'Bagalur Cross', nameLocal: 'ಬಾಗಲೂರು ಕ್ರಾಸ್', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
-                { id: 'bl27', name: 'Bettahalasuru', nameLocal: 'ಬೆಟ್ಟಹಲಸೂರು', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
-                { id: 'bl28', name: 'Doddajala', nameLocal: 'ದೊಡ್ಡಜಾಲ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
-                { id: 'bl29', name: 'Airport City', nameLocal: 'ಏರ್ಪೋರ್ಟ್ ಸಿಟಿ', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
-                { id: 'bl30', name: 'KIA Terminals', nameLocal: 'ಕೆ.ಐ.ಎ ಟರ್ಮಿನಲ್ಸ್', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Airport Terminals', zone: 1 },
-            ],
-        },
-    ],
+                { id: 'pk01', name: 'Kalena Agrahara', type: 'elevated', landmark: 'Bannerghatta Road' },
+                { id: 'pk11', name: 'MG Road', type: 'underground', isIsland: true, landmark: 'Interchange Junction' },
+                { id: 'pk18', name: 'Nagawara', type: 'underground', isIsland: true, landmark: 'Nagawara Terminal' }
+            ].map((st, i) => buildStation(st, 'pk', i, 'pink'))
+        }
+    ]
 };
+
+bengaluruMetro.lines.forEach(line => {
+    line.stations = line.stations.map((st, i) => ({
+        ...st,
+        ...getStationCoords('bengaluru', line.id, i)
+    }));
+});
 
 export default bengaluruMetro;
