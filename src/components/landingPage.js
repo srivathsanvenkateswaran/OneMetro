@@ -72,6 +72,7 @@ function renderCityCard(city) {
                 <div class="lp-card-stats">
                     <div class="lp-stat"><span>${city.stats.lines}</span> Lines</div>
                     <div class="lp-stat"><span>${city.stats.stations}</span> Stations</div>
+                    <div class="lp-stat"><span>${city.stats.length}</span> Length</div>
                 </div>
                 <button class="lp-card-btn">Explore Network</button>
             </div>
