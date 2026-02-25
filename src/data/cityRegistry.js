@@ -139,7 +139,7 @@ export const cityRegistry = {
         emoji: "🐪",
         imageClass: "lp-img-jaipur",
         status: "available",
-        stats: { lines: 2, stations: "34", length: "36+ km" },
+        stats: { lines: 3, stations: "36", length: "36+ km" },
     },
     kochi: {
         id: "kochi",
@@ -164,7 +164,7 @@ export const cityRegistry = {
         emoji: "🦢",
         imageClass: "lp-img-bhopal",
         status: "available",
-        stats: { lines: 2, stations: "16", length: "15+ km" },
+        stats: { lines: 2, stations: "30", length: "31 km" },
     },
     indore: {
         id: "indore",
@@ -204,6 +204,18 @@ export const cityRegistry = {
         status: 'available',
         stats: { lines: 2, stations: '29', length: '29.6 km' },
     },
+    patna: {
+        id: 'patna',
+        displayName: 'Patna',
+        nameLocal: 'पटना',
+        metroName: 'Patna Metro',
+        tagline: 'The City of Pataliputra gets its modern rapid transit with the Ganga-side metro network.',
+        state: 'Bihar',
+        emoji: '🏛️',
+        imageClass: 'lp-img-patna',
+        status: 'available',
+        stats: { lines: 2, stations: '26', length: '30.9 km' },
+    },
 };
 
 /**
@@ -227,6 +239,7 @@ export const cityOrder = [
     "indore",
     "lucknow",
     "agra",
+    "patna",
 ];
 
 /** Returns ordered array of city metadata objects, skipping any unknown keys. */

@@ -19,7 +19,7 @@
  */
 
 /** @type {Record<string, Record<string, Array<{lat:number, lon:number}>>>} */
-const _coords = 
+const _coords =
 {
     "ahmedabad": {
         "blue": [
@@ -1819,6 +1819,91 @@ const _coords =
                 "lat": 23.26,
                 "lon": 77.491
             }
+        ]
+    },
+    "agra": {
+        "yellow": [
+            { "lat": 27.1584, "lon": 78.0579 },
+            { "lat": 27.159, "lon": 78.05 },
+            { "lat": 27.1602, "lon": 78.0427 },
+            { "lat": 27.1684, "lon": 78.0356 },
+            { "lat": 27.1795, "lon": 78.0211 },
+            { "lat": 27.1775, "lon": 78.0179 }
+        ],
+        "yellow-uc": [
+            { "lat": null, "lon": null },
+            { "lat": null, "lon": null },
+            { "lat": null, "lon": null },
+            { "lat": null, "lon": null },
+            { "lat": null, "lon": null },
+            { "lat": null, "lon": null },
+            { "lat": null, "lon": null },
+            { "lat": null, "lon": null }
+        ],
+        "blue": [
+            { "lat": null, "lon": null }, { "lat": null, "lon": null }, { "lat": null, "lon": null },
+            { "lat": null, "lon": null }, { "lat": null, "lon": null }, { "lat": null, "lon": null },
+            { "lat": null, "lon": null }, { "lat": null, "lon": null }, { "lat": null, "lon": null },
+            { "lat": null, "lon": null }, { "lat": null, "lon": null }, { "lat": null, "lon": null },
+            { "lat": null, "lon": null }, { "lat": null, "lon": null }, { "lat": null, "lon": null },
+            { "lat": null, "lon": null }
+        ]
+    },
+    "patna": {
+        "red": [
+            { "lat": 25.6143, "lon": 85.0452 },
+            { "lat": 25.6138, "lon": 85.0597 },
+            { "lat": 25.6131, "lon": 85.0733 },
+            { "lat": 25.6128, "lon": 85.0855 },
+            { "lat": 25.6142, "lon": 85.0962 },
+            { "lat": 25.6148, "lon": 85.1062 },
+            { "lat": 25.6138, "lon": 85.1168 },
+            { "lat": 25.6126, "lon": 85.1270 },
+            { "lat": 25.6121, "lon": 85.1325 },
+            { "lat": 25.6115, "lon": 85.1386 },
+            { "lat": 25.6102, "lon": 85.1472 },
+            { "lat": 25.6058, "lon": 85.1562 },
+            { "lat": 25.5992, "lon": 85.1638 },
+            { "lat": 25.5952, "lon": 85.1705 }
+        ],
+        "blue": [
+            { "lat": 25.6115, "lon": 85.1386 },
+            { "lat": 25.6132, "lon": 85.1388 },
+            { "lat": 25.6162, "lon": 85.1386 },
+            { "lat": 25.6202, "lon": 85.1349 },
+            { "lat": 25.6238, "lon": 85.1272 },
+            { "lat": 25.6265, "lon": 85.1228 },
+            { "lat": 25.6112, "lon": 85.1520 },
+            { "lat": 25.5965, "lon": 85.1642 },
+            { "lat": 25.5952, "lon": 85.1705 },
+            { "lat": 25.5908, "lon": 85.1782 },
+            { "lat": 25.5875, "lon": 85.1848 },
+            { "lat": 25.5858, "lon": 85.1915 }
+        ]
+    },
+    "lucknow": {
+        "red": [
+            { "lat": 26.7642, "lon": 80.8819 },
+            { "lat": 26.7691, "lon": 80.8878 },
+            { "lat": 26.7791, "lon": 80.8936 },
+            { "lat": 26.7915, "lon": 80.8989 },
+            { "lat": 26.8018, "lon": 80.9032 },
+            { "lat": 26.8098, "lon": 80.9082 },
+            { "lat": 26.8145, "lon": 80.9111 },
+            { "lat": 26.8221, "lon": 80.9161 },
+            { "lat": 26.8275, "lon": 80.9205 },
+            { "lat": 26.8328, "lon": 80.9251 },
+            { "lat": 26.8418, "lon": 80.9332 },
+            { "lat": 26.8468, "lon": 80.9382 },
+            { "lat": 26.8518, "lon": 80.9432 },
+            { "lat": 26.8578, "lon": 80.9472 },
+            { "lat": 26.8668, "lon": 80.9532 },
+            { "lat": 26.8748, "lon": 80.9582 },
+            { "lat": 26.8798, "lon": 80.9632 },
+            { "lat": 26.8848, "lon": 80.9692 },
+            { "lat": 26.8898, "lon": 80.9752 },
+            { "lat": 26.8948, "lon": 80.9822 },
+            { "lat": 26.9018, "lon": 80.9912 }
         ]
     }
 };

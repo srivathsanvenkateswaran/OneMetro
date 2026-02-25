@@ -708,4 +708,34 @@ export const mapLayouts = {
   // (Lines are algorithmically positioned relative to each other)
   // No waypoint data needed here.
   // ═══════════════════════════════════════════════════════════════
+
+  // ═══════════════════════════════════════════════════════════════
+  // PATNA — Geographic projection
+  // ═══════════════════════════════════════════════════════════════
+  patna: {
+    type: "geo",
+    scale: 17000,
+    pad: 80,
+    bounds: { latMin: 25.58, latMax: 25.64, lonMin: 85.04, lonMax: 85.20 },
+    lines: {
+      red: [
+        { idx: 0, lat: 25.6143, lon: 85.0452 },
+        { idx: 3, lat: 25.6133, lon: 85.0855 },
+        { idx: 6, lat: 25.6138, lon: 85.1168 },
+        { idx: 9, lat: 25.6115, lon: 85.1386 },
+        { idx: 11, lat: 25.6058, lon: 85.1562 },
+        { idx: 13, lat: 25.5952, lon: 85.1705 },
+      ],
+      blue: [
+        { idx: 0, lat: 25.6115, lon: 85.1386 },
+        { idx: 2, lat: 25.6162, lon: 85.1386 },
+        { idx: 4, lat: 25.6238, lon: 85.1272 },
+        { idx: 5, lat: 25.6265, lon: 85.1228 },
+        { idx: 6, lat: 25.6112, lon: 85.1520 },
+        { idx: 8, lat: 25.5952, lon: 85.1705 },
+        { idx: 11, lat: 25.5858, lon: 85.1915 },
+      ],
+    },
+  },
 };
+
