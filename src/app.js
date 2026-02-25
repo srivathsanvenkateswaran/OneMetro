@@ -34,6 +34,12 @@ const cityLoaders = {
     pune: () => import('./data/pune.js').then(m => m.default),
     nagpur: () => import('./data/nagpur.js').then(m => m.default),
     ahmedabad: () => import('./data/ahmedabad.js').then(m => m.default),
+    kochi: () => import('./data/kochi.js').then(m => m.default),
+    bhopal: () => import('./data/bhopal.js').then(m => m.default),
+    indore: () => import('./data/indore.js').then(m => m.default),
+    jaipur: () => import('./data/jaipur.js').then(m => m.default),
+    lucknow: () => import('./data/lucknow.js').then(m => m.default),
+    agra: () => import('./data/agra.js').then(m => m.default),
 };
 
 // ── City Data Cache ───────────────────────────────────────────────────────────
