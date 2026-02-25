@@ -2,6 +2,8 @@
  * Pune Metro Rail — Complete Station & Line Data
  * Source: Official Data & Upcoming Phase
  */
+import { getStationCoords } from './stationCoords.js';
+
 
 const puneMetro = {
     id: "pune",
@@ -2399,5 +2401,13 @@ const puneMetro = {
         }
     ]
 };
+
+puneMetro.lines.forEach(line => {
+    line.stations = line.stations.map((st, i) => ({
+        ...st,
+        ...getStationCoords('pune', line.id, i),
+        fareZone: null
+    }));
+});
 
 export default puneMetro;

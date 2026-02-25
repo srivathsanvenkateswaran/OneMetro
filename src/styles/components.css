@@ -1,8 +1,8 @@
-/* ══════════════════════════════════════════
+﻿/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    COMPONENT STYLES
-   ══════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-/* ── Header ── */
+/* â”€â”€ Header â”€â”€ */
 .app-header {
     height: var(--header-height);
     display: flex;
@@ -88,14 +88,14 @@
     color: var(--text-primary);
 }
 
-/* ── Main Layout ── */
+/* â”€â”€ Main Layout â”€â”€ */
 .app-main {
     display: flex;
     flex: 1;
     min-height: calc(100vh - var(--header-height));
 }
 
-/* ── Sidebar ── */
+/* â”€â”€ Sidebar â”€â”€ */
 .sidebar {
     width: var(--sidebar-width);
     min-width: var(--sidebar-width);
@@ -126,7 +126,7 @@
     margin-bottom: var(--space-xs);
 }
 
-/* ── Line Cards ── */
+/* â”€â”€ Line Cards â”€â”€ */
 .line-cards {
     display: flex;
     flex-direction: column;
@@ -221,7 +221,7 @@
     gap: 4px;
 }
 
-/* ── Line Info Panel ── */
+/* â”€â”€ Line Info Panel â”€â”€ */
 .line-info {
     background: var(--bg-card);
     border-radius: var(--radius-md);
@@ -321,7 +321,7 @@
     white-space: nowrap;
 }
 
-/* ── Content Area ── */
+/* â”€â”€ Content Area â”€â”€ */
 .content {
     flex: 1;
     padding: var(--space-xl);
@@ -334,7 +334,7 @@
     will-change: opacity, transform;
 }
 
-/* ── Metro Map Container ── */
+/* â”€â”€ Metro Map Container â”€â”€ */
 .metro-map-container {
     background: var(--bg-card);
     border: 1px solid var(--bg-glass-border);
@@ -347,7 +347,7 @@
     flex-direction: column;
 }
 
-/* ── Toolbar ── */
+/* â”€â”€ Toolbar â”€â”€ */
 .map-toolbar {
     display: flex;
     align-items: center;
@@ -438,7 +438,7 @@
     margin-left: 4px;
 }
 
-/* ── Viewport (zoomable area) ── */
+/* â”€â”€ Viewport (zoomable area) â”€â”€ */
 .map-viewport {
     flex: 1;
     overflow: hidden;
@@ -455,7 +455,7 @@
     display: block;
 }
 
-/* ── Fullscreen Mode ── */
+/* â”€â”€ Fullscreen Mode â”€â”€ */
 .map-fullscreen {
     position: fixed !important;
     top: 0;
@@ -492,7 +492,7 @@
     min-height: auto;
 }
 
-/* ── Map Legend ── */
+/* â”€â”€ Map Legend â”€â”€ */
 .map-legend {
     position: absolute;
     bottom: var(--space-md);
@@ -632,7 +632,7 @@
     fill: white;
 }
 
-/* ── Station List ── */
+/* â”€â”€ Station List â”€â”€ */
 .station-list-container {
     animation: fadeInUp var(--duration-slow) var(--ease-out) both;
     animation-delay: 100ms;
@@ -798,7 +798,7 @@
     gap: 3px;
 }
 
-/* ── Welcome / Empty State ── */
+/* â”€â”€ Welcome / Empty State â”€â”€ */
 .welcome-state {
     display: flex;
     flex-direction: column;
@@ -842,7 +842,41 @@
     line-height: 1.7;
 }
 
-/* ── City Stats Bar ── */
+/* â”€â”€ Lazy-load / City Loading State â”€â”€ */
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-lg);
+    flex: 1;
+    min-height: 300px;
+    animation: fadeIn var(--duration-slow) var(--ease-out) both;
+}
+
+.loading-spinner {
+    width: 48px;
+    height: 48px;
+    border: 3px solid var(--bg-glass-border);
+    border-top-color: var(--accent-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-text {
+    font-size: var(--fs-sm);
+    color: var(--text-muted);
+    font-weight: var(--fw-medium);
+    letter-spacing: 0.04em;
+}
+
+/* â”€â”€ City Stats Bar â”€â”€ */
 .city-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -883,7 +917,7 @@
     margin-top: 2px;
 }
 
-/* ── Tooltip ── */
+/* â”€â”€ Tooltip â”€â”€ */
 .map-tooltip {
     position: absolute;
     padding: var(--space-sm) var(--space-md);
@@ -914,7 +948,7 @@
     border-bottom: 1px solid var(--bg-glass-border);
 }
 
-/* ── View All Network Button ── */
+/* â”€â”€ View All Network Button â”€â”€ */
 .view-all-btn {
     display: flex;
     align-items: center;
@@ -948,7 +982,7 @@
     transform: translateX(-3px);
 }
 
-/* ── Upcoming Toggle ── */
+/* â”€â”€ Upcoming Toggle â”€â”€ */
 .upcoming-toggle-container {
     display: flex;
     flex-direction: column;
@@ -1018,7 +1052,7 @@
     font-weight: var(--fw-medium);
 }
 
-/* ── Upcoming Line Card ── */
+/* â”€â”€ Upcoming Line Card â”€â”€ */
 .line-card.upcoming {
     border-style: dashed;
     border-color: var(--bg-glass-border);
@@ -1040,7 +1074,7 @@
     opacity: 0.8;
 }
 
-/* ── Line Info Status ── */
+/* â”€â”€ Line Info Status â”€â”€ */
 .line-info-status {
     font-size: var(--fs-xs);
     font-weight: var(--fw-medium);
@@ -1048,7 +1082,7 @@
     margin-left: var(--space-sm);
 }
 
-/* ── Responsive ── */
+/* â”€â”€ Responsive â”€â”€ */
 @media (max-width: 768px) {
     .app-main {
         flex-direction: column;
@@ -1094,7 +1128,7 @@
     }
 }
 
-/* ── Landing Page ── */
+/* â”€â”€ Landing Page â”€â”€ */
 .landing-page {
     position: relative;
     width: 100%;
@@ -1243,39 +1277,39 @@
 }
 
 .lp-img-chennai {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/assets/Chennai.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/assets/Chennai.webp');
 }
 
 .lp-img-bengaluru {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/assets/Bengaluru.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/assets/Bengaluru.webp');
 }
 
 .lp-img-delhi {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/assets/Delhi.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/assets/Delhi.webp');
 }
 
 .lp-img-mumbai {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/Mumbai.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/Mumbai.webp');
 }
 
 .lp-img-kolkata {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/Kolkata.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/Kolkata.webp');
 }
 
 .lp-img-hyderabad {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/Hyderabad.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/Hyderabad.webp');
 }
 
 .lp-img-pune {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/Pune.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/Pune.webp');
 }
 
 .lp-img-nagpur {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/Nagpur.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/Nagpur.webp');
 }
 
 .lp-img-ahmedabad {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/assets/Ahmedabad.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/assets/Ahmedabad.webp');
 }
 
 .lp-card-content {
@@ -1416,7 +1450,7 @@
     }
 }
 
-/* ── Station Page View ── */
+/* â”€â”€ Station Page View â”€â”€ */
 .station-page-container {
     width: 100%;
     height: 100%;
@@ -1633,7 +1667,7 @@
     color: var(--text-muted);
 }
 
-/* ── Station Navigation Controls ── */
+/* â”€â”€ Station Navigation Controls â”€â”€ */
 .station-nav-controls {
     display: flex;
     justify-content: space-between;
@@ -1670,7 +1704,7 @@
     pointer-events: none;
 }
 
-/* ── Responsive Mobile Adjustments ── */
+/* â”€â”€ Responsive Mobile Adjustments â”€â”€ */
 @media (max-width: 768px) {
     .station-page-container {
         padding: 1rem;
