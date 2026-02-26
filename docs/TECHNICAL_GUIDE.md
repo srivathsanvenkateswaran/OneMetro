@@ -38,6 +38,25 @@ We treat the **Browser URL Hash** as our application's state. There is no `Redux
 
 OneMetro does **not** map the physical geography of India (rivers, roads, or boundaries). We map the **Network Topology**. The "map" you see is a mathematical projection of the metro lines onto a clean, abstract canvas.
 
+### 🗺️ Why Two Modes? (The Design Trade-off)
+
+Newcomers often ask: *Why not just use real-world coordinates for everything?* 
+
+The answer lies in the difference between **Cartography** (drawing the world) and **Wayfinding** (helping people navigate).
+
+| Feature | **Geographic Mode** (`geo`) | **Schematic Mode** (`schematic`) |
+| :--- | :--- | :--- |
+| **Philosophy** | "Show me exactly where it is." | "Show me how to get there." |
+| **Best For** | Smaller networks or coastal cities (Chennai, Kochi). | Dense, complex hubs (Delhi, Mumbai). |
+| **Readability** | Can get messy in city centers where stations are 200m apart. | High. Stations simplified to a consistent grid. |
+| **Canvas** | Scaled to Latitude/Longitude degrees. | Scaled to a fixed pixel grid (e.g., 1400x1000). |
+| **Angles** | Any (organic curves). | Primarily 45° and 90° (The "Beck" standard). |
+
+**The "Delhi Problem":** 
+If we used Geographic mode for Delhi, the city center (Rajiv Chowk area) would be a tiny cluster of overlapping dots, while the outskirts (Gurugram/Noida) would require the user to pan for miles. Schematic mode allows us to "inflate" the busy center and "contract" the long suburban stretches so the entire network fits on one screen.
+
+---
+
 ### Geographic Projection Mode (`type: "geo"`)
 Used for Chennai, Pune, and Ahmedabad. We use real-world Lat/Lon coordinates to determine the *relative* positions of stations.
 
@@ -52,8 +71,10 @@ If Station A is at $(10, 10)$ and Station B is at $(20, 20)$, and we are 50% thr
 - **Smoothstep**: $x = x_1 + (x_2 - x_1) * (3t^2 - 2t^3)$
 This creates the "organic" feel of the lines without requiring extra data.
 
+---
+
 ### Schematic Mode (`type: "schematic"`)
-Used for Delhi and Mumbai. Here, we ignore real-world coordinates and use a custom `{ x, y }` grid to ensure the map is readable even when lines are extremely dense.
+Used for Delhi and Mumbai. Here, we ignore real-world coordinates and use a custom `{ x, y }` grid to ensure the map is readable even when lines are extremely dense. This follows the industry standard set by the London Underground map, prioritizing topological clarity over geographic accuracy.
 
 ---
 
