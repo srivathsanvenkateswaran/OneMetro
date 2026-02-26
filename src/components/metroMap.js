@@ -459,7 +459,19 @@ export function renderMetroMap(
   if (!container) return;
 
   const layout = getLayout(cityData, showUpcoming);
-  const renderedInterchanges = new Set();
+
+  // Group all stations by their rendered coordinates to detect overlaps/clusters
+  const clusters = new Map();
+  const visibleLineIds = layout.lines.map(l => l.line.id);
+  const externalSystems = ["rail", "monorail", "water", "bus", "ferry"];
+
+  layout.lines.forEach(({ coords, line }) => {
+    coords.forEach(coord => {
+      const key = `${coord.x.toFixed(1)},${coord.y.toFixed(1)}`;
+      if (!clusters.has(key)) clusters.set(key, []);
+      clusters.set(key, [...clusters.get(key), { ...coord, line }]);
+    });
+  });
 
   container.innerHTML = `
     <div class="metro-map-container" id="map-viewer">
@@ -521,41 +533,47 @@ export function renderMetroMap(
       })
       .join("")}
 
-            ${layout.lines
-      .map(({ coords, line }) => {
-        return coords
-          .map((coord, i) => {
-            // Logic for conditional interchange rendering
-            let actsAsInterchange = false;
-            if (coord.station.isInterchange) {
-              const visibleLineIds = layout.lines.map((l) => l.line.id);
-              actsAsInterchange = coord.station.interchangeWith.some(
-                (id) => visibleLineIds.includes(id),
-              );
-            }
+            ${Array.from(clusters.values()).map((clusterStations) => {
+        const isGroup = clusterStations.length > 1;
 
-            if (actsAsInterchange) {
-              const key = coord.station.name;
-              if (renderedInterchanges.has(key)) return "";
-              renderedInterchanges.add(key);
-              return renderMapInterchange(
-                coord,
-                activeLine,
-                activeStation,
-              );
-            }
-            return renderMapStation(
-              coord,
-              i,
-              activeLine,
-              activeStation,
-              line.id,
-              coords.length,
+        // An interchange marker is only needed if:
+        // 1. Multiple visible lines overlap (isGroup)
+        // 2. Or it connects to another VISIBLE line or an EXTERNAL system (rail/monorail/water)
+        const hasVisibleInterchange = clusterStations.some(c =>
+          c.station.isInterchange &&
+          c.station.interchangeWith.some(targetId => {
+            const targetLine = cityData.lines.find(l => l.id === targetId);
+            const isTargetOperational = targetLine ? targetLine.status === "operational" : false;
+            const isExternalSystem = externalSystems.some(sys =>
+              targetId.toLowerCase() === sys || targetId.toLowerCase().includes(sys)
             );
+
+            return isTargetOperational || (showUpcoming && targetLine) || isExternalSystem;
           })
-          .join("");
-      })
-      .join("")}
+        );
+
+        if (isGroup || hasVisibleInterchange) {
+          const uniqueNames = new Set(clusterStations.map(c => c.station.name));
+          const isLinkedSystem = uniqueNames.size > 1;
+
+          return renderMapInterchange(
+            clusterStations[0],
+            activeLine,
+            activeStation,
+            isLinkedSystem ? clusterStations : null
+          );
+        }
+
+        // Otherwise render as a standard station
+        const c = clusterStations[0];
+        return renderMapStation(
+          c,
+          0, // Index for animation
+          activeLine,
+          activeStation,
+          c.line.id
+        );
+      }).join("")}
           </svg>
       </div>
       <div class="map-legend" id="map-legend">
@@ -584,7 +602,15 @@ export function renderMetroMap(
 
   // Bind station click/hover events
   container.querySelectorAll(".map-station-dot").forEach((dot) => {
-    dot.addEventListener("click", () => {
+    dot.addEventListener("click", (e) => {
+      // Check if this is a cluster
+      const clusterData = dot.dataset.cluster;
+      if (clusterData) {
+        const stations = JSON.parse(clusterData);
+        showClusterPicker(e, stations, onStationClick, container);
+        return;
+      }
+
       if (onStationClick)
         onStationClick(dot.dataset.stationId, dot.dataset.lineId);
     });
@@ -843,12 +869,30 @@ function renderMapStation(
   `;
 }
 
-function renderMapInterchange(coord, activeLine, activeStation) {
+function renderMapInterchange(coord, activeLine, activeStation, clusterStations = null) {
   const station = coord.station;
-  const isActive = activeStation === station.id;
+  const isActive = activeStation === station.id || (clusterStations && clusterStations.some(s => s.station.id === activeStation));
+
+  // If this is a cluster (linked system), serialize data for the click handler
+  const clusterAttr = clusterStations ? `data-cluster='${JSON.stringify(clusterStations.map(s => ({
+    id: s.station.id,
+    name: s.station.name,
+    lineId: s.line.id,
+    lineColor: s.line.color,
+    lineName: s.line.name
+  }))).replace(/'/g, "&apos;")}'` : "";
+
+  const name = clusterStations
+    ? clusterStations.map(s => s.station.name).join(" / ")
+    : station.name;
 
   return `
-    <g class="map-station-dot" data-station-id="${station.id}" data-station-name="${station.name} (Interchange)" data-line-id="interchange" style="cursor: pointer;">
+    <g class="map-station-dot" 
+       ${clusterAttr}
+       data-station-id="${station.id}" 
+       data-station-name="${name} (Interchange)" 
+       data-line-id="interchange" 
+       style="cursor: pointer;">
       <circle cx="${coord.x}" cy="${coord.y}" r="12"
               fill="#0a0e1a" stroke="white" stroke-width="2.5" opacity="1" />
       <circle cx="${coord.x}" cy="${coord.y}" r="7"
@@ -856,6 +900,63 @@ function renderMapInterchange(coord, activeLine, activeStation) {
               stroke="white" stroke-width="2" opacity="1" />
     </g>
   `;
+}
+
+function showClusterPicker(event, stations, onClick, container) {
+  hideClusterPicker();
+
+  const svgContainer = container.querySelector(".metro-map-container");
+  const svgRect = svgContainer.getBoundingClientRect();
+  const picker = document.createElement("div");
+  picker.className = "map-cluster-picker";
+  picker.id = "map-cluster-picker";
+
+  const listItems = stations.map(s => `
+    <div class="cluster-picker-item" data-station-id="${s.id}" data-line-id="${s.lineId}">
+      <span class="cluster-line-dot" style="background: ${s.lineColor}"></span>
+      <div class="cluster-item-info">
+        <span class="cluster-item-name">${s.name}</span>
+        <span class="cluster-item-line">${s.lineName}</span>
+      </div>
+    </div>
+  `).join("");
+
+  picker.innerHTML = `
+    <div class="cluster-picker-header">Linked Interchange</div>
+    <div class="cluster-picker-list">${listItems}</div>
+  `;
+
+  svgContainer.appendChild(picker);
+
+  const dotRect = event.target.getBoundingClientRect
+    ? event.target.getBoundingClientRect()
+    : event.target.closest("g").getBoundingClientRect();
+
+  const pickerX = dotRect.left - svgRect.left + dotRect.width / 2;
+  const pickerY = dotRect.top - svgRect.top + dotRect.height + 10;
+
+  picker.style.left = `${pickerX}px`;
+  picker.style.top = `${pickerY}px`;
+  picker.style.transform = "translateX(-50%)";
+
+  // Bind selection events
+  picker.querySelectorAll(".cluster-picker-item").forEach(item => {
+    item.addEventListener("click", (e) => {
+      e.stopPropagation();
+      onClick(item.dataset.stationId, item.dataset.lineId);
+      hideClusterPicker();
+    });
+  });
+
+  // Close when clicking elsewhere
+  setTimeout(() => {
+    window.addEventListener("click", hideClusterPicker, { once: true });
+  }, 10);
+}
+
+function hideClusterPicker() {
+  const existing = document.getElementById("map-cluster-picker");
+  if (existing) existing.remove();
 }
 
 function showTooltip(event, name, container) {

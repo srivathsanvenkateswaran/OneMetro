@@ -640,6 +640,94 @@
   fill: white;
 }
 
+/* ── Cluster Picker (Linked Interchange Menu) ── */
+.map-cluster-picker {
+  position: absolute;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--bg-glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.7);
+  z-index: 2000;
+  width: 240px;
+  overflow: hidden;
+  animation: pickerPop 0.25s var(--ease-out) both;
+  color: var(--text-primary);
+}
+
+@keyframes pickerPop {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px) scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+.cluster-picker-header {
+  padding: var(--space-sm) var(--space-md);
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: var(--fw-bold);
+  border-bottom: 1px solid var(--bg-glass-border);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.cluster-picker-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.cluster-picker-item {
+  padding: var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  border-bottom: 1px solid var(--bg-glass-border);
+}
+
+.cluster-picker-item:last-child {
+  border-bottom: none;
+}
+
+.cluster-picker-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  padding-left: calc(var(--space-md) + 4px);
+}
+
+.cluster-line-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cluster-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.cluster-item-name {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+}
+
+.cluster-item-line {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: var(--fw-medium);
+}
+
 /* â”€â”€ Station List â”€â”€ */
 .station-list-container {
   animation: fadeInUp var(--duration-slow) var(--ease-out) both;

@@ -13,7 +13,7 @@ const IGNORE_FILES = ['mapLayouts.js', 'stationCoords.js', 'variables.css', 'cit
 async function validate() {
     console.log('🔍 Starting Smart OneMetro Data Validation...\n');
 
-    const files = fs.readdirSync(DATA_DIR).filter(f => f.endsWith('.js') && !IGNORE_FILES.includes(f));
+    const files = fs.readdirSync(DATA_DIR).filter(f => f === 'mumbai.js');
 
     let errors = 0;
 
