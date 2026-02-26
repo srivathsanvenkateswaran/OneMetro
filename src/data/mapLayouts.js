@@ -657,18 +657,20 @@ export const mapLayouts = {
         { idx: 5, lat: 27.1853, lon: 78.0163 },
       ],
       "yellow-uc": [
-        { idx: 0, lat: 27.1853, lon: 78.0163 },
-        { idx: 2, lat: 27.1855, lon: 78.0027 },
+        { idx: 0, lat: 27.1853, lon: 78.0163 }, // Match Mankameshwar anchor
+        { idx: 1, lat: 27.1852, lon: 78.0135 }, // Medical College
+        { idx: 2, lat: 27.1848, lon: 78.0084 }, // Agra College (Interchange)
+        { idx: 3, lat: 27.1951, lon: 77.9944 }, // Raja Ki Mandi
         { idx: 6, lat: 27.2077, lon: 77.9775 },
-        { idx: 8, lat: 27.2127, lon: 77.9501 },
+        { idx: 8, lat: 27.2185, lon: 77.9501 },
       ],
       blue: [
-        { idx: 0, lat: 27.155, lon: 78.0 },
-        { idx: 3, lat: 27.17, lon: 78.007 },
-        { idx: 6, lat: 27.1855, lon: 78.0027 },
-        { idx: 10, lat: 27.212, lon: 78.015 },
-        { idx: 12, lat: 27.206, lon: 78.026 },
-        { idx: 15, lat: 27.2096, lon: 78.06 },
+        { idx: 0, lat: 27.1593, lon: 78.0022 }, // Agra Cantt
+        { idx: 3, lat: 27.170, lon: 78.007 },   // Pratap Pura
+        { idx: 6, lat: 27.1848, lon: 78.0084 }, // Agra College (Interchange)
+        { idx: 10, lat: 27.208, lon: 78.025 },  // Sultanganj
+        { idx: 12, lat: 27.206, lon: 78.042 },  // Ram Bagh
+        { idx: 15, lat: 27.218, lon: 78.065 },  // Kalindi Vihar
       ],
     },
   },

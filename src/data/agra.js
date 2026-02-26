@@ -154,7 +154,7 @@ const data = {
     city: 'Agra',
     state: 'Uttar Pradesh',
     operator: 'Uttar Pradesh Metro Rail Corporation (UPMRC)',
-    totalStations: 29,
+    totalStations: 30,
     totalLength: '29.65 km',
     totalLines: 2,
     phase: 'Phase 1',
@@ -180,20 +180,23 @@ const data = {
         },
         {
             id: 'yellow-uc',
-            name: 'Yellow Line (UC)',
+            name: 'Yellow Line (Upcoming)',
             color: '#FFEB3B',
             colorLight: '#FFF59D',
-            corridor: 'Corridor 1 Extension',
+            corridor: 'Medical College - Sikandra',
             length: '9.05 km',
-            totalStations: 8,
+            totalStations: 9,
             status: 'under-construction',
             expectedCompletion: '2026',
             gauge: 'Standard Gauge (1435 mm)',
-            stations: yellowUcStationsData.map((st, i) => buildStation(st, 'yuc', i, 'yellow-uc'))
+            stations: [
+                { ...yellowLineStationsData[5], id: 'y06-ext' }, // Mankameshwar Mandir anchor
+                ...yellowUcStationsData
+            ].map((st, i) => buildStation(st, 'yuc', i, 'yellow-uc'))
         },
         {
             id: 'blue',
-            name: 'Blue Line',
+            name: 'Blue Line (Upcoming)',
             color: '#2196F3',
             colorLight: '#64B5F6',
             corridor: 'Corridor 2 (Agra Cantt - Kalindi Vihar)',
