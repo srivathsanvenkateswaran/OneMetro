@@ -14,7 +14,7 @@ const kolkataMetro = {
     city: "Kolkata",
     state: "West Bengal",
     operator: "Metro Railway, Kolkata",
-    totalStations: 57,
+    totalStations: 54,
     totalLength: "66.8 km",
     totalLines: 5,
     established: "1984",
@@ -48,7 +48,7 @@ const kolkataMetro = {
                     gates: [{ gate: "1", landmarks: ["Baranagar Station Road"] }, { gate: "2", landmarks: ["Suburban Railway side"] }]
                 },
                 {
-                    id: "b03", name: "Noapara", nameLocal: "নোয়াপাড়া", type: "elevated",
+                    id: "kol_inter_noapara", name: "Noapara", nameLocal: "নোয়াপাড়া", type: "elevated",
                     isInterchange: true, interchangeWith: ["yellow"], landmark: "Noapara (Yellow Line Interchange)", zone: 1,
                     contact: "139", parking: true,
                     facilities: ["First Aid Box", "CCTV", "Restrooms", "Drinking Water", "Lifts / Escalators"],
@@ -146,7 +146,7 @@ const kolkataMetro = {
                     ]
                 },
                 {
-                    id: "b12", name: "Esplanade", nameLocal: "এসপ্ল্যানেড", type: "underground",
+                    id: "kol_inter_esplanade", name: "Esplanade", nameLocal: "এসপ্ল্যানেড", type: "underground",
                     isInterchange: true, interchangeWith: ["green"], landmark: "Indian Museum / Shaheed Minar", zone: 1,
                     contact: "139", parking: true,
                     facilities: ["First Aid Box", "CCTV", "Restrooms", "Drinking Water", "Lifts / Escalators"],
@@ -302,7 +302,7 @@ const kolkataMetro = {
                     ]
                 },
                 {
-                    id: "b26", name: "Kavi Subhash", nameLocal: "কবি সুভাষ", type: "elevated",
+                    id: "kol_inter_kavi_subhash", name: "Kavi Subhash", nameLocal: "কবি সুভাষ", type: "elevated",
                     isInterchange: true, interchangeWith: ["orange"], landmark: "New Garia / EM Bypass", zone: 1,
                     contact: "139", parking: true,
                     facilities: ["First Aid Box", "CCTV", "Restrooms", "Drinking Water", "Lifts / Escalators"],
@@ -363,7 +363,7 @@ const kolkataMetro = {
                     ]
                 },
                 {
-                    id: "g04", name: "Esplanade", nameLocal: "এসপ্ল্যানেড", type: "underground",
+                    id: "kol_inter_esplanade", name: "Esplanade", nameLocal: "এসপ্ল্যানেড", type: "underground",
                     isInterchange: true, interchangeWith: ["blue", "purple"], landmark: "New Market / Indian Museum", zone: 1,
                     contact: "139", parking: true,
                     facilities: ["First Aid Box", "CCTV", "Restrooms", "Drinking Water", "Lifts / Escalators"],
@@ -566,7 +566,7 @@ const kolkataMetro = {
             operationalSince: "2024-10-01",
             stations: [
                 {
-                    id: "o01", name: "Kavi Subhash", nameLocal: "কবি সুভাষ", type: "elevated",
+                    id: "kol_inter_kavi_subhash", name: "Kavi Subhash", nameLocal: "কবি সুভাষ", type: "elevated",
                     isInterchange: true, interchangeWith: ["blue"], landmark: "New Garia / EM Bypass", zone: 1,
                     contact: "139", parking: true,
                     facilities: ["First Aid Box", "CCTV", "Restrooms", "Drinking Water", "Lifts / Escalators"],
@@ -678,7 +678,7 @@ const kolkataMetro = {
             operationalSince: "2024-03-15",
             stations: [
                 {
-                    id: "y01", name: "Noapara", nameLocal: "নোয়াপাড়া", type: "elevated",
+                    id: "kol_inter_noapara", name: "Noapara", nameLocal: "নোয়াপাড়া", type: "elevated",
                     isInterchange: true, interchangeWith: ["blue"], landmark: "Noapara (Blue Line Interchange)", zone: 1,
                     contact: "139", parking: true,
                     facilities: ["First Aid Box", "CCTV", "Restrooms", "Drinking Water", "Lifts / Escalators"],
