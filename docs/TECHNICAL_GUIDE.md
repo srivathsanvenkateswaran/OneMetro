@@ -36,7 +36,7 @@ We treat the **Browser URL Hash** as our application's state. There is no `Redux
 
 ## 🗺️ 2. The Abstract SVG Mapping Engine
 
-**Crucial Correction**: OneMetro does **not** map the physical geography of India (rivers, roads, or boundaries). We map the **Network Topology**. The "map" you see is a mathematical projection of the metro lines onto a clean, abstract canvas.
+OneMetro does **not** map the physical geography of India (rivers, roads, or boundaries). We map the **Network Topology**. The "map" you see is a mathematical projection of the metro lines onto a clean, abstract canvas.
 
 ### Geographic Projection Mode (`type: "geo"`)
 Used for Chennai, Pune, and Ahmedabad. We use real-world Lat/Lon coordinates to determine the *relative* positions of stations.
