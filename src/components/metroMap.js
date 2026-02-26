@@ -93,11 +93,11 @@ function geoProject(lat, lon, bounds, width, height, pad = 50) {
   const x =
     pad +
     ((lon - bounds.lonMin) / (bounds.lonMax - bounds.lonMin)) *
-      (width - 2 * pad);
+    (width - 2 * pad);
   const y =
     pad +
     ((bounds.latMax - lat) / (bounds.latMax - bounds.latMin)) *
-      (height - 2 * pad);
+    (height - 2 * pad);
   return { x, y };
 }
 
@@ -259,7 +259,7 @@ function generateBengaluruCoords(
     case "yellow": {
       const greenData = allLines.find((l) => l.id === "green");
       const rvIndex = greenData
-        ? greenData.stations.findIndex((s) => s.name === "RV Road")
+        ? greenData.stations.findIndex((s) => s.name === "Rashtreeya Vidyalaya Road" || s.name === "RV Road")
         : 23;
       const greenCount = greenData ? greenData.stations.length : 32;
       const gStartY = padding - 30 + offsetY;
@@ -285,7 +285,7 @@ function generateBengaluruCoords(
     case "pink": {
       const purpleData = allLines.find((l) => l.id === "purple");
       const mgIndex = purpleData
-        ? purpleData.stations.findIndex((s) => s.name === "M.G. Road")
+        ? purpleData.stations.findIndex((s) => s.name === "MG Road" || s.name === "M.G. Road")
         : 18;
       const purpleCount = purpleData ? purpleData.stations.length : 37;
       const pStartX = padding + 20;
@@ -322,7 +322,7 @@ function generateBengaluruCoords(
       // Silk Board anchor — from Yellow line
       const greenData = allLines.find((l) => l.id === "green");
       const rvIndex = greenData
-        ? greenData.stations.findIndex((s) => s.name === "RV Road")
+        ? greenData.stations.findIndex((s) => s.name === "Rashtreeya Vidyalaya Road" || s.name === "RV Road")
         : 23;
       const greenCount = greenData ? greenData.stations.length : 32;
       const gStartY = padding - 30 + offsetY;
@@ -346,7 +346,7 @@ function generateBengaluruCoords(
       // Nagawara anchor — from Pink line top
       const purpleData = allLines.find((l) => l.id === "purple");
       const mgIndexBlue = purpleData
-        ? purpleData.stations.findIndex((s) => s.name === "M.G. Road")
+        ? purpleData.stations.findIndex((s) => s.name === "MG Road" || s.name === "M.G. Road")
         : 18;
       const mgX = pStartX + (pEndX - pStartX) * (mgIndexBlue / 36);
       const nagX = mgX;
@@ -490,72 +490,72 @@ export function renderMetroMap(
             <rect width="100%" height="100%" fill="url(#grid-dots)" rx="16"/>
 
             ${layout.lines
-              .map(({ coords, line }) => {
-                const isActive = !activeLine || activeLine === line.id;
-                const isUpcoming = line.status !== "operational";
+      .map(({ coords, line }) => {
+        const isActive = !activeLine || activeLine === line.id;
+        const isUpcoming = line.status !== "operational";
 
-                let pathLabel = "";
-                if (line.id.startsWith("water_") && coords.length > 1) {
-                  const isRoute = line.id.split("_")[1];
-                  const midIndex = Math.floor(coords.length / 2) || 1;
-                  const p1 = coords[midIndex - 1];
-                  const p2 = coords[midIndex];
-                  const lblX = (p1.x + p2.x) / 2;
-                  const lblY = (p1.y + p2.y) / 2;
+        let pathLabel = "";
+        if (line.id.startsWith("water_") && coords.length > 1) {
+          const isRoute = line.id.split("_")[1];
+          const midIndex = Math.floor(coords.length / 2) || 1;
+          const p1 = coords[midIndex - 1];
+          const p2 = coords[midIndex];
+          const lblX = (p1.x + p2.x) / 2;
+          const lblY = (p1.y + p2.y) / 2;
 
-                  pathLabel = `
+          pathLabel = `
         <g class="water-route-label" opacity="${isActive ? 1 : 0.2}" style="transition: opacity 0.3s ease;">
           <rect x="${lblX - 10}" y="${lblY - 10}" width="20" height="20" rx="4" fill="${line.color}" stroke="${isActive ? "white" : "transparent"}" stroke-width="1.5" />
           <text x="${lblX}" y="${lblY + 1}" fill="white" font-size="11px" font-weight="bold" font-family="sans-serif" text-anchor="middle" dominant-baseline="central">${isRoute}</text>
         </g>
       `;
-                }
+        }
 
-                return `<path d="${createSVGPath(coords)}"
+        return `<path d="${createSVGPath(coords)}"
                 stroke="${line.color}" stroke-width="${isActive ? 5 : 3}" fill="none"
                 stroke-linecap="round" stroke-linejoin="round"
                 opacity="${isActive ? 1 : 0.2}"
                 ${isUpcoming ? 'stroke-dasharray="12 6"' : ""}
                 filter="${activeLine === line.id ? `url(#glow-${line.id})` : ""}"
                 class="metro-line-path" />${pathLabel}`;
-              })
-              .join("")}
+      })
+      .join("")}
 
             ${layout.lines
-              .map(({ coords, line }) => {
-                return coords
-                  .map((coord, i) => {
-                    // Logic for conditional interchange rendering
-                    let actsAsInterchange = false;
-                    if (coord.station.isInterchange) {
-                      const visibleLineIds = layout.lines.map((l) => l.line.id);
-                      actsAsInterchange = coord.station.interchangeWith.some(
-                        (id) => visibleLineIds.includes(id),
-                      );
-                    }
+      .map(({ coords, line }) => {
+        return coords
+          .map((coord, i) => {
+            // Logic for conditional interchange rendering
+            let actsAsInterchange = false;
+            if (coord.station.isInterchange) {
+              const visibleLineIds = layout.lines.map((l) => l.line.id);
+              actsAsInterchange = coord.station.interchangeWith.some(
+                (id) => visibleLineIds.includes(id),
+              );
+            }
 
-                    if (actsAsInterchange) {
-                      const key = coord.station.name;
-                      if (renderedInterchanges.has(key)) return "";
-                      renderedInterchanges.add(key);
-                      return renderMapInterchange(
-                        coord,
-                        activeLine,
-                        activeStation,
-                      );
-                    }
-                    return renderMapStation(
-                      coord,
-                      i,
-                      activeLine,
-                      activeStation,
-                      line.id,
-                      coords.length,
-                    );
-                  })
-                  .join("");
-              })
-              .join("")}
+            if (actsAsInterchange) {
+              const key = coord.station.name;
+              if (renderedInterchanges.has(key)) return "";
+              renderedInterchanges.add(key);
+              return renderMapInterchange(
+                coord,
+                activeLine,
+                activeStation,
+              );
+            }
+            return renderMapStation(
+              coord,
+              i,
+              activeLine,
+              activeStation,
+              line.id,
+              coords.length,
+            );
+          })
+          .join("");
+      })
+      .join("")}
           </svg>
       </div>
       <div class="map-legend" id="map-legend">
@@ -565,8 +565,8 @@ export function renderMetroMap(
         </div>
         <div class="map-legend-content">
           ${layout.lines
-            .map(
-              ({ line }) => `
+      .map(
+        ({ line }) => `
             <div class="map-legend-item ${activeLine === line.id ? "active" : ""}" data-line-id="${line.id}">
               <span class="map-legend-color" style="background: ${line.color}; box-shadow: 0 0 8px ${line.color}44;">
                 ${line.id.startsWith("water_") ? line.id.split("_")[1] : ""}
@@ -575,8 +575,8 @@ export function renderMetroMap(
               ${line.status !== "operational" ? '<span class="map-legend-tag">Upcoming</span>' : ""}
             </div>
           `,
-            )
-            .join("")}
+      )
+      .join("")}
         </div>
       </div>
     </div>
@@ -653,12 +653,12 @@ function initMapControls(container) {
     const rx =
       clientX !== undefined
         ? (clientX - svg.getBoundingClientRect().left) /
-          svg.getBoundingClientRect().width
+        svg.getBoundingClientRect().width
         : 0.5;
     const ry =
       clientY !== undefined
         ? (clientY - svg.getBoundingClientRect().top) /
-          svg.getBoundingClientRect().height
+        svg.getBoundingClientRect().height
         : 0.5;
 
     vx = pt.x - rx * newW;
