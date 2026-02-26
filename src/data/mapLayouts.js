@@ -590,9 +590,6 @@ export const mapLayouts = {
         { idx: 7, lat: 26.9226, lon: 75.7998 },
         { idx: 8, lat: 26.9263, lon: 75.8074 },
         { idx: 10, lat: 26.9229, lon: 75.8268 },
-        { idx: 11, lat: 26.9202, lon: 75.8309 },
-        { idx: 12, lat: 26.9106, lon: 75.8432 },
-        { idx: 13, lat: 26.884, lon: 75.736 },
       ],
       orange: [
         { idx: 0, lat: 26.78, lon: 75.82 },

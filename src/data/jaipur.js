@@ -526,8 +526,8 @@ const jaipurData = {
   city: 'Jaipur',
   state: 'Rajasthan',
   operator: 'Jaipur Metro Rail Corporation Limited (JMRC)',
-  totalStations: 37,
-  length: '38+ km',
+  totalStations: 34,
+  length: '35+ km',
   totalLines: 2,
   phase: 'Phase 1 & 2',
   established: '2015',
@@ -546,46 +546,6 @@ const jaipurData = {
       stations: pinkLineStations.map((station, i) => ({
         ...station,
         ...getStationCoords('jaipur', 'pink', i)
-      }))
-    },
-    {
-      id: 'pink-ext-1c',
-      name: 'Pink Line Ext. (1C)',
-      color: '#E91E63',
-      colorLight: '#F8BBD0',
-      corridor: 'Badi Chaupar - Transport Nagar',
-      length: '2.85 km',
-      totalStations: 3,
-      status: 'under-construction',
-      expectedCompletion: '2025',
-      stations: [
-        { ...pinkLineStations[10], id: 'p11-c' }, // Connect from Badi Chaupar
-        ...pinkExtStations
-      ].map((station, i) => ({
-        ...station,
-        ...getStationCoords('jaipur', 'pink', 10 + i) // Indices 10, 11, 12
-      }))
-    },
-    {
-      id: 'pink-ext-1d',
-      name: 'Pink Line Ext. (1D)',
-      color: '#E91E63',
-      colorLight: '#F8BBD0',
-      corridor: 'Mansarovar - Ajmer Road',
-      length: '1.35 km',
-      totalStations: 2,
-      status: 'under-construction',
-      expectedCompletion: '2025',
-      stations: [
-        {
-          id: 'pe03', name: 'Ajmer Road Chauraha', nameLocal: 'अजमेर रोड चौराहा', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Ajmer Road Bypass', zone: 1,
-          contact: '1800-180-0038', parking: true, facilities: ['CCTV', 'Lifts'],
-          platforms: [{ no: 1, towards: 'Mansarovar' }, { no: 2, towards: 'Terminal' }], gates: []
-        },
-        { ...pinkLineStations[0], id: 'p01-d' } // Connect to Mansarovar
-      ].map((station, i) => ({
-        ...station,
-        ...getStationCoords('jaipur', 'pink', i === 0 ? 13 : 0) // Index 13 (Ajmer Road) -> 0 (Mansarovar)
       }))
     },
     {
