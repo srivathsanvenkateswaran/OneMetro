@@ -82,7 +82,22 @@ This creates the "organic" feel of the lines without requiring extra data.
 ---
 
 ### Schematic Mode (`type: "schematic"`)
-Used for Delhi and Mumbai. Here, we ignore real-world coordinates and use a custom `{ x, y }` grid to ensure the map is readable even when lines are extremely dense. This follows the industry standard set by the London Underground map, prioritizing topological clarity over geographic accuracy.
+Used for **Delhi**, **Mumbai**, **Hyderabad**, **Kolkata**, **Nagpur**, and **Kochi**. 
+
+In this mode, we ignore real-world Latitude and Longitude. Instead, we use a custom `{ x, y }` grid defined in `mapLayouts.js`. This follows the industry standard set by the London Underground map, prioritizing topological clarity over geographic accuracy. It ensures that lines remain perfectly straight or at 45-degree angles, making the map readable even when dozens of lines intersect in a small city center.
+
+---
+
+### Algorithmic Projection (`type: "algorithmic"`)
+Used exclusively for **Bengaluru**. This is the highest level of abstraction in the OneMetro engine.
+
+**The Rationale**:
+Bengaluru's Phase 1 network is shaped like a "Plus" sign (+), with the Purple and Green lines crossing at a central hub (Majestic). If we used `geo` or `schematic` modes, we would need to manually update dozens of coordinates every time we adjusted the map's center. 
+
+**How it works**:
+Instead of reading from `mapLayouts.js`, the engine calls `generateBengaluruCoords()`. 
+- **Relative Snapping**: The engine first calculates the path for Phase 1. When it renders Phase 2 (Pink/Yellow lines), it literally **searches** for the parent station (e.g., MG Road) in the calculated coordinates of the Purple line and starts the new line from that exact pixel.
+- **Mathematical Curves**: Lines are rendered as sinusoidal waves ($y = \text{center} + \sin(t) \times \text{amplitude}$) to give them a premium, consistent curve that is impossible to maintain manually with static waypoints.
 
 ---
 
