@@ -1,91 +1,132 @@
 # OneMetro: Technical Architecture & Contribution Guide
 
-Welcome to the internal engine of OneMetro. This document is designed for developers, students, and transit enthusiasts who want to understand how a high-performance, framework-less web application is built from the ground up.
+Welcome to the internal engine of OneMetro. This document is a deep-dive designed for developers, students, and "VibeCoders" who want to master the architecture of a high-performance, framework-less web application.
 
 ---
 
 ## 🏗️ 1. The "No-Framework" Philosophy
 
-Most modern web apps use React, Vue, or Angular. OneMetro intentionally uses **Vanilla JavaScript (ES6+)**.
+OneMetro is built intentionally with **Vanilla JavaScript (ES6+)**. In an era of massive frameworks, we returned to first principles to achieve a sub-1-second load time.
 
-### Why?
-1. **Performance**: No virtual DOM overhead, no library initialization delay.
-2. **Longevity**: Frameworks change every few years. Vanilla JS is the standard of the web and will work exactly the same in 10 years.
-3. **The 1-Second Rule**: To load a map of India on a 3G connection in under 1 second, every kilobyte of JavaScript matters.
+### The Component Lifecycle
+Instead of a Virtual DOM (like React), we use **Functional Templates**. 
 
-### How it works:
-- **Components** are pure functions that take data and return an HTML string:
-  ```javascript
-  const StationCard = (station) => `
-    <div class="station-card">
-      <h3>${station.name}</h3>
-      <p>${station.landmark}</p>
+**Example: The Station Header**
+```javascript
+// src/components/stationDetail.js
+export const renderStationHeader = (station, line) => `
+  <div class="station-header" style="border-left: 4px solid ${line.color}">
+    <span class="station-id">${station.id}</span>
+    <h1>${station.name}</h1>
+    <div class="station-meta">
+      <span class="type-badge">${station.type}</span>
+      <span class="zone-badge">Zone ${station.zone}</span>
     </div>
-  `;
-  ```
-- **State Management**: We use the URL hash (`#/city/line`) as our "Single Source of Truth." When the URL changes, `app.js` detects it and re-renders the necessary components.
+  </div>
+`;
+```
+
+### State Management via URL
+We treat the **Browser URL Hash** as our application's state. There is no `Redux` or `Vuex`.
+1. **Change**: User clicks a station.
+2. **Update**: The app updates the URL to `#/chennai/blue/chennai-central`.
+3. **Reactive Render**: The `hashchange` event listener in `app.js` detects this, identifies the city/line/station from the string, and calls the appropriate render functions.
 
 ---
 
-## 🗺️ 2. The SVG Mapping Engine (`metroMap.js`)
+## 🗺️ 2. The Abstract SVG Mapping Engine
 
-OneMetro doesn't use static images for maps. It renders them dynamically using **Scalable Vector Graphics (SVG)**.
+**Crucial Correction**: OneMetro does **not** map the physical geography of India (rivers, roads, or boundaries). We map the **Network Topology**. The "map" you see is a mathematical projection of the metro lines onto a clean, abstract canvas.
 
-### Geographic Projection (`type: "geo"`)
-For cities like Chennai or Pune, we use real-world Lat/Lon coordinates.
-- **The Problem**: Real metro lines have hundreds of small curves. Storing every single point would make the data files massive.
-- **The Solution**: **Hermite Interpolation (Smoothstep)**. We define a few "Waypoints" in `mapLayouts.js`, and the engine mathematically draws smooth curves between them.
-- **Algorithm**: `x = x1 + (x2 - x1) * (t * t * (3 - 2 * t))`. This is the same math used in video game animations to make movement feel natural.
+### Geographic Projection Mode (`type: "geo"`)
+Used for Chennai, Pune, and Ahmedabad. We use real-world Lat/Lon coordinates to determine the *relative* positions of stations.
 
-### Clustering Algorithm
-To handle "Interchanges" (where two lines meet), the map uses a proximity check:
-1. It looks at every station's calculated X/Y position.
-2. If two stations are within a `CLUSTER_RADIUS` (currently 8 pixels), it merges them into a single dot.
-3. If those stations belong to different lines, it renders the "Interchange" marker.
+**The Math of the Curve**:
+We don't want jagged, straight lines between stations. We use a **Smoothstep (Hermite)** interpolation algorithm.
+- **Problem**: Storing every curve point for 1000 stations is data-heavy.
+- **Solution**: We store only 4-5 "Waypoints" for an entire 30km line. The engine calculates the rest.
 
----
+**Interpolation Example**:
+If Station A is at $(10, 10)$ and Station B is at $(20, 20)$, and we are 50% through the segment ($t=0.5$):
+- **Linear**: $15, 15$
+- **Smoothstep**: $x = x_1 + (x_2 - x_1) * (3t^2 - 2t^3)$
+This creates the "organic" feel of the lines without requiring extra data.
 
-## 🛰️ 3. Data Science: Coordinate Interpolation
-
-How do we know where the "15th station" is if we only have waypoints for the 1st and 30th?
-
-We use `scripts/interpolateCoords.mjs`. This script:
-1. Reads the waypoints from `mapLayouts.js`.
-2. Reads the total station count from the city data.
-3. Maps each station index to a `t` value between 0 and 1.
-4. Calculates the approximate Lat/Lon using the smoothstep curve.
-5. Writes the result to `src/data/stationCoords.js`.
-
-**This allows us to maintain geographic accuracy without manual data entry for thousands of stations.**
+### Schematic Mode (`type: "schematic"`)
+Used for Delhi and Mumbai. Here, we ignore real-world coordinates and use a custom `{ x, y }` grid to ensure the map is readable even when lines are extremely dense.
 
 ---
 
-## 🎨 4. Design System (`variables.css`)
+## 🔗 3. Interchange Mechanics: Snapping & Clustering
 
-We follow a **Glassmorphic Dark Theme**.
-- **Tokens**: All colors, blurs, and spacings are stored in `src/styles/variables.css`.
-- **Dynamic Theming**: Metro line colors are NOT in the CSS. They are injected from the JS data files into the SVG style attributes. This makes the system "City-Agnostic."
+How do we make sure different lines "meet" perfectly at a single dot?
 
----
+### Stage 1: The Clustering Algorithm
+During render, the `metroMap.js` engine loops through every station in the visible network.
+```javascript
+const CLUSTER_RADIUS = 8; // Pixels
+// If distance(Station_A, Station_B) < CLUSTER_RADIUS
+//   Then Merge into a single Cluster
+```
+If a cluster contains stations from **different lines**, the engine automatically switches from a small "Station Dot" to a large "Interchange Circle."
 
-## 🚀 5. Scaling: Adding a New City (Tutorial)
-
-To add "Jaipur Metro," a newcomer would:
-
-1. **Define the Data**: Create `src/data/jaipur.js` following the schema in the `README.md`.
-2. **Register**: Add Jaipur to `src/data/cityRegistry.js` with its metadata (state, length, etc.).
-3. **Layout**: In `src/data/mapLayouts.js`, define the `geoBounds` (max/min lat/lon) and at least 3-4 waypoints for each line.
-4. **Interpolate**: Run `node scripts/interpolateCoords.mjs` in your terminal. This generates the station dots.
-5. **Connect**: Open `src/app.js` and add a dynamic import to the `cityLoaders` object:
-   ```javascript
-   jaipur: () => import('./data/jaipur.js')
-   ```
+### Stage 2: Snapping
+The `snapInterchanges()` function runs before the SVG is drawn. It looks for stations with the same name or ID and "snaps" their coordinates to be exactly identical. This prevents the "vibration" effect where two lines are slightly offset at a junction.
 
 ---
 
-## 🎓 6. Learning Resources
-- **MDN Web Docs**: [SVG Tutorial](https://developer.mozilla.org/en-US/docs/Web/SVG)
-- **Mathematical Curves**: [The Book of Shaders (Interpolation)](https://thebookofshaders.com/05/)
-- **CSS Variables**: [CSS Custom Properties Guide](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
+## 🛰️ 4. Data Schemas: The OneMetro Standard
 
-*OneMetro is a "Living Lab." Feel free to experiment with the clustering radius, interpolation math, or animation timings to see how they impact the user experience!*
+To make OneMetro "AI-friendly" and "VibeCoder-friendly," we use a strict schema. Every city is a static JS module—**not a JSON file**. This allows Vite to tree-shake the data and only load Chennai if the user actually visits Chennai.
+
+**The Station "Atom":**
+```javascript
+{
+  id: 'cm-01',
+  name: 'Central',
+  nameLocal: 'மத்திய நிலையம்',
+  type: 'underground',
+  isInterchange: true,
+  interchangeWith: ['green-line'],
+  gates: [
+    { gate: 'A', landmarks: ['Central Railway Station'] }
+  ]
+}
+```
+
+---
+
+## 🚀 5. Mastering the Workflow: A VibeCoder Tutorial
+
+### Task: Add a missing landmark to a station.
+1. Find the city file: `src/data/chennai.js`.
+2. Locate the station object (use `Ctrl+F` for the station name).
+3. Update the `landmark` or `gates` array.
+4. Save. Vite's Hot Module Replacement (HMR) will update your browser instantly.
+
+### Task: Add a new waypoint to fix a map curve.
+1. Open `src/data/mapLayouts.js`.
+2. Find your city.
+3. Add an object to the line's array: `{ idx: 15, lat: 13.01, lon: 80.20 }`. 
+   - `idx`: The 0-based index of the station in the data file.
+   - `lat/lon`: The real-world coordinates.
+4. The engine will now "pull" the curve through this new point.
+
+---
+
+## 🎨 6. The Aesthetics Pillar
+
+OneMetro follows a **Premium Dark UI** standard:
+- **Glassmorphism**: Use `backdrop-filter: blur(10px)` with semi-transparent backgrounds.
+- **Dynamic Glow**: Each line's path has a subtle CSS filter glow using its specific data color.
+- **Micro-Animations**: We use CSS Keyframes for staggered entry. Note how the station list "flows" in rather than just appearing.
+
+---
+
+## 🎓 7. Glossary for Newcomers
+- **WGS84**: The standard coordinate system used by GPS.
+- **Tree-Shaking**: A build process that removes unused code (like other cities) to keep your load fast.
+- **HMR (Hot Module Replacement)**: Updating the app in real-time as you type code.
+- **W3C Semantic HTML**: Using `<article>`, `<nav>`, and `<header>` tags instead of just `<div>` for better SEO and accessibility.
+
+*OneMetro is designed to be the "cleanest" codebase you'll ever work on. No complex state hooks, no obscured logic—just pure, fast, beautiful code.*
