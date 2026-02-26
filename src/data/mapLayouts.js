@@ -476,7 +476,7 @@ export const mapLayouts = {
       yellow: [
         { idx: 0, lat: 22.7389, lon: 75.7975 },
         { idx: 2, lat: 22.755, lon: 75.808 },
-        { idx: 5, lat: 22.778, lon: 75.823 },
+        { idx: 4, lat: 22.778, lon: 75.823 },
       ],
       "yellow-ext": [
         { idx: 0, lat: 22.778, lon: 75.823 },
@@ -487,7 +487,8 @@ export const mapLayouts = {
         { idx: 16, lat: 22.7198, lon: 75.8676 },
         { idx: 17, lat: 22.7184, lon: 75.8547 },
         { idx: 22, lat: 22.726, lon: 75.81 },
-        { idx: 23, lat: 22.73, lon: 75.8 },
+        { idx: 24, lat: 22.73, lon: 75.8 },
+        { idx: 25, lat: 22.7389, lon: 75.7975 },
       ],
     },
   },
