@@ -458,6 +458,18 @@
 }
 
 /* ── Fullscreen Mode (Modal Scaffold) ── */
+body.map-fullscreen-active .content {
+  transform: none !important;
+  will-change: auto !important;
+  z-index: 99999;
+}
+
+body.map-fullscreen-active .app-header,
+body.map-fullscreen-active .sidebar {
+  z-index: 10;
+  /* Lower than modal */
+}
+
 .map-fullscreen {
   position: fixed !important;
   top: 0;

@@ -824,8 +824,9 @@ function initMapControls(container) {
     const isFullscreen = viewer.classList.toggle("map-fullscreen");
     fsBtn.textContent = isFullscreen ? "✕" : "⛶";
 
-    // Toggle body scroll
+    // Toggle body states
     document.body.style.overflow = isFullscreen ? "hidden" : "";
+    document.body.classList.toggle("map-fullscreen-active", isFullscreen);
   });
 
   document.addEventListener("keydown", (e) => {
@@ -833,6 +834,7 @@ function initMapControls(container) {
       viewer.classList.remove("map-fullscreen");
       fsBtn.textContent = "⛶";
       document.body.style.overflow = "";
+      document.body.classList.remove("map-fullscreen-active");
     }
   });
 
