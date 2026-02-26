@@ -665,7 +665,7 @@ function initMapControls(container) {
     startY = 0,
     startVx = 0,
     startVy = 0;
-  const MIN_ZOOM = 0.5,
+  const MIN_ZOOM = 0.2, // Zoom out to 20%
     MAX_ZOOM = 6;
 
   function updateViewBox() {
@@ -821,13 +821,18 @@ function initMapControls(container) {
   // Fullscreen toggle
   const fsBtn = container.querySelector("#fullscreen-toggle");
   fsBtn.addEventListener("click", () => {
-    viewer.classList.toggle("map-fullscreen");
-    fsBtn.textContent = viewer.classList.contains("map-fullscreen") ? "✕" : "⛶";
+    const isFullscreen = viewer.classList.toggle("map-fullscreen");
+    fsBtn.textContent = isFullscreen ? "✕" : "⛶";
+
+    // Toggle body scroll
+    document.body.style.overflow = isFullscreen ? "hidden" : "";
   });
+
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && viewer.classList.contains("map-fullscreen")) {
       viewer.classList.remove("map-fullscreen");
       fsBtn.textContent = "⛶";
+      document.body.style.overflow = "";
     }
   });
 
