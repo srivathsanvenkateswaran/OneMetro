@@ -40,7 +40,7 @@ OneMetro does **not** map the physical geography of India (rivers, roads, or bou
 
 ### 🗺️ Why Two Modes? (The Design Trade-off)
 
-Newcomers often ask: *Why not just use real-world coordinates for everything?* 
+*Why not just use real-world coordinates for everything?* 
 
 The answer lies in the difference between **Cartography** (drawing the world) and **Wayfinding** (helping people navigate).
 
@@ -53,6 +53,12 @@ The answer lies in the difference between **Cartography** (drawing the world) an
 | **Angles** | Any (organic curves). | Primarily 45° and 90° (The "Beck" standard). |
  
 If we used Geographic mode for Delhi, the city center (Rajiv Chowk area) would be a tiny cluster of overlapping dots, while the outskirts (Gurugram/Noida) would require the user to pan for miles. Schematic mode allows us to "inflate" the busy center and "contract" the long suburban stretches so the entire network fits on one screen.
+
+### 💡 When to choose Schematic over Geo?
+Beyond the "Delhi Problem," we choose Schematic mode for:
+1. **Aspect Ratio Optimization**: Real cities like **Kolkata** are very "tall and thin." Schematic mode allows us to "stretch" the width so the map fills the screen instead of looking like a vertical needle.
+2. **Dense Multi-Modal Networks**: In **Kochi**, the Water Metro has many small jetties close together. Schematic mode allows us to "zoom in" and space these out so they are easily clickable on mobile devices.
+3. **Visual Symmetry**: For cities with simple geometric crosses like **Nagpur** or **Hyderabad**, Schematic mode removes "geographic jitter" (real-world road wobbles) to create a clean, premium dashboard aesthetic.
 
 ### 🏙️ City Classification
 As of 2026, the cities in OneMetro are divided as follows:
