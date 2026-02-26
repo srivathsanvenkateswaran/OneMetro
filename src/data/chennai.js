@@ -278,7 +278,7 @@ const chennaiMetro = {
                     ]
                 },
                 {
-                    id: 'b16', name: 'Thousand Lights', nameLocal: 'ஆயிரம் விளக்கு', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Thousand Lights Mosque', zone: 3,
+                    id: 'b16', name: 'Thousand Lights', nameLocal: 'ஆயிரம் விளக்கு', type: 'underground', isInterchange: true, interchangeWith: ['purple'], landmark: 'Thousand Lights Mosque', zone: 3,
                     contact: '1860-425-1515, 155370',
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
@@ -328,7 +328,7 @@ const chennaiMetro = {
                     ]
                 },
                 {
-                    id: 'b19', name: 'Nandanam', nameLocal: 'நந்தனம்', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Nandanam Signal', zone: 3,
+                    id: 'b19', name: 'Nandanam', nameLocal: 'நந்தனம்', type: 'underground', isInterchange: true, interchangeWith: ['yellow'], landmark: 'Nandanam Signal', zone: 3,
                     contact: '1860-425-1515, 155370',
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
@@ -392,7 +392,7 @@ const chennaiMetro = {
                     ]
                 },
                 {
-                    id: 'b23', name: 'Alandur', nameLocal: 'ஆலந்தூர்', type: 'elevated', isInterchange: true, interchangeWith: ['green'], landmark: 'Alandur Bus Depot', zone: 4,
+                    id: 'b23', name: 'Alandur', nameLocal: 'ஆலந்தூர்', type: 'elevated', isInterchange: true, interchangeWith: ['green', 'red'], landmark: 'Alandur Bus Depot', zone: 4,
                     contact: '1860-425-1515, 155370',
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
@@ -595,7 +595,7 @@ const chennaiMetro = {
                     ]
                 },
                 {
-                    id: 'g09', name: 'Thirumangalam', nameLocal: 'திருமங்கலம்', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Thirumangalam Junction', zone: 2,
+                    id: 'g09', name: 'Thirumangalam', nameLocal: 'திருமங்கலம்', type: 'underground', isInterchange: true, interchangeWith: ['red'], landmark: 'Thirumangalam Junction', zone: 2,
                     contact: '1860-425-1515, 155370',
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
@@ -612,7 +612,7 @@ const chennaiMetro = {
                     ]
                 },
                 {
-                    id: 'g10', name: 'Koyambedu', nameLocal: 'கோயம்பேடு', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Koyambedu Market', zone: 3,
+                    id: 'g10', name: 'Koyambedu', nameLocal: 'கோயம்பேடு', type: 'elevated', isInterchange: true, interchangeWith: ['red'], landmark: 'Koyambedu Market', zone: 3,
                     contact: '1860-425-1515, 155370',
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
@@ -658,7 +658,7 @@ const chennaiMetro = {
                     ]
                 },
                 {
-                    id: 'g13', name: 'Vadapalani', nameLocal: 'வடபழனி', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Vadapalani Murugan Temple', zone: 3,
+                    id: 'g13', name: 'Vadapalani', nameLocal: 'வடபழனி', type: 'elevated', isInterchange: true, interchangeWith: ['yellow'], landmark: 'Vadapalani Murugan Temple', zone: 3,
                     contact: '1860-425-1515, 155370',
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
@@ -704,7 +704,7 @@ const chennaiMetro = {
                     ]
                 },
                 {
-                    id: 'g16', name: 'Alandur', nameLocal: 'ஆலந்தூர்', type: 'elevated', isInterchange: true, interchangeWith: ['blue'], landmark: 'Alandur Bus Depot', zone: 4,
+                    id: 'g16', name: 'Alandur', nameLocal: 'ஆலந்தூர்', type: 'elevated', isInterchange: true, interchangeWith: ['blue', 'red'], landmark: 'Alandur Bus Depot', zone: 4,
                     contact: '1860-425-1515, 155370',
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
@@ -720,7 +720,7 @@ const chennaiMetro = {
                     ]
                 },
                 {
-                    id: 'g17', name: 'St. Thomas Mount', nameLocal: 'செயிண்ட் தாமஸ் மவுண்ட்', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'St. Thomas Mount Church', zone: 4,
+                    id: 'g17', name: 'St. Thomas Mount', nameLocal: 'செயிண்ட் தாமஸ் மவுண்ட்', type: 'elevated', isInterchange: true, interchangeWith: ['red'], landmark: 'St. Thomas Mount Church', zone: 4,
                     contact: '1860-425-1515, 155370',
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
@@ -1674,7 +1674,7 @@ const chennaiMetro = {
                     ]
                 },
                 {
-                    id: 'y18', name: 'Alapakkam', nameLocal: '', type: 'elevated', isInterchange: true, interchangeWith: ['red'], landmark: 'Interchange with Red Line', zone: 3,
+                    id: 'y18', name: 'Alapakkam', nameLocal: '', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 3,
                     contact: '1860-425-1515, 155370',
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
@@ -2150,7 +2150,7 @@ const chennaiMetro = {
                     ]
                 },
                 {
-                    id: 'r23', name: 'Alapakkam', nameLocal: '', type: 'elevated', isInterchange: true, interchangeWith: ['yellow'], landmark: 'Interchange with Yellow Line', zone: 3,
+                    id: 'r23', name: 'Alapakkam', nameLocal: '', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 3,
                     contact: '1860-425-1515, 155370',
                     parking: true,
                     facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators'],
