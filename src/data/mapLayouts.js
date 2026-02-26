@@ -476,7 +476,7 @@ export const mapLayouts = {
       yellow: [
         { idx: 0, lat: 22.7389, lon: 75.7975 },
         { idx: 2, lat: 22.755, lon: 75.808 },
-        { idx: 5, lat: 22.778, lon: 75.823 },
+        { idx: 4, lat: 22.778, lon: 75.823 },
       ],
       "yellow-ext": [
         { idx: 0, lat: 22.778, lon: 75.823 },
@@ -487,7 +487,8 @@ export const mapLayouts = {
         { idx: 16, lat: 22.7198, lon: 75.8676 },
         { idx: 17, lat: 22.7184, lon: 75.8547 },
         { idx: 22, lat: 22.726, lon: 75.81 },
-        { idx: 23, lat: 22.73, lon: 75.8 },
+        { idx: 24, lat: 22.73, lon: 75.8 },
+        { idx: 25, lat: 22.7389, lon: 75.7975 },
       ],
     },
   },
@@ -518,13 +519,15 @@ export const mapLayouts = {
         { idx: 12, lat: 18.536, lon: 73.884 },
         { idx: 15, lat: 18.561, lon: 73.926 },
       ],
-      line3: [
+      pink: [
         { idx: 0, lat: 18.576, lon: 73.684 },
+        { idx: 2, lat: 18.583, lon: 73.714 },
         { idx: 4, lat: 18.585, lon: 73.725 },
-        { idx: 7, lat: 18.595, lon: 73.74 },
-        { idx: 10, lat: 18.582, lon: 73.765 },
+        { idx: 6, lat: 18.591, lon: 73.740 },
+        { idx: 8, lat: 18.581, lon: 73.755 },
+        { idx: 10, lat: 18.568, lon: 73.773 },
         { idx: 15, lat: 18.558, lon: 73.784 },
-        { idx: 18, lat: 18.541, lon: 73.826 },
+        { idx: 18, lat: 18.553, lon: 73.824 },
         { idx: 21, lat: 18.532, lon: 73.847 },
         { idx: 22, lat: 18.528, lon: 73.855 },
       ],
@@ -585,12 +588,9 @@ export const mapLayouts = {
         { idx: 0, lat: 26.8795, lon: 75.7499 },
         { idx: 2, lat: 26.8803, lon: 75.7646 },
         { idx: 6, lat: 26.9095, lon: 75.7812 },
-        { idx: 7, lat: 26.9186, lon: 75.79 },
-        { idx: 8, lat: 26.9226, lon: 75.7998 },
-        { idx: 9, lat: 26.9263, lon: 75.8074 },
-        { idx: 11, lat: 26.9229, lon: 75.8268 },
-        { idx: 12, lat: 26.9202, lon: 75.8309 },
-        { idx: 13, lat: 26.9106, lon: 75.8432 },
+        { idx: 7, lat: 26.9226, lon: 75.7998 },
+        { idx: 8, lat: 26.9263, lon: 75.8074 },
+        { idx: 10, lat: 26.9229, lon: 75.8268 },
       ],
       orange: [
         { idx: 0, lat: 26.78, lon: 75.82 },
@@ -599,8 +599,8 @@ export const mapLayouts = {
         { idx: 13, lat: 26.9056, lon: 75.8155 },
         { idx: 14, lat: 26.915, lon: 75.816 },
         { idx: 15, lat: 26.918, lon: 75.802 },
-        { idx: 16, lat: 26.9226, lon: 75.7998 },
-        { idx: 19, lat: 26.9441, lon: 75.7763 },
+        { idx: 19, lat: 26.9226, lon: 75.7998 },
+        { idx: 22, lat: 26.9441, lon: 75.7763 },
       ],
     },
   },
@@ -657,18 +657,20 @@ export const mapLayouts = {
         { idx: 5, lat: 27.1853, lon: 78.0163 },
       ],
       "yellow-uc": [
-        { idx: 0, lat: 27.1853, lon: 78.0163 },
-        { idx: 2, lat: 27.1855, lon: 78.0027 },
+        { idx: 0, lat: 27.1853, lon: 78.0163 }, // Match Mankameshwar anchor
+        { idx: 1, lat: 27.1852, lon: 78.0135 }, // Medical College
+        { idx: 2, lat: 27.1848, lon: 78.0084 }, // Agra College (Interchange)
+        { idx: 3, lat: 27.1951, lon: 77.9944 }, // Raja Ki Mandi
         { idx: 6, lat: 27.2077, lon: 77.9775 },
-        { idx: 8, lat: 27.2127, lon: 77.9501 },
+        { idx: 8, lat: 27.2185, lon: 77.9501 },
       ],
       blue: [
-        { idx: 0, lat: 27.155, lon: 78.0 },
-        { idx: 3, lat: 27.17, lon: 78.007 },
-        { idx: 6, lat: 27.1855, lon: 78.0027 },
-        { idx: 10, lat: 27.212, lon: 78.015 },
-        { idx: 12, lat: 27.206, lon: 78.026 },
-        { idx: 15, lat: 27.2096, lon: 78.06 },
+        { idx: 0, lat: 27.1593, lon: 78.0022 }, // Agra Cantt
+        { idx: 3, lat: 27.170, lon: 78.007 },   // Pratap Pura
+        { idx: 6, lat: 27.1848, lon: 78.0084 }, // Agra College (Interchange)
+        { idx: 10, lat: 27.208, lon: 78.025 },  // Sultanganj
+        { idx: 12, lat: 27.206, lon: 78.042 },  // Ram Bagh
+        { idx: 15, lat: 27.218, lon: 78.065 },  // Kalindi Vihar
       ],
     },
   },
@@ -683,20 +685,20 @@ export const mapLayouts = {
     bounds: { latMin: 23.18, latMax: 23.33, lonMin: 77.35, lonMax: 77.52 },
     lines: {
       orange: [
-        { idx: 0, lat: 23.243, lon: 77.425 },
-        { idx: 4, lat: 23.221, lon: 77.438 },
-        { idx: 7, lat: 23.21, lon: 77.456 },
+        { idx: 0, lat: 23.21, lon: 77.456 },   // AIIMS
+        { idx: 3, lat: 23.221, lon: 77.438 },  // DRM Office / RKMP
+        { idx: 7, lat: 23.243, lon: 77.425 },  // Subhash Nagar
       ],
       "orange-ext": [
-        { idx: 0, lat: 23.305, lon: 77.404 },
-        { idx: 5, lat: 23.266, lon: 77.413 },
-        { idx: 7, lat: 23.25, lon: 77.42 },
-        { idx: 8, lat: 23.243, lon: 77.425 },
+        { idx: 0, lat: 23.243, lon: 77.425 },  // Subhash Nagar Connection
+        { idx: 1, lat: 23.25, lon: 77.42 },     // Pul Bogda (Interchange)
+        { idx: 4, lat: 23.266, lon: 77.413 },  // Mid-strip
+        { idx: 8, lat: 23.305, lon: 77.404 },  // Karond Square
       ],
       blue: [
         { idx: 0, lat: 23.224, lon: 77.382 },
         { idx: 3, lat: 23.242, lon: 77.402 },
-        { idx: 6, lat: 23.25, lon: 77.42 },
+        { idx: 6, lat: 23.25, lon: 77.42 },    // Pul Bogda (Interchange)
         { idx: 9, lat: 23.257, lon: 77.455 },
         { idx: 12, lat: 23.26, lon: 77.491 },
       ],

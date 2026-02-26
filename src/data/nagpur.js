@@ -43,16 +43,64 @@ const aquaLineStations = [
     { name: 'Lokmanya Nagar', nameLocal: 'लोकમાન્યા नगर', type: 'elevated', landmark: 'Hingna Road' }
 ];
 
+const orangeNorthStations = [
+    { name: 'Automotive Square', nameLocal: 'ऑटोमोटिव्ह चौक', type: 'elevated', landmark: 'Kamptee Road' },
+    { name: 'Pili Nadi', nameLocal: 'पिली नदी', type: 'elevated', landmark: 'Pili Nadi' },
+    { name: 'Khasara Fata', nameLocal: 'खसरा फाटा', type: 'elevated', landmark: 'Khasara Fata' },
+    { name: 'All India Radio', nameLocal: 'आकाशवाणी', type: 'elevated', landmark: 'AIR Nagpur' },
+    { name: 'Kheri Fata', nameLocal: 'खेरी फाटा', type: 'elevated', landmark: 'Kheri Fata' },
+    { name: 'Lok Vihar', nameLocal: 'लोक विहार', type: 'elevated', landmark: 'Lok Vihar' },
+    { name: 'Lekha Nagar', nameLocal: 'लेखा नगर', type: 'elevated', landmark: 'Lekha Nagar' },
+    { name: 'Cantonment', nameLocal: 'कॅन्टोन्मेंट', type: 'elevated', landmark: 'Kamptee Cantonment' },
+    { name: 'Kamptee Police Station', nameLocal: 'कामठी पोलीस स्टेशन', type: 'elevated', landmark: 'Kamptee PS' },
+    { name: 'Kamptee Municipal Council', nameLocal: 'कामठी नगर परिषद', type: 'elevated', landmark: 'Kamptee MC' },
+    { name: 'Dragon Palace', nameLocal: 'ड्रॅगन पॅलेस', type: 'elevated', landmark: 'Dragon Palace Temple' },
+    { name: 'Golf Club', nameLocal: 'गोल्फ क्लब', type: 'elevated', landmark: 'Kamptee Golf Club' },
+    { name: 'Kanhan', nameLocal: 'कान्हान', type: 'elevated', landmark: 'Kanhan River' }
+];
+
+const orangeSouthStations = [
+    { name: 'Khapri', nameLocal: 'खापरी', type: 'at-grade', landmark: 'Khapri' },
+    { name: 'Eco Park', nameLocal: 'इको पार्क', type: 'elevated', landmark: 'Eco Park' },
+    { name: 'Metro City', nameLocal: 'मेट्रो सिटी', type: 'elevated', landmark: 'Metro City' },
+    { name: 'Ashokvan', nameLocal: 'अशोकवन', type: 'elevated', landmark: 'Ashokvan' },
+    { name: 'Dongargaon', nameLocal: 'डोंगरगाव', type: 'elevated', landmark: 'Dongargaon' },
+    { name: 'Mohgaon', nameLocal: 'मोहगाव', type: 'elevated', landmark: 'Mohgaon' },
+    { name: 'Meghdoot CIDCO', nameLocal: 'मेघदूत सिडको', type: 'elevated', landmark: 'CIDCO Colony' },
+    { name: 'Butibori Police Station', nameLocal: 'बुटीबोरी पोलीस स्टेशन', type: 'elevated', landmark: 'Butibori PS' },
+    { name: 'Mhada Colony', nameLocal: 'म्हाडा कॉलनी', type: 'elevated', landmark: 'Mhada Colony' },
+    { name: 'MIDC KEC', nameLocal: 'एमआयडीसी केईसी', type: 'elevated', landmark: 'MIDC' },
+    { name: 'MIDC-ESR', nameLocal: 'एमआयडीसी-ईएसआर', type: 'elevated', landmark: 'MIDC ESR' }
+];
+
+const aquaWestStations = [
+    { name: 'Lokmanya Nagar', nameLocal: 'लोकमान्या नगर', type: 'elevated', landmark: 'Hingna Road' },
+    { name: 'Mount View', nameLocal: 'माऊंट व्ह्यू', type: 'elevated', landmark: 'Mount View' },
+    { name: 'Rajiv Nagar', nameLocal: 'राजीव नगर', type: 'elevated', landmark: 'Rajiv Nagar' },
+    { name: 'Wanadongri', nameLocal: 'वानाडोंगरी', type: 'elevated', landmark: 'Wanadongri' },
+    { name: 'APMC', nameLocal: 'एपीएमसी', type: 'elevated', landmark: 'APMC Hingna' },
+    { name: 'Raipur', nameLocal: 'रायपूर', type: 'elevated', landmark: 'Raipur' },
+    { name: 'Hingna Bus Station', nameLocal: 'हिंगणा बस स्थानक', type: 'elevated', landmark: 'Hingna Bus Stand' },
+    { name: 'Hingna', nameLocal: 'हिंगणा', type: 'elevated', landmark: 'Hingna' }
+];
+
+const aquaEastStations = [
+    { name: 'Prajapati Nagar', nameLocal: 'प्रजापती नगर', type: 'elevated', landmark: 'Prajapati Nagar' },
+    { name: 'Pardi', nameLocal: 'पारडी', type: 'elevated', landmark: 'Pardi' },
+    { name: 'Kapsi Khurd', nameLocal: 'कापसी खुर्द', type: 'elevated', landmark: 'Kapsi' },
+    { name: 'Transport Nagar', nameLocal: 'ट्रान्सपोर्ट नगर', type: 'elevated', landmark: 'Transport Nagar' }
+];
+
 function buildStation(st, idPrefix, idx, lineId) {
     let towards1 = 'Terminal 1';
     let towards2 = 'Terminal 2';
 
-    if (lineId === 'orange') {
-        towards1 = 'Khapri';
-        towards2 = 'Automotive Square';
-    } else if (lineId === 'aqua') {
-        towards1 = 'Lokmanya Nagar';
-        towards2 = 'Prajapati Nagar';
+    if (lineId.includes('orange')) {
+        towards1 = 'Butibori / Khapri';
+        towards2 = 'Kanhan / Automotive Square';
+    } else if (lineId.includes('aqua')) {
+        towards1 = 'Hingna / Lokmanya Nagar';
+        towards2 = 'Transport Nagar / Prajapati Nagar';
     }
 
     return {
@@ -84,10 +132,10 @@ const nagpurData = {
     city: 'Nagpur',
     state: 'Maharashtra',
     operator: 'Maharashtra Metro Rail Corporation Limited (Maha Metro)',
-    totalStations: 37,
-    length: '38.2 km',
+    totalStations: 69,
+    length: '82.0 km',
     totalLines: 2,
-    phase: 'Phase 1',
+    phase: 'Phase 1 (Operational) + Phase 2 (Under Construction)',
     established: '2019',
     website: 'https://www.metrorailnagpur.com/',
     lines: [
@@ -114,6 +162,54 @@ const nagpurData = {
             status: 'operational',
             operationalSince: '2020-01-28',
             stations: aquaLineStations.map((st, i) => buildStation(st, 'a', i, 'aqua'))
+        },
+        {
+            id: 'orange-north',
+            name: 'Orange Line North Ext.',
+            color: '#FF9800',
+            colorLight: '#FFCC80',
+            corridor: 'Automotive Square - Kanhan',
+            length: '13.0 km',
+            totalStations: 13,
+            status: 'under-construction',
+            expectedCompletion: '2026',
+            stations: orangeNorthStations.map((st, i) => buildStation(st, 'on', i, 'orange-north'))
+        },
+        {
+            id: 'orange-south',
+            name: 'Orange Line South Ext.',
+            color: '#FF9800',
+            colorLight: '#FFCC80',
+            corridor: 'Khapri - Butibori',
+            length: '18.7 km',
+            totalStations: 11,
+            status: 'under-construction',
+            expectedCompletion: '2026',
+            stations: orangeSouthStations.map((st, i) => buildStation(st, 'os', i, 'orange-south'))
+        },
+        {
+            id: 'aqua-east',
+            name: 'Aqua Line East Ext.',
+            color: '#00BCD4',
+            colorLight: '#B2EBF2',
+            corridor: 'Prajapati Nagar - Transport Nagar',
+            length: '5.5 km',
+            totalStations: 4,
+            status: 'under-construction',
+            expectedCompletion: '2026',
+            stations: aquaEastStations.map((st, i) => buildStation(st, 'ae', i, 'aqua-east'))
+        },
+        {
+            id: 'aqua-west',
+            name: 'Aqua Line West Ext.',
+            color: '#00BCD4',
+            colorLight: '#B2EBF2',
+            corridor: 'Lokmanya Nagar - Hingna',
+            length: '6.6 km',
+            totalStations: 8,
+            status: 'under-construction',
+            expectedCompletion: '2026',
+            stations: aquaWestStations.map((st, i) => buildStation(st, 'aw', i, 'aqua-west'))
         }
     ]
 };

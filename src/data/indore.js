@@ -437,28 +437,30 @@ const indoreData = {
       operationalSince: '2025',
       frequency: '10–15 min',
       stations: yellowLineStations
-        .filter(st => ['y01', 'y02', 'y03', 'y04', 'y05'].includes(st.id))
-        .map((station) => ({
+        .slice(0, 5) // y01 to y05
+        .map((station, i) => ({
           ...station,
-          ...getStationCoords('indore', 'yellow', parseInt(station.id.substring(1)) - 1)
+          ...getStationCoords('indore', 'yellow', i)
         }))
     },
     {
       id: 'yellow-ext',
-      name: 'Yellow Line (Ext)',
+      name: 'Yellow Line (Upcoming)',
       color: '#FFEB3B',
       colorLight: '#FFF59D',
-      corridor: 'Ring Line (UC)',
+      corridor: 'Ring Line (Phase 1)',
       length: '25.5 km',
-      totalStations: 24,
+      totalStations: 26,
       status: 'under-construction',
       expectedCompletion: '2027',
-      stations: yellowLineStations
-        .filter(st => !['y01', 'y02', 'y03', 'y04', 'y05'].includes(st.id))
-        .map((station, i) => ({
-          ...station,
-          ...getStationCoords('indore', 'yellow-ext', i)
-        }))
+      stations: [
+        yellowLineStations[4], // y05 (Junction)
+        ...yellowLineStations.slice(5), // y06 to y29
+        yellowLineStations[0] // y01 (Closing the ring)
+      ].map((station, i) => ({
+        ...station,
+        ...getStationCoords('indore', 'yellow-ext', i)
+      }))
     }
   ]
 };

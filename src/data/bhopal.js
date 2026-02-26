@@ -132,10 +132,13 @@ const bhopalData = {
       colorLight: '#FFCC80',
       corridor: 'Subhash Nagar - Karond Square',
       length: '8.77 km',
-      totalStations: 8,
+      totalStations: 9,
       status: 'under-construction',
       expectedCompletion: '2026',
-      stations: orangeUcStations.map((st, i) => buildStation(st, 'oe', i, 'orange-ext'))
+      stations: [
+        { ...orangeOperationalStations[7], id: 'o08-ext' }, // Subhash Nagar connection
+        ...orangeUcStations
+      ].map((st, i) => buildStation(st, 'oe', i, 'orange-ext'))
     },
     {
       id: 'blue',

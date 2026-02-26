@@ -38,11 +38,13 @@ const aquaLineStations = [
 
 const pinkLineStations = [
     { name: 'Megapolis Circle', nameLocal: 'मेगापोलिस सर्कल', type: 'elevated', landmark: 'Hinjewadi Phase 3' },
-    { name: 'Quadron', nameLocal: 'क्वाड्रॉन', type: 'elevated', landmark: 'Quadron IT Park' },
+    { name: 'Embassy Quadron Business Park', nameLocal: 'एम्बसी क्वाड्रॉन बिझनेस पार्क', type: 'elevated', landmark: 'Quadron IT Park' },
+    { name: 'Döhler', nameLocal: 'डोहलर', type: 'elevated', landmark: 'Döhler Hinjewadi' },
     { name: 'Infosys Phase II', nameLocal: 'इन्फोसिस फेज २', type: 'elevated', landmark: 'Infosys Campus' },
     { name: 'Wipro Technologies', nameLocal: 'विप्रो टेक्नॉलॉजीज', type: 'elevated', landmark: 'Wipro Hinjewadi' },
+    { name: 'Pall India', nameLocal: 'पाल इंडिया', type: 'elevated', landmark: 'Pall India Hinjewadi' },
     { name: 'Shivaji Chowk', nameLocal: 'शिवाजी चौक', type: 'elevated', landmark: 'Hinjewadi Phase 1' },
-    { name: 'Hinjewadi', nameLocal: 'हिंजवडी', type: 'elevated', landmark: 'Hinjewadi' },
+    { name: 'Hinjawadi', nameLocal: 'हिंजवडी', type: 'elevated', landmark: 'Hinjewadi' },
     { name: 'Wakad Chowk', nameLocal: 'वाकड चौक', type: 'elevated', landmark: 'Wakad' },
     { name: 'Balewadi Stadium', nameLocal: 'बालेवाडी स्टेडियम', type: 'elevated', landmark: 'Shree Shiv Chhatrapati Sports Complex' },
     { name: 'NICMAR', nameLocal: 'निकमार', type: 'elevated', landmark: 'NICMAR' },
@@ -51,6 +53,7 @@ const pinkLineStations = [
     { name: 'Balewadi Phata', nameLocal: 'बालेवाडी फाटा', type: 'elevated', landmark: 'Balewadi Phata' },
     { name: 'Baner Gaon', nameLocal: 'बाणेर गाव', type: 'elevated', landmark: 'Baner' },
     { name: 'Baner', nameLocal: 'बाणेर', type: 'elevated', landmark: 'Baner Road' },
+    { name: 'Krushi Anusandhan', nameLocal: 'कृषी संशोधन', type: 'elevated', landmark: 'ICAR-IARI' },
     { name: 'Sakal Nagar', nameLocal: 'सकाळ नगर', type: 'elevated', landmark: 'Sakal Nagar' },
     { name: 'Savitribai Phule Pune University', nameLocal: 'सावित्रीबाई फुले पुणे विद्यापीठ', type: 'elevated', landmark: 'Pune University Main Gate' },
     { name: 'Reserve Bank of India', nameLocal: 'भारतीय रिझर्व्ह बँक', type: 'elevated', landmark: 'RBI Pune' },
@@ -127,7 +130,7 @@ const puneData = {
             colorLight: '#F8BBD0',
             corridor: 'Hinjewadi - Civil Court',
             length: '23.3 km',
-            totalStations: 20,
+            totalStations: 23,
             status: 'under-construction',
             expectedCompletion: '2026',
             stations: pinkLineStations.map((st, i) => buildStation(st, 'pi', i))

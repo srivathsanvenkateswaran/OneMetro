@@ -526,7 +526,7 @@ const jaipurData = {
   city: 'Jaipur',
   state: 'Rajasthan',
   operator: 'Jaipur Metro Rail Corporation Limited (JMRC)',
-  totalStations: 36,
+  totalStations: 34,
   length: '35+ km',
   totalLines: 2,
   phase: 'Phase 1 & 2',
@@ -546,21 +546,6 @@ const jaipurData = {
       stations: pinkLineStations.map((station, i) => ({
         ...station,
         ...getStationCoords('jaipur', 'pink', i)
-      }))
-    },
-    {
-      id: 'pink-ext',
-      name: 'Pink Line (Ext)',
-      color: '#E91E63',
-      colorLight: '#F8BBD0',
-      corridor: 'Phase 1C & 1D',
-      length: '3 km',
-      totalStations: 2,
-      status: 'under-construction',
-      expectedCompletion: '2025',
-      stations: pinkExtStations.map((station, i) => ({
-        ...station,
-        ...getStationCoords('jaipur', 'pink', 11 + i) // Offset by 11 operational stations
       }))
     },
     {
