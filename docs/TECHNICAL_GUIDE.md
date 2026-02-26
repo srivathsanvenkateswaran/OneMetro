@@ -34,7 +34,37 @@ We treat the **Browser URL Hash** as our application's state. There is no `Redux
 
 ---
 
-## 🗺️ 2. The Abstract SVG Mapping Engine
+## �️ 1.5 The SVG Rendering Pipeline
+
+OneMetro uses a highly optimized, single-pass SVG rendering engine. Unlike Canvas, SVG allows us to maintain **vector-perfect sharpness** at any zoom level and attach event listeners directly to the elements.
+
+### The Rendering Order (Z-Index)
+To ensure maximum legibility, our engine renders elements in a strict bottom-up layer stack:
+1. **The Rail Base**: Thick, semi-transparent paths that form the "halo" or glow of the metro line.
+2. **The Active Line**: A thinner, solid-colored path representing the actual track.
+3. **The Connection Layer**: Small bridge lines that connect stations in complex interchanges.
+4. **The Station Dots**: Procedural circles (smaller for normal stops, larger for interchanges).
+5. **The Label Layer**: Anti-aliased text labels with high-contrast shadows.
+
+### The "Double-Path" Technique
+For a premium aesthetic, every metro line is actually rendered as **two SVG paths** on top of each other:
+```javascript
+// A conceptual snippet from the engine
+const railGlow = `<path d="${pathData}" stroke="${color}" stroke-width="8" opacity="0.3" />`;
+const railTrack = `<path d="${pathData}" stroke="${color}" stroke-width="4" />`;
+```
+This creates a subtle "neon" effect that makes the lines pop against the dark mode background.
+
+### Coordinate Transformation
+The engine uses a linear projection to map geographic coordinates to the SVG canvas:
+- **X-axis**: $x = \text{pad} + \frac{(\text{lon} - \text{lonMin})}{(\text{lonMax} - \text{lonMin})} \times (\text{width} - 2 \times \text{pad})$
+- **Y-axis**: $y = \text{pad} + \frac{(\text{latMax} - \text{lat})}{(\text{latMax} - \text{latMin})} \times (\text{height} - 2 \times \text{pad})$
+
+*Note: In Y-axis transformation, we subtract from `latMax` because SVG coordinates (0,0) start at the top-left, while geographic latitudes increase as you move north (up).*
+
+---
+
+## �🗺️ 2. The Abstract SVG Mapping Engine
 
 OneMetro does **not** map the physical geography of India (rivers, roads, or boundaries). We map the **Network Topology**. The "map" you see is a mathematical projection of the metro lines onto a clean, abstract canvas.
 
