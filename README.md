@@ -89,7 +89,7 @@ OneMetro is built on open data and community knowledge. We extend our gratitude 
 
 ## 👨‍💻 Maintainer
 **Srivathsan Venkateswaran**  
-[LinkedIn Profile](https://www.linkedin.com/in/srivathsan-venkateswaran/)
+[LinkedIn Profile](https://www.linkedin.com/in/srivathsanvenkateswaran/)
 
 ---
 
