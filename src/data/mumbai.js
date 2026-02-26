@@ -10,9 +10,9 @@ const mumbaiMetro = {
     city: 'Mumbai',
     state: 'Maharashtra',
     operator: 'Maha Mumbai Metro Operations Corporation (MMMOCL) / MMOPL / MMRC',
-    totalStations: 70,
-    totalLength: '80.0 km',
-    totalLines: 4,
+    totalStations: 167,
+    totalLength: '120.0 km',
+    totalLines: 9,
     established: '2014',
     website: 'https://mmmocl.co.in/',
 
@@ -34,10 +34,10 @@ const mumbaiMetro = {
             rollingStock: 'CRRC Nanjing Puzhen',
             stations: [
                 { id: 'm1_01', name: 'Versova', nameLocal: 'वर्सोवा', type: 'elevated', isInterchange: false, landmark: '', zone: 1, platforms: [{ no: 1, towards: 'Ghatkopar' }, { no: 2, towards: 'Terminal' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] },
-                { id: 'm1_02', name: 'Andheri West / DN Nagar', nameLocal: 'डी एन नगर', type: 'elevated', isInterchange: true, interchangeWith: ['yellow'], landmark: '', zone: 1, platforms: [{ no: 1, towards: 'Ghatkopar' }, { no: 2, towards: 'Versova' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] },
+                { id: 'm1_02', name: 'DN Nagar', nameLocal: 'डी एन नगर', type: 'elevated', isInterchange: true, interchangeWith: ['yellow'], landmark: '', zone: 1, platforms: [{ no: 1, towards: 'Ghatkopar' }, { no: 2, towards: 'Versova' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] },
                 { id: 'm1_03', name: 'Azad Nagar', nameLocal: 'आझाद नगर', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1, platforms: [{ no: 1, towards: 'Ghatkopar' }, { no: 2, towards: 'Versova' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] },
                 { id: 'm1_04', name: 'Andheri', nameLocal: 'अंधेरी', type: 'elevated', isInterchange: true, interchangeWith: ['rail'], landmark: 'Andheri Station (WR)', zone: 1, platforms: [{ no: 1, towards: 'Ghatkopar' }, { no: 2, towards: 'Versova' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] },
-                { id: 'm1_05', name: 'Gundavali / WEH', nameLocal: 'पश्चिम द्रुतगती महामार्ग', type: 'elevated', isInterchange: true, interchangeWith: ['red'], landmark: '', zone: 1, platforms: [{ no: 1, towards: 'Ghatkopar' }, { no: 2, towards: 'Versova' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] },
+                { id: 'm1_05', name: 'Western Express Highway (WEH)', nameLocal: 'पश्चिम द्रुतगती महामार्ग', type: 'elevated', isInterchange: true, interchangeWith: ['red'], landmark: '', zone: 1, platforms: [{ no: 1, towards: 'Ghatkopar' }, { no: 2, towards: 'Versova' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] },
                 { id: 'm1_06', name: 'Chakala (J.B. Nagar)', nameLocal: 'चकाला (जे बी नगर)', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1, platforms: [{ no: 1, towards: 'Ghatkopar' }, { no: 2, towards: 'Versova' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] },
                 { id: 'm1_07', name: 'Airport Road', nameLocal: 'विमानतळ रस्ता', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1, platforms: [{ no: 1, towards: 'Ghatkopar' }, { no: 2, towards: 'Versova' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] },
                 { id: 'm1_08', name: 'Marol Naka', nameLocal: 'मरोळ नाका', type: 'elevated', isInterchange: true, interchangeWith: ['aqua'], landmark: '', zone: 1, platforms: [{ no: 1, towards: 'Ghatkopar' }, { no: 2, towards: 'Versova' }], facilities: ['Lifts', 'Escalators', 'CCTV', 'Restrooms'] },
@@ -63,7 +63,7 @@ const mumbaiMetro = {
             gauge: 'Standard Gauge (1435 mm)',
             rollingStock: 'BEML',
             stations: [
-                { id: 'm2a_01', name: 'Dahisar East', nameLocal: 'दहिसर पूर्व', type: 'elevated', isInterchange: true, interchangeWith: ['red'], landmark: '', zone: 2 },
+                { id: 'inter-dahisar-east', name: 'Dahisar East', nameLocal: 'दहिसर पूर्व', type: 'elevated', isInterchange: true, interchangeWith: ['red', 'red-9'], landmark: '', zone: 2 },
                 { id: 'm2a_02', name: 'Anand Nagar', nameLocal: 'आनंद नगर', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 2 },
                 { id: 'm2a_03', name: 'Kandarpada', nameLocal: 'कंदरपाडा', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 2 },
                 { id: 'm2a_04', name: 'Mandapeshwar', nameLocal: 'मंडपेश्वर', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 2 },
@@ -77,9 +77,9 @@ const mumbaiMetro = {
                 { id: 'm2a_12', name: 'Lower Malad', nameLocal: 'लोअर मालाड', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 2 },
                 { id: 'm2a_13', name: 'Pahadi Goregaon', nameLocal: 'पहाडी गोरेगाव', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 2 },
                 { id: 'm2a_14', name: 'Goregaon West', nameLocal: 'गोरेगाव पश्चिम', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 2 },
-                { id: 'm2a_15', name: 'Oshiwara / Adarsh Nagar', nameLocal: 'ओशिवरा', type: 'elevated', isInterchange: true, interchangeWith: ['pink'], landmark: '', zone: 2 },
+                { id: 'inter-oshiwara', name: 'Oshiwara / Adarsh Nagar', nameLocal: 'ओशिवरा', type: 'elevated', isInterchange: true, interchangeWith: ['pink'], landmark: '', zone: 2 },
                 { id: 'm2a_16', name: 'Lower Oshiwara', nameLocal: 'लोअर ओशिवरा', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 2 },
-                { id: 'm2a_17', name: 'Andheri West / DN Nagar', nameLocal: 'अंधेरी पश्चिम', type: 'elevated', isInterchange: true, interchangeWith: ['blue'], landmark: 'DN Nagar Connect', zone: 2 }
+                { id: 'm2a_17', name: 'Andheri West', nameLocal: 'अंधेरी पश्चिम', type: 'elevated', isInterchange: true, interchangeWith: ['blue'], landmark: 'DN Nagar Connect', zone: 2 }
             ]
         },
         {
@@ -98,7 +98,7 @@ const mumbaiMetro = {
             gauge: 'Standard Gauge (1435 mm)',
             rollingStock: 'BEML',
             stations: [
-                { id: 'm7_01', name: 'Dahisar East', nameLocal: 'दहिसर पूर्व', type: 'elevated', isInterchange: true, interchangeWith: ['yellow'], landmark: '', zone: 3 },
+                { id: 'inter-dahisar-east', name: 'Dahisar East', nameLocal: 'दहिसर पूर्व', type: 'elevated', isInterchange: true, interchangeWith: ['yellow', 'red-9'], landmark: '', zone: 3 },
                 { id: 'm7_02', name: 'Ovaripada', nameLocal: 'ओवरीपाडा', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 3 },
                 { id: 'm7_03', name: 'Rashtriya Udyan', nameLocal: 'राष्ट्रीय उद्यान', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Sanjay Gandhi National Park', zone: 3 },
                 { id: 'm7_04', name: 'Devipada', nameLocal: 'देवीपाडा', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 3 },
@@ -109,9 +109,9 @@ const mumbaiMetro = {
                 { id: 'm7_09', name: 'Dindoshi', nameLocal: 'दिंडोशी', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 3 },
                 { id: 'm7_10', name: 'Aarey', nameLocal: 'आरे', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 3 },
                 { id: 'm7_11', name: 'Goregaon East', nameLocal: 'गोरेगाव पूर्व', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 3 },
-                { id: 'm7_12', name: 'Jogeshwari / JVLR', nameLocal: 'जोगेश्वरी पूर्व', type: 'elevated', isInterchange: true, interchangeWith: ['pink'], landmark: '', zone: 3 },
+                { id: 'inter-jvlr', name: 'Jogeshwari / JVLR', nameLocal: 'जोगेश्वरी पूर्व', type: 'elevated', isInterchange: true, interchangeWith: ['pink'], landmark: '', zone: 3 },
                 { id: 'm7_13', name: 'Mogra', nameLocal: 'मोगरा', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 3 },
-                { id: 'm7_14', name: 'Gundavali / WEH', nameLocal: 'गुंदवली', type: 'elevated', isInterchange: true, interchangeWith: ['blue'], landmark: 'WEH Connect', zone: 3 }
+                { id: 'm7_14', name: 'Gundavali', nameLocal: 'गुंदवली', type: 'elevated', isInterchange: true, interchangeWith: ['blue'], landmark: 'WEH Connect', zone: 3 }
             ]
         },
         {
@@ -139,7 +139,7 @@ const mumbaiMetro = {
                 { id: 'm3_07', name: 'CSMIA T1', nameLocal: 'छत्रपती शिवाजी महाराज आंतरराष्ट्रीय विमानतळ टी१', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Domestic Airport', zone: 4 },
                 { id: 'm3_08', name: 'Santacruz', nameLocal: 'सांताक्रूझ', type: 'underground', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
                 { id: 'm3_09', name: 'Bandra Colony', nameLocal: 'वांद्रे कॉलनी', type: 'underground', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
-                { id: 'm3_10', name: 'BKC / ITO', nameLocal: 'बीकेसी', type: 'underground', isInterchange: true, interchangeWith: ['yellow'], landmark: 'Bandra Kurla Complex', zone: 4 },
+                { id: 'm3_10', name: 'BKC', nameLocal: 'बीकेसी', type: 'underground', isInterchange: true, interchangeWith: ['yellow-b'], landmark: 'Bandra Kurla Complex', zone: 4 },
                 { id: 'm3_11', name: 'Dharavi', nameLocal: 'धारावी', type: 'underground', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
                 { id: 'm3_12', name: 'Shitaladevi Mandir', nameLocal: 'शितलादेवी मंदिर', type: 'underground', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
                 { id: 'm3_13', name: 'Dadar', nameLocal: 'दादर', type: 'underground', isInterchange: true, interchangeWith: ['rail'], landmark: 'Dadar Station (WR/CR)', zone: 4 },
@@ -152,7 +152,7 @@ const mumbaiMetro = {
                 { id: 'm3_20', name: 'Grant Road', nameLocal: 'ग्रँट रोड', type: 'underground', isInterchange: true, interchangeWith: ['rail'], landmark: 'Grant Road Station', zone: 4 },
                 { id: 'm3_21', name: 'Girgaon', nameLocal: 'गिरगाव', type: 'underground', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
                 { id: 'm3_22', name: 'Kalbadevi', nameLocal: 'काळबादेवी', type: 'underground', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
-                { id: 'm3_23', name: 'CSMT', nameLocal: 'छत्रपती शिवाजी महाराज टर्मिनस', type: 'underground', isInterchange: true, interchangeWith: ['rail'], landmark: 'CSMT Station (CR)', zone: 4 },
+                { id: 'm3_23', name: 'CSMT', nameLocal: 'छत्रपती शिवाजी महाराज टर्मिनस', type: 'underground', isInterchange: true, interchangeWith: ['gold', 'rail'], landmark: 'CSMT Station (CR)', zone: 4 },
                 { id: 'm3_24', name: 'Hutatma Chowk', nameLocal: 'हुतात्मा चौक', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Flora Fountain', zone: 4 },
                 { id: 'm3_25', name: 'Churchgate', nameLocal: 'चर्चगेट', type: 'underground', isInterchange: true, interchangeWith: ['rail'], landmark: 'Churchgate Station (WR)', zone: 4 },
                 { id: 'm3_26', name: 'Vidhan Bhavan', nameLocal: 'विधान भवन', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Mantralaya', zone: 4 },
@@ -210,7 +210,7 @@ const mumbaiMetro = {
                 { id: 'm4_03', name: 'Dongari Pada', nameLocal: 'डोंगरी पाडा', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
                 { id: 'm4_04', name: 'Tikuji-Ni-Wadi', nameLocal: 'टिकुजी-नी-वाडी', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
                 { id: 'm4_05', name: 'Manpada', nameLocal: 'मानपाडा', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
-                { id: 'm4_06', name: 'Kapurbawdi', nameLocal: 'कापूरबावडी', type: 'elevated', isInterchange: true, interchangeWith: ['orange'], landmark: '', zone: 1 },
+                { id: 'inter-kapurbawdi', name: 'Kapurbawdi', nameLocal: 'कापूरबावडी', type: 'elevated', isInterchange: true, interchangeWith: ['orange'], landmark: '', zone: 1 },
                 { id: 'm4_07', name: 'Majiwada', nameLocal: 'माजिवाडा', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
                 { id: 'm4_08', name: 'Cadbury Junction', nameLocal: 'कॅडबरी जंक्शन', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
                 { id: 'm4_09', name: 'Mahapalika Marg', nameLocal: 'महापालिका मार्ग', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
@@ -223,7 +223,7 @@ const mumbaiMetro = {
                 { id: 'm4_16', name: 'Bhandup Metro', nameLocal: 'भांडुप मेट्रो', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
                 { id: 'm4_17', name: 'Bhandup Mahapalika', nameLocal: 'भांडुप महापालिका', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
                 { id: 'm4_18', name: 'Naval Housing', nameLocal: 'नेव्हल हाउसिंग', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
-                { id: 'm4_19', name: 'Kanjurmarg', nameLocal: 'कांजूरमार्ग (गांधी नगर)', type: 'elevated', isInterchange: true, interchangeWith: ['pink'], landmark: '', zone: 1 },
+                { id: 'inter-kanjurmarg', name: 'Kanjurmarg', nameLocal: 'कांजूरमार्ग (गांधी नगर)', type: 'elevated', isInterchange: true, interchangeWith: ['pink'], landmark: '', zone: 1 },
                 { id: 'm4_20', name: 'Surya Nagar', nameLocal: 'सूर्य नगर', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
                 { id: 'm4_21', name: 'Vikhroli Metro', nameLocal: 'विक्रोळी मेट्रो', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
                 { id: 'm4_22', name: 'Godrej Company', nameLocal: 'गोदरेज कंपनी', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
@@ -234,7 +234,7 @@ const mumbaiMetro = {
                 { id: 'm4_27', name: 'Siddharth Colony', nameLocal: 'सिद्धार्थ कॉलनी', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
                 { id: 'm4_28', name: 'Anik Nagar Bus Depot', nameLocal: 'अणिक नगर बस आगार', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
                 { id: 'm4_29', name: 'Wadala TT', nameLocal: 'वडाळा टीटी', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
-                { id: 'm4_30', name: 'Bhakti Park Metro', nameLocal: 'भक्ती पार्क मेट्रो', type: 'elevated', isInterchange: true, interchangeWith: ['monorail'], landmark: '', zone: 1 }
+                { id: 'inter-wadala', name: 'Wadala / Bhakti Park Metro', nameLocal: 'भक्ती पार्क मेट्रो', type: 'elevated', isInterchange: true, interchangeWith: ['gold', 'monorail'], landmark: '', zone: 1 }
             ]
         },
         {
@@ -250,9 +250,9 @@ const mumbaiMetro = {
             gauge: 'Standard Gauge (1435 mm)',
             stations: [
                 { id: 'm6_01', name: 'Swami Samarth Nagar', nameLocal: 'स्वामी समर्थ नगर', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
-                { id: 'm6_02', name: 'Oshiwara / Adarsh Nagar', nameLocal: 'आदर्श नगर', type: 'elevated', isInterchange: true, interchangeWith: ['yellow'], landmark: '', zone: 4 },
+                { id: 'inter-oshiwara', name: 'Oshiwara / Adarsh Nagar', nameLocal: 'आदर्श नगर', type: 'elevated', isInterchange: true, interchangeWith: ['yellow'], landmark: '', zone: 4 },
                 { id: 'm6_03', name: 'Jogeshwari West', nameLocal: 'जोगेश्वरी पश्चिम', type: 'elevated', isInterchange: true, interchangeWith: ['rail'], landmark: '', zone: 4 },
-                { id: 'm6_04', name: 'Jogeshwari / JVLR', nameLocal: 'जेव्हीएलआर जंक्शन', type: 'elevated', isInterchange: true, interchangeWith: ['red'], landmark: '', zone: 4 },
+                { id: 'inter-jvlr', name: 'Jogeshwari / JVLR', nameLocal: 'जेव्हीएलआर जंक्शन', type: 'elevated', isInterchange: true, interchangeWith: ['red'], landmark: '', zone: 4 },
                 { id: 'm6_05', name: 'Shyam Nagar', nameLocal: 'श्याम नगर', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
                 { id: 'm6_06', name: 'Mahakali Caves', nameLocal: 'महाकाली गुंफा', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
                 { id: 'm6_07', name: 'SEEPZ', nameLocal: 'सीप्झ गाव', type: 'elevated', isInterchange: true, interchangeWith: ['aqua'], landmark: '', zone: 4 },
@@ -260,7 +260,7 @@ const mumbaiMetro = {
                 { id: 'm6_09', name: 'Rambaug', nameLocal: 'रामबाग', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
                 { id: 'm6_10', name: 'Powai Lake', nameLocal: 'पवई तलाव', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
                 { id: 'm6_11', name: 'IIT Powai', nameLocal: 'आयआयटी पवई', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
-                { id: 'm6_12', name: 'Kanjurmarg', nameLocal: 'कांजूरमार्ग पश्चिम', type: 'elevated', isInterchange: true, interchangeWith: ['green', 'rail'], landmark: '', zone: 4 },
+                { id: 'inter-kanjurmarg', name: 'Kanjurmarg', nameLocal: 'कांजूरमार्ग पश्चिम', type: 'elevated', isInterchange: true, interchangeWith: ['green', 'rail'], landmark: '', zone: 4 },
                 { id: 'm6_13', name: 'Vikhroli EEH', nameLocal: 'विक्रोळी ईईएच', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 }
             ]
         },
@@ -276,7 +276,7 @@ const mumbaiMetro = {
             expectedCompletion: '2025/2027',
             gauge: 'Standard Gauge (1435 mm)',
             stations: [
-                { id: 'm5_01', name: 'Kapurbawdi', nameLocal: 'कापूरबावडी', type: 'elevated', isInterchange: true, interchangeWith: ['green'], landmark: '', zone: 1 },
+                { id: 'inter-kapurbawdi', name: 'Kapurbawdi', nameLocal: 'कापूरबावडी', type: 'elevated', isInterchange: true, interchangeWith: ['green'], landmark: '', zone: 1 },
                 { id: 'm5_02', name: 'Balkum Naka', nameLocal: 'बाळकूम नाका', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
                 { id: 'm5_03', name: 'Kasheli', nameLocal: 'कशेळी', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
                 { id: 'm5_04', name: 'Kalher', nameLocal: 'काल्हेर', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
@@ -307,7 +307,7 @@ const mumbaiMetro = {
             expectedCompletion: '2028',
             gauge: 'Standard Gauge (1435 mm)',
             stations: [
-                { id: 'm8_01', name: 'Wadala - Bhakti Park', nameLocal: 'वडाळा', type: 'elevated', isInterchange: true, interchangeWith: ['green', 'monorail'], landmark: '', zone: 1 },
+                { id: 'inter-wadala', name: 'Wadala - Bhakti Park', nameLocal: 'वडाळा', type: 'elevated', isInterchange: true, interchangeWith: ['green', 'monorail'], landmark: '', zone: 1 },
                 { id: 'm8_02', name: 'Anik Bus Depot', nameLocal: 'अणिक बस आगार', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
                 { id: 'm8_03', name: 'CGS Colony', nameLocal: 'सीजीएस कॉलनी', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 1 },
                 { id: 'm8_04', name: 'Ganesh Nagar', nameLocal: 'गणेश नगर', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 4 },
@@ -337,7 +337,7 @@ const mumbaiMetro = {
             expectedCompletion: '2025',
             gauge: 'Standard Gauge (1435 mm)',
             stations: [
-                { id: 'm9_01', name: 'Dahisar East', nameLocal: 'दहिसर पूर्व', type: 'elevated', isInterchange: true, interchangeWith: ['yellow', 'red'], landmark: '', zone: 3 },
+                { id: 'inter-dahisar-east', name: 'Dahisar East', nameLocal: 'दहिसर पूर्व', type: 'elevated', isInterchange: true, interchangeWith: ['yellow', 'red'], landmark: '', zone: 3 },
                 { id: 'm9_02', name: 'Pandurang Wadi', nameLocal: 'पांडुरंग वाडी', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 3 },
                 { id: 'm9_03', name: 'Miragaon', nameLocal: 'मीरागाव', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 3 },
                 { id: 'm9_04', name: 'Kashigaon', nameLocal: 'काशीगाव', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: '', zone: 3 },

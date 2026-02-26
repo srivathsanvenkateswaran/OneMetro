@@ -459,11 +459,39 @@ export function renderMetroMap(
   if (!container) return;
 
   const layout = getLayout(cityData, showUpcoming);
-  const renderedInterchanges = new Set();
+
+  // Group all stations by their rendered coordinates to detect overlaps/clusters
+  const clusters = new Map();
+  const visibleLineIds = layout.lines.map(l => l.line.id);
+  const externalSystems = ["rail", "monorail", "water", "bus", "ferry"];
+  const CLUSTER_RADIUS = 12; // Radius in SVG units to group nearby stations
+
+  layout.lines.forEach(({ coords, line }) => {
+    coords.forEach(coord => {
+      let foundKey = null;
+      // Search for an existing cluster within range
+      for (const [key] of clusters.entries()) {
+        const [kx, ky] = key.split(',').map(Number);
+        const dist = Math.sqrt(Math.pow(coord.x - kx, 2) + Math.pow(coord.y - ky, 2));
+        if (dist < CLUSTER_RADIUS) {
+          foundKey = key;
+          break;
+        }
+      }
+
+      if (foundKey) {
+        clusters.set(foundKey, [...clusters.get(foundKey), { ...coord, line }]);
+      } else {
+        const key = `${coord.x.toFixed(1)},${coord.y.toFixed(1)}`;
+        clusters.set(key, [{ ...coord, line }]);
+      }
+    });
+  });
 
   container.innerHTML = `
-    <div class="metro-map-container" id="map-viewer">
-      <div class="map-toolbar">
+    <div class="metro-map-wrapper" id="map-wrapper">
+      <div class="metro-map-container" id="map-viewer">
+        <div class="map-toolbar">
         <div class="map-toolbar-left">
           <button class="map-ctrl-btn map-minimize-btn" id="map-minimize" title="Minimize/Expand map">∨</button>
           <div class="map-toolbar-title">
@@ -521,46 +549,54 @@ export function renderMetroMap(
       })
       .join("")}
 
-            ${layout.lines
-      .map(({ coords, line }) => {
-        return coords
-          .map((coord, i) => {
-            // Logic for conditional interchange rendering
-            let actsAsInterchange = false;
-            if (coord.station.isInterchange) {
-              const visibleLineIds = layout.lines.map((l) => l.line.id);
-              actsAsInterchange = coord.station.interchangeWith.some(
-                (id) => visibleLineIds.includes(id),
-              );
-            }
+            ${Array.from(clusters.values()).map((clusterStations) => {
+        const isGroup = clusterStations.length > 1;
 
-            if (actsAsInterchange) {
-              const key = coord.station.name;
-              if (renderedInterchanges.has(key)) return "";
-              renderedInterchanges.add(key);
-              return renderMapInterchange(
-                coord,
-                activeLine,
-                activeStation,
-              );
-            }
-            return renderMapStation(
-              coord,
-              i,
-              activeLine,
-              activeStation,
-              line.id,
-              coords.length,
+        // An interchange marker is only needed if:
+        // 1. Multiple visible lines overlap (isGroup)
+        // 2. Or it connects to another VISIBLE line or an EXTERNAL system (rail/monorail/water)
+        const hasVisibleInterchange = clusterStations.some(c =>
+          c.station.isInterchange &&
+          c.station.interchangeWith.some(targetId => {
+            const targetLine = cityData.lines.find(l => l.id === targetId);
+            const isTargetOperational = targetLine ? targetLine.status === "operational" : false;
+            const isExternalSystem = externalSystems.some(sys =>
+              targetId.toLowerCase() === sys || targetId.toLowerCase().includes(sys)
             );
+
+            return isTargetOperational || (showUpcoming && targetLine) || isExternalSystem;
           })
-          .join("");
-      })
-      .join("")}
+        );
+
+        if (isGroup || hasVisibleInterchange) {
+          return renderMapInterchange(
+            clusterStations[0],
+            activeLine,
+            activeStation,
+            clusterStations
+          );
+        }
+
+        // Otherwise render as a standard station
+        const c = clusterStations[0];
+        return renderMapStation(
+          c,
+          0, // Index for animation
+          activeLine,
+          activeStation,
+          c.line.id,
+          1, // total stations in this group dummy
+          [c] // Single-item cluster
+        );
+      }).join("")}
           </svg>
       </div>
       <div class="map-legend" id="map-legend">
         <div class="map-legend-header" id="legend-header">
-          <span class="map-legend-title">Legend</span>
+          <div class="map-legend-title-container">
+            <span class="map-legend-drag-handle">⠿</span>
+            <span class="map-legend-title">Legend</span>
+          </div>
           <button class="map-legend-toggle" id="legend-toggle" title="Toggle Legend">×</button>
         </div>
         <div class="map-legend-content">
@@ -579,12 +615,21 @@ export function renderMetroMap(
       .join("")}
         </div>
       </div>
+      </div>
     </div>
   `;
 
   // Bind station click/hover events
   container.querySelectorAll(".map-station-dot").forEach((dot) => {
-    dot.addEventListener("click", () => {
+    dot.addEventListener("click", (e) => {
+      // Check if this is a cluster
+      const clusterData = dot.dataset.cluster;
+      if (clusterData) {
+        const stations = JSON.parse(clusterData);
+        showClusterPicker(e, stations, onStationClick, container);
+        return;
+      }
+
       if (onStationClick)
         onStationClick(dot.dataset.stationId, dot.dataset.lineId);
     });
@@ -602,6 +647,7 @@ export function renderMetroMap(
 // Zoom by changing SVG viewBox (not CSS transform) — stays crisp at any level
 
 function initMapControls(container) {
+  const wrapper = container.querySelector("#map-wrapper");
   const viewer = container.querySelector("#map-viewer");
   const viewport = container.querySelector("#map-viewport");
   const svg = container.querySelector("#map-svg");
@@ -622,7 +668,7 @@ function initMapControls(container) {
     startY = 0,
     startVx = 0,
     startVy = 0;
-  const MIN_ZOOM = 0.5,
+  const MIN_ZOOM = 0.2, // Zoom out to 20%
     MAX_ZOOM = 6;
 
   function updateViewBox() {
@@ -778,13 +824,20 @@ function initMapControls(container) {
   // Fullscreen toggle
   const fsBtn = container.querySelector("#fullscreen-toggle");
   fsBtn.addEventListener("click", () => {
-    viewer.classList.toggle("map-fullscreen");
-    fsBtn.textContent = viewer.classList.contains("map-fullscreen") ? "✕" : "⛶";
+    const isFullscreen = wrapper.classList.toggle("map-fullscreen");
+    fsBtn.textContent = isFullscreen ? "✕" : "⛶";
+
+    // Toggle body states
+    document.body.style.overflow = isFullscreen ? "hidden" : "";
+    document.body.classList.toggle("map-fullscreen-active", isFullscreen);
   });
+
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && viewer.classList.contains("map-fullscreen")) {
-      viewer.classList.remove("map-fullscreen");
+    if (e.key === "Escape" && wrapper.classList.contains("map-fullscreen")) {
+      wrapper.classList.remove("map-fullscreen");
       fsBtn.textContent = "⛶";
+      document.body.style.overflow = "";
+      document.body.classList.remove("map-fullscreen-active");
     }
   });
 
@@ -795,10 +848,75 @@ function initMapControls(container) {
     minBtn.textContent = viewer.classList.contains("map-minimized") ? ">" : "∨";
   });
 
-  // Toggle legend
   const legend = container.querySelector("#map-legend");
+
+  // --- Legend Dragging Logic ---
+  const legendHeader = container.querySelector("#legend-header");
+  let isLegendDragging = false;
+  let legStartX, legStartY;
+  let initialLegX, initialLegY;
+
+  const onLegendDragStart = (e) => {
+    if (e.target.closest("#legend-toggle")) return;
+
+    isLegendDragging = true;
+    legend.classList.add("dragging");
+    const rect = legend.getBoundingClientRect();
+    const containerRect = viewer.getBoundingClientRect();
+
+    initialLegX = rect.left - containerRect.left;
+    initialLegY = rect.top - containerRect.top;
+
+    const clientX = e.type === "touchstart" ? e.touches[0].clientX : e.clientX;
+    const clientY = e.type === "touchstart" ? e.touches[0].clientY : e.clientY;
+
+    legStartX = clientX;
+    legStartY = clientY;
+
+    if (e.type === "mousedown") {
+      window.addEventListener("mousemove", onLegendDragMove);
+      window.addEventListener("mouseup", onLegendDragEnd);
+      e.preventDefault();
+    } else {
+      window.addEventListener("touchmove", onLegendDragMove, { passive: false });
+      window.addEventListener("touchend", onLegendDragEnd);
+    }
+  };
+
+  const onLegendDragMove = (e) => {
+    if (!isLegendDragging) return;
+
+    const clientX = e.type === "touchmove" ? e.touches[0].clientX : e.clientX;
+    const clientY = e.type === "touchmove" ? e.touches[0].clientY : e.clientY;
+
+    if (e.type === "touchmove") e.preventDefault();
+
+    const dx = clientX - legStartX;
+    const dy = clientY - legStartY;
+
+    // Switch from bottom/right positioning to top/left for free floating
+    legend.style.bottom = "auto";
+    legend.style.right = "auto";
+    legend.style.left = `${initialLegX + dx}px`;
+    legend.style.top = `${initialLegY + dy}px`;
+  };
+
+  const onLegendDragEnd = () => {
+    isLegendDragging = false;
+    legend.classList.remove("dragging");
+    window.removeEventListener("mousemove", onLegendDragMove);
+    window.removeEventListener("mouseup", onLegendDragEnd);
+    window.removeEventListener("touchmove", onLegendDragMove);
+    window.removeEventListener("touchend", onLegendDragEnd);
+  };
+
+  legendHeader.addEventListener("mousedown", onLegendDragStart);
+  legendHeader.addEventListener("touchstart", onLegendDragStart, { passive: true });
+
+  // Toggle legend
   const legendBtn = container.querySelector("#legend-toggle");
-  legendBtn.addEventListener("click", () => {
+  legendBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
     legend.classList.toggle("minimized");
     legendBtn.textContent = legend.classList.contains("minimized") ? "+" : "×";
   });
@@ -813,6 +931,7 @@ function renderMapStation(
   activeStation,
   lineId,
   totalStations,
+  clusterStations = null
 ) {
   const station = coord.station;
   const line = coord.line;
@@ -821,21 +940,21 @@ function renderMapStation(
   const isUpcoming = line.status !== "operational";
   const radius = 5;
 
-  const labelPositions = {
-    blue: { dx: 14, dy: 4, anchor: "start" },
-    green: { dx: 0, dy: -12, anchor: "middle" },
-    red: { dx: 14, dy: 4, anchor: "start" },
-    purple: { dx: 0, dy: -12, anchor: "middle" },
-    yellow: { dx: 14, dy: 4, anchor: "start" },
-    pink: { dx: -14, dy: 4, anchor: "end" },
-  };
-  const lp = labelPositions[lineId] || { dx: 14, dy: 4, anchor: "start" };
+  const clusterAttr = clusterStations ? `data-cluster='${JSON.stringify(clusterStations.map(s => ({
+    id: s.station.id,
+    name: s.station.name,
+    lineId: s.line.id,
+    lineColor: s.line.color,
+    lineName: s.line.name
+  }))).replace(/'/g, "&apos;")}'` : "";
+
   return `
     <circle class="map-station-dot ${isActive ? "active" : ""}"
             cx="${coord.x}" cy="${coord.y}" r="${isActive ? 7 : radius}"
             fill="${isActive ? line.color : isUpcoming ? line.color : "#0a0e1a"}"
             stroke="${line.color}" stroke-width="${isActive ? 3 : 2}"
             opacity="${isLineActive ? (isUpcoming ? 0.7 : 1) : 0.15}"
+            ${clusterAttr}
             data-station-id="${station.id}"
             data-station-name="${station.name}"
             data-line-id="${lineId}"
@@ -843,12 +962,30 @@ function renderMapStation(
   `;
 }
 
-function renderMapInterchange(coord, activeLine, activeStation) {
+function renderMapInterchange(coord, activeLine, activeStation, clusterStations = null) {
   const station = coord.station;
-  const isActive = activeStation === station.id;
+  const isActive = activeStation === station.id || (clusterStations && clusterStations.some(s => s.station.id === activeStation));
+
+  // If this is a cluster (linked system), serialize data for the click handler
+  const clusterAttr = clusterStations ? `data-cluster='${JSON.stringify(clusterStations.map(s => ({
+    id: s.station.id,
+    name: s.station.name,
+    lineId: s.line.id,
+    lineColor: s.line.color,
+    lineName: s.line.name
+  }))).replace(/'/g, "&apos;")}'` : "";
+
+  const name = clusterStations
+    ? clusterStations.map(s => s.station.name).join(" / ")
+    : station.name;
 
   return `
-    <g class="map-station-dot" data-station-id="${station.id}" data-station-name="${station.name} (Interchange)" data-line-id="interchange" style="cursor: pointer;">
+    <g class="map-station-dot" 
+       ${clusterAttr}
+       data-station-id="${station.id}" 
+       data-station-name="${name} (Interchange)" 
+       data-line-id="interchange" 
+       style="cursor: pointer;">
       <circle cx="${coord.x}" cy="${coord.y}" r="12"
               fill="#0a0e1a" stroke="white" stroke-width="2.5" opacity="1" />
       <circle cx="${coord.x}" cy="${coord.y}" r="7"
@@ -856,6 +993,170 @@ function renderMapInterchange(coord, activeLine, activeStation) {
               stroke="white" stroke-width="2" opacity="1" />
     </g>
   `;
+}
+
+function showClusterPicker(event, stations, onClick, container) {
+  hideClusterPicker();
+  hideTooltip(container);
+
+  const svgContainer = container.querySelector(".metro-map-container");
+  const svgRect = svgContainer.getBoundingClientRect();
+  const picker = document.createElement("div");
+  picker.className = "map-cluster-picker";
+  picker.id = "map-cluster-picker";
+
+  const isMultiple = stations.length > 1;
+  const headerTitle = isMultiple ? "Nearby Stations" : "Station Preview";
+
+  const listItems = stations.map(s => `
+    <div class="cluster-picker-item" data-station-id="${s.id}" data-line-id="${s.lineId}">
+      <span class="cluster-line-dot" style="background: ${s.lineColor}; color: ${s.lineColor}"></span>
+      <div class="cluster-item-info">
+        <span class="cluster-item-name">${s.name}</span>
+        <span class="cluster-item-line">${s.lineName}</span>
+      </div>
+      <div class="cluster-item-action">View Info →</div>
+    </div>
+  `).join("");
+
+  picker.innerHTML = `
+    <div class="cluster-picker-header" id="cluster-picker-handle">
+      <div class="picker-header-left">
+        <span class="drag-icon">⠿</span>
+        ${headerTitle}
+      </div>
+      <button class="picker-close-btn" id="picker-close" title="Close">×</button>
+    </div>
+    <div class="cluster-picker-list">${listItems}</div>
+    ${isMultiple ? `<div class="cluster-picker-footer">${stations.length} stations in this area</div>` : ""}
+  `;
+
+  svgContainer.appendChild(picker);
+
+  // Initial Position Logic
+  const dotRect = event.target.getBoundingClientRect
+    ? event.target.getBoundingClientRect()
+    : event.target.closest("g").getBoundingClientRect();
+
+  let pickerX = dotRect.left - svgRect.left + dotRect.width / 2;
+  let pickerY = dotRect.top - svgRect.top + dotRect.height + 15;
+
+  // Keep within bounds
+  const pickerWidth = 260; // From CSS
+  if (pickerX + pickerWidth / 2 > svgRect.width) pickerX = svgRect.width - pickerWidth / 2 - 10;
+  if (pickerX - pickerWidth / 2 < 10) pickerX = pickerWidth / 2 + 10;
+  if (pickerY + 200 > svgRect.height) pickerY = dotRect.top - svgRect.top - 210;
+
+  picker.style.left = `${pickerX}px`;
+  picker.style.top = `${pickerY}px`;
+  picker.style.transform = "translateX(-50%)";
+
+  // --- DRAGGING LOGIC ---
+  const handle = picker.querySelector("#cluster-picker-handle");
+  let isDragging = false;
+  let startX, startY;
+  let initialPickerLeft, initialPickerTop;
+
+  const dragStart = (e) => {
+    if (e.target.closest("#picker-close")) return;
+
+    isDragging = true;
+    picker.classList.add("dragging");
+
+    // Get current computed position
+    const rect = picker.getBoundingClientRect();
+    const containerRect = svgContainer.getBoundingClientRect();
+
+    initialPickerLeft = rect.left - containerRect.left + rect.width / 2;
+    initialPickerTop = rect.top - containerRect.top;
+
+    startX = e.clientX;
+    startY = e.clientY;
+
+    window.addEventListener("mousemove", dragMove);
+    window.addEventListener("mouseup", dragEnd);
+    e.preventDefault();
+  };
+
+  const dragMove = (e) => {
+    if (!isDragging) return;
+
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+
+    picker.style.left = `${initialPickerLeft + dx}px`;
+    picker.style.top = `${initialPickerTop + dy}px`;
+  };
+
+  const dragEnd = () => {
+    isDragging = false;
+    picker.classList.remove("dragging");
+    window.removeEventListener("mousemove", dragMove);
+    window.removeEventListener("mouseup", dragEnd);
+  };
+
+  handle.addEventListener("mousedown", dragStart);
+
+  // --- TOUCH SUPPORT ---
+  const touchStart = (e) => {
+    if (e.target.closest("#picker-close")) return;
+    const touch = e.touches[0];
+    isDragging = true;
+    picker.classList.add("dragging");
+    const rect = picker.getBoundingClientRect();
+    const containerRect = svgContainer.getBoundingClientRect();
+    initialPickerLeft = rect.left - containerRect.left + rect.width / 2;
+    initialPickerTop = rect.top - containerRect.top;
+    startX = touch.clientX;
+    startY = touch.clientY;
+    window.addEventListener("touchmove", touchMove, { passive: false });
+    window.addEventListener("touchend", touchEnd);
+  };
+
+  const touchMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    const dx = touch.clientX - startX;
+    const dy = touch.clientY - startY;
+    picker.style.left = `${initialPickerLeft + dx}px`;
+    picker.style.top = `${initialPickerTop + dy}px`;
+  };
+
+  const touchEnd = () => {
+    isDragging = false;
+    picker.classList.remove("dragging");
+    window.removeEventListener("touchmove", touchMove);
+    window.removeEventListener("touchend", touchEnd);
+  };
+
+  handle.addEventListener("touchstart", touchStart, { passive: true });
+
+  // --- EVENT BINDING ---
+  picker.querySelectorAll(".cluster-picker-item").forEach(item => {
+    item.addEventListener("click", (e) => {
+      e.stopPropagation();
+      onClick(item.dataset.stationId, item.dataset.lineId);
+      hideClusterPicker();
+    });
+  });
+
+  picker.querySelector("#picker-close").addEventListener("click", (e) => {
+    e.stopPropagation();
+    hideClusterPicker();
+  });
+
+  // Stop events from bubbling to map
+  picker.addEventListener("click", e => e.stopPropagation());
+  picker.addEventListener("mousedown", e => e.stopPropagation());
+}
+
+function hideClusterPicker() {
+  const existing = document.getElementById("map-cluster-picker");
+  if (existing) {
+    // Optionally remove listeners here if needed, but remove() cleans them up usually
+    existing.remove();
+  }
 }
 
 function showTooltip(event, name, container) {

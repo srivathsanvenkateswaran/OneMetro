@@ -175,7 +175,7 @@ export const mapLayouts = {
         { idx: 37, x: 1000, y: 50 },
       ],
       orange: [
-        { idx: 0, x: 700, y: 450 },
+        { idx: 0, x: 700, y: 419 },
         { idx: 1, x: 650, y: 550 },
         { idx: 2, x: 600, y: 650 },
         { idx: 3, x: 500, y: 750 },
@@ -199,7 +199,7 @@ export const mapLayouts = {
         { idx: 33, x: 850, y: 1100 },
       ],
       green: [
-        { idx: 0, x: 625, y: 250 },
+        { idx: 0, x: 563, y: 250 },
         { idx: 1, x: 525, y: 300 },
         { idx: 2, x: 462, y: 325 },
         { idx: 3, x: 400, y: 350 },
@@ -351,6 +351,7 @@ export const mapLayouts = {
         { idx: 3, x: 500, y: 550 },
         { idx: 6, x: 700, y: 500 },
         { idx: 10, x: 950, y: 500 },
+        { idx: 11, x: 1050, y: 500 },
       ],
       purple: [
         { idx: 0, x: 200, y: 1050 },
