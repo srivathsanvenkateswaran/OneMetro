@@ -6,6 +6,9 @@
 
 **OneMetro** is a high-performance, aesthetically premium open-source platform designed to be the definitive digital gateway for India's rapid transit systems. Built on the principle of "Performance as a Feature," it provides an immersive, lightning-fast experience for exploring metropolitan networks across the nation.
 
+> [!TIP]
+> **New to the project?** Read our [In-Depth Technical Guide](docs/TECHNICAL_GUIDE.md) to learn how the SVG engine and coordinate interpolation work!
+
 ## 🏛️ Vision & Philosophy
 Urban transit is the backbone of India's growth. OneMetro aims to democratize access to transit information through:
 - **Extreme Speed**: Sub-1-second loads with zero runtime network dependency.
