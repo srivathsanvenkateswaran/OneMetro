@@ -351,18 +351,18 @@ const GEO_CITIES = {
     orange: {
       count: 8,
       waypoints: [
-        { idx: 0, lat: 23.243, lon: 77.425 },
-        { idx: 4, lat: 23.221, lon: 77.438 },
-        { idx: 7, lat: 23.21, lon: 77.456 },
+        { idx: 0, lat: 23.21, lon: 77.456 },
+        { idx: 3, lat: 23.221, lon: 77.438 },
+        { idx: 7, lat: 23.243, lon: 77.425 },
       ],
     },
     "orange-ext": {
       count: 9,
       waypoints: [
-        { idx: 0, lat: 23.305, lon: 77.404 },
-        { idx: 5, lat: 23.266, lon: 77.413 },
-        { idx: 7, lat: 23.25, lon: 77.42 },
-        { idx: 8, lat: 23.243, lon: 77.425 },
+        { idx: 0, lat: 23.243, lon: 77.425 },
+        { idx: 1, lat: 23.25, lon: 77.42 },
+        { idx: 4, lat: 23.266, lon: 77.413 },
+        { idx: 8, lat: 23.305, lon: 77.404 },
       ],
     },
     blue: {

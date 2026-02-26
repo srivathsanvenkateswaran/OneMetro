@@ -683,20 +683,20 @@ export const mapLayouts = {
     bounds: { latMin: 23.18, latMax: 23.33, lonMin: 77.35, lonMax: 77.52 },
     lines: {
       orange: [
-        { idx: 0, lat: 23.243, lon: 77.425 },
-        { idx: 4, lat: 23.221, lon: 77.438 },
-        { idx: 7, lat: 23.21, lon: 77.456 },
+        { idx: 0, lat: 23.21, lon: 77.456 },   // AIIMS
+        { idx: 3, lat: 23.221, lon: 77.438 },  // DRM Office / RKMP
+        { idx: 7, lat: 23.243, lon: 77.425 },  // Subhash Nagar
       ],
       "orange-ext": [
-        { idx: 0, lat: 23.305, lon: 77.404 },
-        { idx: 5, lat: 23.266, lon: 77.413 },
-        { idx: 7, lat: 23.25, lon: 77.42 },
-        { idx: 8, lat: 23.243, lon: 77.425 },
+        { idx: 0, lat: 23.243, lon: 77.425 },  // Subhash Nagar Connection
+        { idx: 1, lat: 23.25, lon: 77.42 },     // Pul Bogda (Interchange)
+        { idx: 4, lat: 23.266, lon: 77.413 },  // Mid-strip
+        { idx: 8, lat: 23.305, lon: 77.404 },  // Karond Square
       ],
       blue: [
         { idx: 0, lat: 23.224, lon: 77.382 },
         { idx: 3, lat: 23.242, lon: 77.402 },
-        { idx: 6, lat: 23.25, lon: 77.42 },
+        { idx: 6, lat: 23.25, lon: 77.42 },    // Pul Bogda (Interchange)
         { idx: 9, lat: 23.257, lon: 77.455 },
         { idx: 12, lat: 23.26, lon: 77.491 },
       ],
