@@ -97,6 +97,9 @@ In this mode, we ignore real-world Latitude and Longitude. Instead, we use a cus
 ### Algorithmic Projection (`type: "algorithmic"`)
 Used exclusively for **Bengaluru**. This is the highest level of abstraction in the OneMetro engine.
 
+> [!WARNING]
+> **Legacy Status**: Algorithmic projection is considered a **Legacy/Special Case**. While it provides mathematical perfection, it is difficult for newcomers to maintain because it requires modifying core engine code. For all new cities, please use **Schematic** or **Geographic** modes.
+
 **The Rationale**:
 Bengaluru's Phase 1 network is shaped like a "Plus" sign (+), with the Purple and Green lines crossing at a central hub (Majestic). If we used `geo` or `schematic` modes, we would need to manually update dozens of coordinates every time we adjusted the map's center. 
 
