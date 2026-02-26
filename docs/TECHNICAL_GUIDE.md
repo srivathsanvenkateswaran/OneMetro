@@ -51,9 +51,17 @@ The answer lies in the difference between **Cartography** (drawing the world) an
 | **Readability** | Can get messy in city centers where stations are 200m apart. | High. Stations simplified to a consistent grid. |
 | **Canvas** | Scaled to Latitude/Longitude degrees. | Scaled to a fixed pixel grid (e.g., 1400x1000). |
 | **Angles** | Any (organic curves). | Primarily 45° and 90° (The "Beck" standard). |
-
-**The "Delhi Problem":** 
+ 
 If we used Geographic mode for Delhi, the city center (Rajiv Chowk area) would be a tiny cluster of overlapping dots, while the outskirts (Gurugram/Noida) would require the user to pan for miles. Schematic mode allows us to "inflate" the busy center and "contract" the long suburban stretches so the entire network fits on one screen.
+
+### 🏙️ City Classification
+As of 2026, the cities in OneMetro are divided as follows:
+
+| Mode | Cities |
+| :--- | :--- |
+| **Schematic** | Delhi, Mumbai, Hyderabad, Kolkata, Nagpur, Kochi |
+| **Geographic** | Chennai, Ahmedabad, Pune, Jaipur, Lucknow, Agra, Bhopal, Indore, Patna |
+| **Algorithmic** | Bengaluru (relative positioning) |
 
 ---
 
