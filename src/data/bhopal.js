@@ -16,7 +16,7 @@ const orangeOperationalStations = [
 ];
 
 const orangeUcStations = [
-  { name: 'Pul Bogda', nameLocal: 'पुल बोगदा', type: 'elevated', isInterchange: true, interchangeWith: ['blue'], landmark: 'Interchange Hub' },
+  { id: 'b07', name: 'Pul Bogda', nameLocal: 'पुल बोगदा', type: 'elevated', isInterchange: true, interchangeWith: ['blue'], landmark: 'Interchange Hub' },
   { name: 'Aish Bagh Crossing', nameLocal: 'ऐशबाग क्रॉसिंग', type: 'elevated', landmark: 'Aishbagh Stadium' },
   { name: 'Bhopal Junction', nameLocal: 'भोपाल जंक्शन', type: 'underground', isIsland: true, isInterchange: true, interchangeWith: ['rail'], landmark: 'Bhopal Central Railway Station' },
   { name: 'Nadra Bus Stand', nameLocal: 'नादरा बस स्टैंड', type: 'underground', isIsland: true, landmark: 'Hamidia Road Bus Stand' },
@@ -33,7 +33,7 @@ const blueLineStations = [
   { name: 'Roshanpura Chauraha', nameLocal: 'रोशनपुरा चौराहा', type: 'elevated', landmark: 'Raj Bhavan Way' },
   { name: 'Minto Hall', nameLocal: 'मिंटो हॉल', type: 'elevated', landmark: 'Old Vidhan Sabha / Minto Hall' },
   { name: 'Parade Ground', nameLocal: 'परे드 ग्राउंड', type: 'elevated', landmark: 'Jahangirabad' },
-  { name: 'Pul Bogda', nameLocal: 'पुल बोगदा', type: 'elevated', isInterchange: true, interchangeWith: ['orange'], landmark: 'Interchange Station' },
+  { id: 'b07', name: 'Pul Bogda', nameLocal: 'पुल बोगदा', type: 'elevated', isInterchange: true, interchangeWith: ['orange'], landmark: 'Interchange Station' },
   { name: 'Prabhat Chauraha', nameLocal: 'प्रभात चौराहा', type: 'elevated', landmark: 'Prabhat Petrol Pump' },
   { name: 'Govindpura', nameLocal: 'गोविंदपुरा', type: 'elevated', landmark: 'Industrial Area' },
   { name: 'JK Road', nameLocal: 'जेके रोड', type: 'elevated', landmark: 'JK Road crossing' },
@@ -73,7 +73,7 @@ function buildStation(st, idPrefix, idx, lineId) {
   }
 
   return {
-    id: `${idPrefix}${String(idx + 1).padStart(2, '0')}`,
+    id: st.id || `${idPrefix}${String(idx + 1).padStart(2, '0')}`,
     name: st.name,
     nameLocal: st.nameLocal,
     type: st.type,
@@ -101,7 +101,7 @@ const bhopalData = {
   city: 'Bhopal',
   state: 'Madhya Pradesh',
   operator: 'Madhya Pradesh Metro Rail Corporation Limited (MPMRCL)',
-  totalStations: 29,
+  totalStations: 28,
   totalLength: '27.87 km',
   totalLines: 2,
   phase: 'Phase 1',
@@ -136,7 +136,7 @@ const bhopalData = {
       status: 'under-construction',
       expectedCompletion: '2026',
       stations: [
-        { ...orangeOperationalStations[7], id: 'o08-ext' }, // Subhash Nagar connection
+        { ...orangeOperationalStations[7], id: 'o08' }, // Subhash Nagar connection (Reusing ID o08)
         ...orangeUcStations
       ].map((st, i) => buildStation(st, 'oe', i, 'orange-ext'))
     },

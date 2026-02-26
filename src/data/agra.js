@@ -68,7 +68,7 @@ const yellowLineStationsData = [
 
 const yellowUcStationsData = [
     { name: 'Medical College', nameLocal: 'मेडिकल कॉलेज', type: 'underground', landmark: 'S.N. Medical College', isIsland: true },
-    { name: 'Agra College', nameLocal: 'आग्रा कॉलेज', type: 'underground', landmark: 'St. John\'s College / Agra College', isInterchange: true, interchangeWith: ['blue'], isIsland: true },
+    { id: 'inter-ac', name: 'Agra College', nameLocal: 'आग्रा कॉलेज', type: 'underground', landmark: 'St. John\'s College / Agra College', isInterchange: true, interchangeWith: ['blue'], isIsland: true },
     { name: 'Raja Ki Mandi', nameLocal: 'राजा की मंडी', type: 'underground', landmark: 'Raja Ki Mandi Railway Station', isIsland: true },
     { name: 'RBS College', nameLocal: 'आरबीएस कॉलेज', type: 'underground', landmark: 'RBS College', isIsland: true },
     { name: 'Shastri Nagar', nameLocal: 'शास्त्री नगर', type: 'elevated', landmark: 'Shastri Nagar Residential' },
@@ -84,7 +84,7 @@ const blueLineStationsData = [
     { name: 'Pratap Pura', nameLocal: 'प्रताप पुरा', type: 'elevated', landmark: 'Pratap Pura Crossing' },
     { name: 'Collectorate', nameLocal: 'कलेक्ट्रेट', type: 'elevated', landmark: 'Agra Collectorate' },
     { name: 'Subhash Park', nameLocal: 'सुभाष पार्क', type: 'elevated', landmark: 'Subhash Park' },
-    { name: 'Agra College', nameLocal: 'आग्रा कॉलेज', type: 'elevated', landmark: 'St. John\'s / Agra College Interchange', isInterchange: true, interchangeWith: ['yellow'] },
+    { id: 'inter-ac', name: 'Agra College', nameLocal: 'आग्रा कॉलेज', type: 'elevated', landmark: 'St. John\'s / Agra College Interchange', isInterchange: true, interchangeWith: ['yellow'] },
     { name: 'Hariparvat Chauraha', nameLocal: 'हरिपरवत चौराहा', type: 'elevated', landmark: 'Hariparvat' },
     { name: 'Sanjay Place', nameLocal: 'संजय प्लेस', type: 'elevated', landmark: 'Sanjay Place Commercial Hub' },
     { name: 'MG Road', nameLocal: 'एमजी रोड', type: 'elevated', landmark: 'MG Road' },
@@ -126,7 +126,7 @@ function buildStation(st, idPrefix, idx, lineId) {
     }
 
     return {
-        id: `${idPrefix}${String(idx + 1).padStart(2, '0')}`,
+        id: st.id || `${idPrefix}${String(idx + 1).padStart(2, '0')}`,
         name: st.name,
         nameLocal: st.nameLocal,
         type: st.type,
@@ -154,7 +154,7 @@ const data = {
     city: 'Agra',
     state: 'Uttar Pradesh',
     operator: 'Uttar Pradesh Metro Rail Corporation (UPMRC)',
-    totalStations: 30,
+    totalStations: 29,
     totalLength: '29.65 km',
     totalLines: 2,
     phase: 'Phase 1',
@@ -190,7 +190,7 @@ const data = {
             expectedCompletion: '2026',
             gauge: 'Standard Gauge (1435 mm)',
             stations: [
-                { ...yellowLineStationsData[5], id: 'y06-ext' }, // Mankameshwar Mandir anchor
+                { ...yellowLineStationsData[5], id: 'y06' }, // Mankameshwar Mandir anchor (Reusing ID y06)
                 ...yellowUcStationsData
             ].map((st, i) => buildStation(st, 'yuc', i, 'yellow-uc'))
         },

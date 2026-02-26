@@ -158,7 +158,7 @@ const redLineStations = [
         ]
     },
     {
-        id: 'r11', name: 'Ameerpet', nameLocal: 'అమీర్‌పేట', type: 'elevated', isInterchange: true, interchangeWith: ['blue'], landmark: 'Ameerpet Junction', zone: 3,
+        id: 'inter-ameerpet', name: 'Ameerpet', nameLocal: 'అమీర్‌పేట', type: 'elevated', isInterchange: true, interchangeWith: ['blue'], landmark: 'Ameerpet Junction', zone: 3,
         contact: '1860-258-2580',
         parking: true,
         facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators', 'Smart Card Vending'],
@@ -300,7 +300,7 @@ const redLineStations = [
         ]
     },
     {
-        id: 'r20', name: 'MG Bus Station', nameLocal: 'ఎం.జి. బస్ స్టేషన్', type: 'elevated', isInterchange: true, interchangeWith: ['green'], landmark: 'MGBS Central Bus Stand', zone: 4,
+        id: 'inter-mg-bus', name: 'MG Bus Station', nameLocal: 'ఎం.జి. బస్ స్టేషన్', type: 'elevated', isInterchange: true, interchangeWith: ['green'], landmark: 'MGBS Central Bus Stand', zone: 4,
         contact: '1860-258-2580',
         parking: true,
         facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators', 'Smart Card Vending'],
@@ -535,7 +535,7 @@ const blueLineStations = [
         ]
     },
     {
-        id: 'b09', name: 'Parade Ground', nameLocal: 'పరేడ్ గ్రౌండ్', type: 'elevated', isInterchange: true, interchangeWith: ['green'], landmark: 'Parade Ground', zone: 2,
+        id: 'inter-parade-ground', name: 'Parade Ground', nameLocal: 'పరేడ్ గ్రౌండ్', type: 'elevated', isInterchange: true, interchangeWith: ['green'], landmark: 'Parade Ground', zone: 2,
         contact: '1860-258-2580',
         parking: true,
         facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators', 'Smart Card Vending'],
@@ -605,7 +605,7 @@ const blueLineStations = [
         ]
     },
     {
-        id: 'b14', name: 'Ameerpet', nameLocal: 'అమీర్‌పేట', type: 'elevated', isInterchange: true, interchangeWith: ['red'], landmark: 'Ameerpet Junction', zone: 3,
+        id: 'inter-ameerpet', name: 'Ameerpet', nameLocal: 'అమీర్‌పేట', type: 'elevated', isInterchange: true, interchangeWith: ['red'], landmark: 'Ameerpet Junction', zone: 3,
         contact: '1860-258-2580',
         parking: true,
         facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators', 'Smart Card Vending'],
@@ -747,7 +747,7 @@ const blueLineStations = [
 ];
 const greenLineStations = [
     {
-        id: 'g01', name: 'JBS Parade Ground', nameLocal: 'జె.బి.ఎస్. పరేడ్ గ్రౌండ్', type: 'elevated', isInterchange: true, interchangeWith: ['blue'], landmark: 'JBS Bus Stand', zone: 1,
+        id: 'inter-parade-ground', name: 'Parade Ground', nameLocal: 'పరేడ్ గ్రౌండ్', type: 'elevated', isInterchange: true, interchangeWith: ['blue'], landmark: 'JBS Bus Stand', zone: 1,
         contact: '1860-258-2580',
         parking: true,
         facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators', 'Smart Card Vending'],
@@ -869,7 +869,7 @@ const greenLineStations = [
         ]
     },
     {
-        id: 'g09', name: 'MG Bus Station', nameLocal: 'ఎం.జి. బస్ స్టేషన్', type: 'elevated', isInterchange: true, interchangeWith: ['red'], landmark: 'MGBS Bus Stand', zone: 2,
+        id: 'inter-mg-bus', name: 'MG Bus Station', nameLocal: 'ఎం.జి. బస్ స్టేషన్', type: 'elevated', isInterchange: true, interchangeWith: ['red'], landmark: 'MGBS Bus Stand', zone: 2,
         contact: '1860-258-2580',
         parking: true,
         facilities: ['First Aid Box', 'CCTV', 'Restrooms', 'Drinking Water', 'Lifts / Escalators', 'Smart Card Vending'],
@@ -957,7 +957,7 @@ const data = {
     city: 'Hyderabad',
     state: 'Telangana',
     operator: 'Hyderabad Metro Rail Limited (HMRL) / L&T Metro',
-    totalStations: 57,
+    totalStations: 56,
     totalLength: '69 km',
     totalLines: 3,
     phase: 'Phase 1',

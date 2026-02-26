@@ -1,14 +1,14 @@
 import { getStationCoords } from "./stationCoords.js";
 
 const orangeLineStations = [
-    { name: 'Automotive Square', nameLocal: 'ऑटोमोटिव्ह चौक', type: 'elevated', landmark: 'Kamptee Road' },
+    { id: 'inter-automotive', name: 'Automotive Square', nameLocal: 'ऑटोमोटिव्ह चौक', type: 'elevated', landmark: 'Kamptee Road' },
     { name: 'Nari Road', nameLocal: 'नारी रोड', type: 'elevated', landmark: 'Nari Road' },
     { name: 'Indora Square', nameLocal: 'इंदोरा चौक', type: 'elevated', landmark: 'Indora Square' },
     { name: 'Kadbi Chowk', nameLocal: 'कडबी चौक', type: 'elevated', landmark: 'Kadbi Chowk' },
     { name: 'Gaddi Godam Square', nameLocal: 'गड्डी गोदाम चौक', type: 'elevated', landmark: 'Gaddi Godam' },
     { name: 'Kasturchand Park', nameLocal: 'कस्तૂરचंद पार्क', type: 'elevated', landmark: 'Kasturchand Park Ground' },
     { name: 'Zero Mile Freedom Park', nameLocal: 'झिरो माईल फ्रीडम पार्क', type: 'elevated', landmark: 'Zero Mile Stone' },
-    { name: 'Sitabuldi', nameLocal: 'सीताबर्डी', type: 'elevated', isInterchange: true, interchangeWith: ['aqua'], landmark: 'Sitabuldi Market' },
+    { id: 'inter-sitabuldi', name: 'Sitabuldi', nameLocal: 'सीताबर्डी', type: 'elevated', isInterchange: true, interchangeWith: ['aqua'], landmark: 'Sitabuldi Market' },
     { name: 'Congress Nagar', nameLocal: 'काँग्रेस नगर', type: 'elevated', landmark: 'Ajni Railway Station Area' },
     { name: 'Rahate Colony', nameLocal: 'रहाटे कॉलनी', type: 'elevated', landmark: 'Rahate Colony' },
     { name: 'Ajni Square', nameLocal: 'अजनी चौक', type: 'elevated', landmark: 'Ajni Square' },
@@ -18,11 +18,11 @@ const orangeLineStations = [
     { name: 'Airport', nameLocal: 'एअरपोर्ट', type: 'elevated', landmark: 'Dr. Babasaheb Ambedkar International Airport' },
     { name: 'Airport South', nameLocal: 'एअरपोर्ट साउथ', type: 'elevated', landmark: 'Airport South' },
     { name: 'New Airport', nameLocal: 'न्यू एअरपोर्ट', type: 'at-grade', landmark: 'MIHAN' },
-    { name: 'Khapri', nameLocal: 'खापरी', type: 'at-grade', landmark: 'Khapri' }
+    { id: 'inter-khapri', name: 'Khapri', nameLocal: 'खापरी', type: 'at-grade', landmark: 'Khapri' }
 ];
 
 const aquaLineStations = [
-    { name: 'Prajapati Nagar', nameLocal: 'प्रજાपती नगर', type: 'elevated', landmark: 'Prajapati Nagar' },
+    { id: 'inter-prajapati', name: 'Prajapati Nagar', nameLocal: 'प्रजापती नगर', type: 'elevated', landmark: 'Prajapati Nagar' },
     { name: 'Vaishno Devi Square', nameLocal: 'वैष्णोदेवी चौक', type: 'elevated', landmark: 'Vaishno Devi Temple' },
     { name: 'Ambedkar Square', nameLocal: 'आंबेडकर चौक', type: 'elevated', landmark: 'Ambedkar Square' },
     { name: 'Telephone Exchange', nameLocal: 'टेलीफोन एक्सचेंज', type: 'elevated', landmark: 'Telephone Exchange' },
@@ -30,7 +30,7 @@ const aquaLineStations = [
     { name: 'Agrasen Square', nameLocal: 'अग्रसेन चौक', type: 'elevated', landmark: 'Agrasen Square' },
     { name: 'Dosar Vaisya Square', nameLocal: 'दोसर वैश्य चौक', type: 'elevated', landmark: 'Dosar Vaisya Square' },
     { name: 'Nagpur Railway Station', nameLocal: 'नागपूर रेल्वे स्टेशन', type: 'elevated', landmark: 'Nagpur Junction' },
-    { name: 'Sitabuldi', nameLocal: 'सीताबर्ડી', type: 'elevated', isInterchange: true, interchangeWith: ['orange'], landmark: 'Sitabuldi Interchange' },
+    { id: 'inter-sitabuldi', name: 'Sitabuldi', nameLocal: 'सीताबर्डी', type: 'elevated', isInterchange: true, interchangeWith: ['orange'], landmark: 'Sitabuldi Interchange' },
     { name: 'Jhansi Rani Square', nameLocal: 'झांसी राणी चौक', type: 'elevated', landmark: 'Jhansi Rani Square' },
     { name: 'Institute of Engineers', nameLocal: 'इन्स्टिट्यूशन ऑफ इंजिनियर्स', type: 'elevated', landmark: 'Institution of Engineers' },
     { name: 'Shankar Nagar Square', nameLocal: 'शंकर नगर चौक', type: 'elevated', landmark: 'Shankar Nagar' },
@@ -40,11 +40,11 @@ const aquaLineStations = [
     { name: 'Rachana Ring Road', nameLocal: 'रचना रिंग रोड जंक्शन', type: 'elevated', landmark: 'Ring Road' },
     { name: 'Vasudev Nagar', nameLocal: 'वासुदेव नगर', type: 'elevated', landmark: 'Vasudev Nagar' },
     { name: 'Bansi Nagar', nameLocal: 'बंसी नगर', type: 'elevated', landmark: 'Bansi Nagar' },
-    { name: 'Lokmanya Nagar', nameLocal: 'लोकમાન્યા नगर', type: 'elevated', landmark: 'Hingna Road' }
+    { id: 'inter-lokmanya', name: 'Lokmanya Nagar', nameLocal: 'लोकમાન્યા नगर', type: 'elevated', landmark: 'Hingna Road' }
 ];
 
 const orangeNorthStations = [
-    { name: 'Automotive Square', nameLocal: 'ऑटोमोटिव्ह चौक', type: 'elevated', landmark: 'Kamptee Road' },
+    { id: 'inter-automotive', name: 'Automotive Square', nameLocal: 'ऑटोमोटिव्ह चौक', type: 'elevated', landmark: 'Kamptee Road' },
     { name: 'Pili Nadi', nameLocal: 'पिली नदी', type: 'elevated', landmark: 'Pili Nadi' },
     { name: 'Khasara Fata', nameLocal: 'खसरा फाटा', type: 'elevated', landmark: 'Khasara Fata' },
     { name: 'All India Radio', nameLocal: 'आकाशवाणी', type: 'elevated', landmark: 'AIR Nagpur' },
@@ -60,7 +60,7 @@ const orangeNorthStations = [
 ];
 
 const orangeSouthStations = [
-    { name: 'Khapri', nameLocal: 'खापरी', type: 'at-grade', landmark: 'Khapri' },
+    { id: 'inter-khapri', name: 'Khapri', nameLocal: 'खापरी', type: 'at-grade', landmark: 'Khapri' },
     { name: 'Eco Park', nameLocal: 'इको पार्क', type: 'elevated', landmark: 'Eco Park' },
     { name: 'Metro City', nameLocal: 'मेट्रो सिटी', type: 'elevated', landmark: 'Metro City' },
     { name: 'Ashokvan', nameLocal: 'अशोकवन', type: 'elevated', landmark: 'Ashokvan' },
@@ -74,7 +74,7 @@ const orangeSouthStations = [
 ];
 
 const aquaWestStations = [
-    { name: 'Lokmanya Nagar', nameLocal: 'लोकमान्या नगर', type: 'elevated', landmark: 'Hingna Road' },
+    { id: 'inter-lokmanya', name: 'Lokmanya Nagar', nameLocal: 'लोकमान्या नगर', type: 'elevated', landmark: 'Hingna Road' },
     { name: 'Mount View', nameLocal: 'माऊंट व्ह्यू', type: 'elevated', landmark: 'Mount View' },
     { name: 'Rajiv Nagar', nameLocal: 'राजीव नगर', type: 'elevated', landmark: 'Rajiv Nagar' },
     { name: 'Wanadongri', nameLocal: 'वानाडोंगरी', type: 'elevated', landmark: 'Wanadongri' },
@@ -85,7 +85,7 @@ const aquaWestStations = [
 ];
 
 const aquaEastStations = [
-    { name: 'Prajapati Nagar', nameLocal: 'प्रजापती नगर', type: 'elevated', landmark: 'Prajapati Nagar' },
+    { id: 'inter-prajapati', name: 'Prajapati Nagar', nameLocal: 'प्रजापती नगर', type: 'elevated', landmark: 'Prajapati Nagar' },
     { name: 'Pardi', nameLocal: 'पारडी', type: 'elevated', landmark: 'Pardi' },
     { name: 'Kapsi Khurd', nameLocal: 'कापसी खुर्द', type: 'elevated', landmark: 'Kapsi' },
     { name: 'Transport Nagar', nameLocal: 'ट्रान्सपोर्ट नगर', type: 'elevated', landmark: 'Transport Nagar' }
@@ -104,7 +104,7 @@ function buildStation(st, idPrefix, idx, lineId) {
     }
 
     return {
-        id: `${idPrefix}${String(idx + 1).padStart(2, '0')}`,
+        id: st.id || `${idPrefix}${String(idx + 1).padStart(2, '0')}`,
         name: st.name,
         nameLocal: st.nameLocal,
         type: st.type,
@@ -132,7 +132,7 @@ const nagpurData = {
     city: 'Nagpur',
     state: 'Maharashtra',
     operator: 'Maharashtra Metro Rail Corporation Limited (Maha Metro)',
-    totalStations: 69,
+    totalStations: 68,
     length: '82.0 km',
     totalLines: 2,
     phase: 'Phase 1 (Operational) + Phase 2 (Under Construction)',

@@ -98,6 +98,7 @@ const redLineStationsData = [
         ]
     },
     {
+        id: 'inter-patna-jn',
         name: 'Patna Junction',
         nameLocal: 'पटना जंक्शन',
         type: 'underground',
@@ -146,6 +147,7 @@ const redLineStationsData = [
         ]
     },
     {
+        id: 'inter-khemnichak',
         name: 'Khemnichak',
         nameLocal: 'खेमनीचक',
         type: 'underground',
@@ -168,6 +170,7 @@ const redLineStationsData = [
 // ──────────────────────────────────────────────────────────────────────────────
 const blueLineStationsData = [
     {
+        id: 'inter-patna-jn',
         name: 'Patna Junction',
         nameLocal: 'पटना जंक्शन',
         type: 'underground',
@@ -259,6 +262,7 @@ const blueLineStationsData = [
         ]
     },
     {
+        id: 'inter-khemnichak',
         name: 'Khemnichak',
         nameLocal: 'खेमनीचक',
         type: 'elevated',
@@ -346,7 +350,7 @@ function buildStation(st, idPrefix, idx, lineId) {
     }
 
     return {
-        id: `${idPrefix}${String(idx + 1).padStart(2, '0')}`,
+        id: st.id || `${idPrefix}${String(idx + 1).padStart(2, '0')}`,
         name: st.name,
         nameLocal: st.nameLocal,
         type: st.type,
@@ -377,7 +381,7 @@ const data = {
     city: 'Patna',
     state: 'Bihar',
     operator: 'Patna Metro Rail Corporation (PMRC)',
-    totalStations: 26,
+    totalStations: 24,
     totalLength: '30.92 km',
     totalLines: 2,
     phase: 'Phase 1 (Partial Operations)',

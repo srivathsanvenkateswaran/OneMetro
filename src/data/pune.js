@@ -11,7 +11,7 @@ const purpleLineStations = [
     { name: 'Khadki', nameLocal: 'खडकी', type: 'elevated', landmark: 'Khadki Cantonment / Railway Station' },
     { name: 'Range Hill', nameLocal: 'रेंज हिल', type: 'elevated', landmark: 'Range Hill Metro Depot' },
     { name: 'Shivajinagar', nameLocal: 'शिवाजीनगर', type: 'underground', landmark: 'Shivajinagar Railway Station / ST Stand' },
-    { name: 'Civil Court', nameLocal: 'दिवाणी न्यायालय', type: 'underground', isInterchange: true, interchangeWith: ['aqua', 'pink'], landmark: 'District Court Pune' },
+    { id: 'inter-civil-court', name: 'Civil Court', nameLocal: 'दिवाणी न्यायालय', type: 'underground', isInterchange: true, interchangeWith: ['aqua', 'pink'], landmark: 'District Court Pune' },
     { name: 'Budhwar Peth', nameLocal: 'बुधवार पेठ', type: 'underground', landmark: 'Dagadusheth Halwai Ganapati (Nearby)' },
     { name: 'Mandai', nameLocal: 'मंडई', type: 'underground', landmark: 'Mahatma Phule Mandai Market' },
     { name: 'Swargate', nameLocal: 'स्वारगेट', type: 'underground', landmark: 'Swargate ST Stand / Ganesh Kala Krida' }
@@ -26,7 +26,7 @@ const aquaLineStations = [
     { name: 'Deccan Gymkhana', nameLocal: 'डेक्कन जिमखाना', type: 'elevated', landmark: 'Deccan Gymkhana / Sambhaji Park' },
     { name: 'Chhatrapati Sambhaji Udyan', nameLocal: 'छत्रपती संभाजी उद्यान', type: 'elevated', landmark: 'Bal Gandharva Rang Mandir' },
     { name: 'PMC', nameLocal: 'पुणे महानगरपालिका', type: 'elevated', landmark: 'PMC Main Building' },
-    { name: 'Civil Court', nameLocal: 'दिवाणी न्यायालय', type: 'underground', isInterchange: true, interchangeWith: ['purple', 'pink'], landmark: 'District Court' },
+    { id: 'inter-civil-court', name: 'Civil Court', nameLocal: 'दिवाणी न्यायालय', type: 'underground', isInterchange: true, interchangeWith: ['purple', 'pink'], landmark: 'District Court' },
     { name: 'Mangalwar Peth', nameLocal: 'मंगळवार पेठ', type: 'elevated', landmark: 'Juna Bazaar' },
     { name: 'Pune Railway Station', nameLocal: 'पुणे रेल्वे स्टेशन', type: 'elevated', landmark: 'Pune Junction Railway Station' },
     { name: 'Ruby Hall Clinic', nameLocal: 'रुबी हॉल क्लिनिक', type: 'elevated', landmark: 'Ruby Hall Clinic / Jehangir Hospital' },
@@ -59,12 +59,12 @@ const pinkLineStations = [
     { name: 'Reserve Bank of India', nameLocal: 'भारतीय रिझर्व्ह बँक', type: 'elevated', landmark: 'RBI Pune' },
     { name: 'Agriculture College', nameLocal: 'कृषी महाविद्यालय', type: 'elevated', landmark: 'COEP / Agriculture College' },
     { name: 'Shivaji Nagar', nameLocal: 'शिवाजीनगर', type: 'elevated', landmark: 'Shivajinagar' },
-    { name: 'Civil Court', nameLocal: 'दिवाणी न्यायालय', type: 'elevated', isInterchange: true, interchangeWith: ['purple', 'aqua'], landmark: 'District Court' }
+    { id: 'inter-civil-court', name: 'Civil Court', nameLocal: 'दिवाणी न्यायालय', type: 'elevated', isInterchange: true, interchangeWith: ['purple', 'aqua'], landmark: 'District Court' }
 ];
 
 function buildStation(st, idPrefix, idx) {
     return {
-        id: `${idPrefix}${String(idx + 1).padStart(2, '0')}`,
+        id: st.id || `${idPrefix}${String(idx + 1).padStart(2, '0')}`,
         name: st.name,
         nameLocal: st.nameLocal,
         type: st.type,
@@ -92,7 +92,7 @@ const puneData = {
     city: 'Pune',
     state: 'Maharashtra',
     operator: 'Maharashtra Metro Rail Corporation Limited (Maha Metro)',
-    totalStations: 54,
+    totalStations: 51,
     length: '54.5 km',
     totalLines: 3,
     phase: 'Phase 1 & 2',
