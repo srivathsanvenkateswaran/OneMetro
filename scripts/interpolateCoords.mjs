@@ -231,21 +231,20 @@ const GEO_CITIES = {
 
   jaipur: {
     pink: {
-      count: 14,
+      count: 13,
       waypoints: [
         { idx: 0, lat: 26.8795, lon: 75.7499 },
         { idx: 2, lat: 26.8803, lon: 75.7646 },
         { idx: 6, lat: 26.9095, lon: 75.7812 },
-        { idx: 7, lat: 26.9186, lon: 75.79 },
-        { idx: 8, lat: 26.9226, lon: 75.7998 },
-        { idx: 9, lat: 26.9263, lon: 75.8074 },
-        { idx: 11, lat: 26.9229, lon: 75.8268 },
-        { idx: 12, lat: 26.9202, lon: 75.8309 },
-        { idx: 13, lat: 26.9106, lon: 75.8432 },
+        { idx: 7, lat: 26.9226, lon: 75.7998 },
+        { idx: 8, lat: 26.9263, lon: 75.8074 },
+        { idx: 10, lat: 26.9229, lon: 75.8268 },
+        { idx: 11, lat: 26.9202, lon: 75.8309 },
+        { idx: 12, lat: 26.9106, lon: 75.8432 },
       ],
     },
     orange: {
-      count: 20,
+      count: 23,
       waypoints: [
         { idx: 0, lat: 26.78, lon: 75.82 },
         { idx: 5, lat: 26.84, lon: 75.8 },
@@ -253,8 +252,8 @@ const GEO_CITIES = {
         { idx: 13, lat: 26.9056, lon: 75.8155 },
         { idx: 14, lat: 26.915, lon: 75.816 },
         { idx: 15, lat: 26.918, lon: 75.802 },
-        { idx: 16, lat: 26.9226, lon: 75.7998 },
-        { idx: 19, lat: 26.9441, lon: 75.7763 },
+        { idx: 19, lat: 26.9226, lon: 75.7998 },
+        { idx: 22, lat: 26.9441, lon: 75.7763 },
       ],
     },
   },
