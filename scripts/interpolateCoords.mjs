@@ -231,7 +231,7 @@ const GEO_CITIES = {
 
   jaipur: {
     pink: {
-      count: 13,
+      count: 14,
       waypoints: [
         { idx: 0, lat: 26.8795, lon: 75.7499 },
         { idx: 2, lat: 26.8803, lon: 75.7646 },
@@ -241,6 +241,7 @@ const GEO_CITIES = {
         { idx: 10, lat: 26.9229, lon: 75.8268 },
         { idx: 11, lat: 26.9202, lon: 75.8309 },
         { idx: 12, lat: 26.9106, lon: 75.8432 },
+        { idx: 13, lat: 26.884, lon: 75.736 },
       ],
     },
     orange: {
