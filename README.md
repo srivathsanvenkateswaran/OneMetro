@@ -1,87 +1,99 @@
-# OneMetro — India's Integrated Metro Portal
+# OneMetro — The Pulse of Urban India
 
-**OneMetro** is a high-performance, aesthetically premium web application designed to be the single source of truth for all metro and rapid transit systems across India. Built with a focus on speed, clarity, and visual excellence, it provides detailed information on lines, stations, and geographic map layouts for cities nationwide.
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Build Status](https://img.shields.io/badge/Build-Vite-646CFF.svg)](https://vitejs.dev/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-![OneMetro Banner](public/assets/Delhi.webp)
+**OneMetro** is a high-performance, aesthetically premium open-source platform designed to be the definitive digital gateway for India's rapid transit systems. Built on the principle of "Performance as a Feature," it provides an immersive, lightning-fast experience for exploring metropolitan networks across the nation.
 
-## 🚀 Key Features
+![OneMetro Banner](public/assets/banner.png)
 
-- **Multi-City Support**: Comprehensive data for major hubs including Chennai, Delhi, Mumbai, Bengaluru, Kolkata, Hyderabad, Pune, Nagpur, Ahmedabad, and 6 newly added cities.
-- **Dynamic Interaction**: 
-  - **Interactive Metro Maps**: Responsive, zooomable, and pan-able SVG maps generated programmatically.
-  - **Live Routing**: Deep-linking to specific cities, lines, and stations via URL fragments.
-- **Performance Optimized**:
-  - **Static Architecture**: Zero runtime API calls; data is served via optimized static JS modules.
-  - **Lazy Loading**: City data chunks are fetched only when needed, keeping the initial bundle size tiny.
-  - **Asset Optimization**: High-resolution landing page images converted to WebP for faster loads.
-- **Rich User Experience**:
-  - **Premium Dark UI**: Glassmorphism, smooth gradients, and coordinated color schemes.
-  - **Micro-Animations**: Staggered entry animations and smooth transitions for a high-end feel.
-  - **Detailed Station Pages**: Real-world metadata including gates, platforms, landmarks, and facilities.
+## 🏛️ Vision & Philosophy
+Urban transit is the backbone of India's growth. OneMetro aims to democratize access to transit information through:
+- **Extreme Speed**: Sub-1-second loads with zero runtime network dependency.
+- **Visual Excellence**: A design-first approach that transforms raw data into beautiful, interactive SVG experiences.
+- **Privacy First**: No tracking, no external cookies, no runtime API calls to third parties.
 
-## 🛠️ Technology Stack
+---
 
-- **Core**: Vanilla JavaScript (ES6+), Semantic HTML5.
-- **Styling**: Modern Vanilla CSS with a centralized Design System (CSS Variables).
-- **Build Tool**: [Vite](https://vitejs.dev/) for bundling and fast development.
-- **Mapping**: Dynamic SVG generation with support for both **Geographic Projection** (WGS84) and **Schematic** layouts.
-- **Typography**: Inter & Outfit (Google Fonts).
+## 🚀 Engine Features
 
-## 📂 Project Structure
+### 🗺️ Hybrid SVG Layout Engine
+OneMetro uses a dual-engine approach to map rendering:
+- **Geographic Projection (WGS84)**: For cities like Chennai, Pune, and Ahmedabad, maps are projected using real-world coordinates and smooth Hermite interpolation (smoothstep) for organic line curves.
+- **Schematic Layouts**: For complex networks like Delhi and Mumbai, we use a custom-designed schematic grid to ensure maximum legibility and cognitive ease.
+
+### ⚡ Architectural Invariants
+- **No-Framework Core**: Built with Vanilla JS to minimize overhead and prevent "framework rot."
+- **Data as Code**: Metro system data is stored as ES modules. This eliminates JSON parsing overhead and allows for aggressive tree-shaking and lazy-loading.
+- **State via URL**: Every city, line, and station is indexed via URL fragments, making the entire platform deep-linkable and SEO-friendly.
+
+---
+
+## 📂 Internal Structure
 
 ```text
 OneMetro/
 ├── src/
-│   ├── app.js            # Main application controller & router
-│   ├── components/       # UI Components (Headless & Functional)
-│   ├── data/             # City-specific JS data modules
-│   └── styles/           # Design system and component styles
-├── scripts/              # Data generation and coordinate interpolation tools
-├── public/               # Static assets (Optimized WebP images)
-└── index.html            # Entry point
+│   ├── app.js            # Router and dynamic module loader
+│   ├── components/       # Pure-function UI components (Functional CSS)
+│   ├── data/             # The Source of Truth: Static city modules
+│   └── styles/           # Variables-driven Design System
+├── scripts/              # Coordinate interpolation & data-generation toolset
+└── public/               # Optimized assets (WebP format)
 ```
 
-## 🏗️ Architecture: Adding a New City
+---
 
-The project is designed for trivial scalability. To add a new city:
-
-1.  **Registry**: Add the city metadata to `src/data/cityRegistry.js`.
-2.  **Data Module**: Create `src/data/{cityId}.js` following the canonical station/line schema.
-3.  **Map Layout**: Define waypoints and canvas config in `src/data/mapLayouts.js`.
-4.  **Loader**: Register the dynamic import in `src/app.js`'s `cityLoaders`.
-5.  **Coordinates**: Run `node scripts/interpolateCoords.mjs` to generate geographic coordinates for geo-projected maps.
-
-## 🚦 Getting Started
+## 🛠️ Technical Getting Started
 
 ### Prerequisites
-- Node.js (v18+)
-- npm
+- Node.js (v18.0.0 or higher)
+- npm (v9.0.0 or higher)
 
-### Installation
+### Local Development
 ```bash
+# Clone the repository
 git clone https://github.com/srivathsanvenkateswaran/OneMetro.git
-cd OneMetro
-npm install
-```
 
-### Development
-```bash
+# Install dependencies
+npm install
+
+# Start the development server
 npm run dev
 ```
 
-### Build & Deploy
-```bash
-npm run build   # Build for production
-npm run deploy  # Build and deploy to GitHub Pages
-```
+---
 
-## 📈 Roadmap & Progress
-
-Track our progress in [progress.md](./progress.md). Current focus areas include:
-- [x] High-performance lazy loading.
-- [x] Dynamic SEO Meta Tags.
-- [x] Integration of 15+ major Indian cities.
-- [ ] Integration of Regional Transit (RRTS).
+## 🧭 Roadmap 2026
+We are building for the future of Indian mobility. Our priorities are:
+1.  🚆 **RRTS Integration**: Adding the Delhi-Meerut and upcoming regional corridors.
+2.  📊 **Real-World Integration**: Moving beyond static paths to include real-world frequency and boarding data.
+3.  🌏 **Multilingual Support**: Localizing the entire interface into regional Indian languages.
+4.  📱 **PWA / Offline Capabilities**: Full offline map access for commuters in underground networks.
 
 ---
-*Built with ❤️ for India's commuters.*
+
+## 🤝 Contributing
+We welcome developers, transit enthusiasts, and data hobbyists! Please read our [Contributing Guidelines](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md) before starting.
+
+To add a new city, follow our [Scaling Guide](CONTRIBUTING.md#1-adding-new-cities).
+
+---
+
+## 📜 Acknowledgments
+OneMetro is built on open data and community knowledge. We extend our gratitude to:
+- **OpenStreetMap**: For the foundational geographic coordinates.
+- **Wikipedia Community**: For historical and technical metadata.
+- **Official Transit Providers**: DMRC, CMRL, KMRL, MMRDA, and others for their public documentation.
+
+---
+
+## 👨‍💻 Maintainer
+**Srivathsan Venkateswaran**  
+[LinkedIn Profile](https://www.linkedin.com/in/srivathsan-venkateswaran/)
+
+---
+
+### License
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
