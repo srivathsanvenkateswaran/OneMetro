@@ -716,24 +716,24 @@ export const mapLayouts = {
     type: "geo",
     scale: 17000,
     pad: 80,
-    bounds: { latMin: 25.58, latMax: 25.64, lonMin: 85.04, lonMax: 85.20 },
+    bounds: { latMin: 25.57, latMax: 25.66, lonMin: 85.03, lonMax: 85.22 },
     lines: {
       red: [
-        { idx: 0, lat: 25.6143, lon: 85.0452 },
-        { idx: 3, lat: 25.6133, lon: 85.0855 },
-        { idx: 6, lat: 25.6138, lon: 85.1168 },
-        { idx: 9, lat: 25.6115, lon: 85.1386 },
-        { idx: 11, lat: 25.6058, lon: 85.1562 },
-        { idx: 13, lat: 25.5952, lon: 85.1705 },
+        { idx: 0, lat: 25.6143, lon: 85.0452 }, // Danapur Cantonment
+        { idx: 3, lat: 25.6128, lon: 85.0855 }, // Patliputra
+        { idx: 6, lat: 25.6110, lon: 85.1168 }, // Patna Zoo
+        { idx: 9, lat: 25.6115, lon: 85.1386 }, // Patna Junction
+        { idx: 13, lat: 25.5952, lon: 85.1705 }, // Khemnichak
       ],
       blue: [
-        { idx: 0, lat: 25.6115, lon: 85.1386 },
-        { idx: 2, lat: 25.6162, lon: 85.1386 },
-        { idx: 4, lat: 25.6238, lon: 85.1272 },
-        { idx: 5, lat: 25.6265, lon: 85.1228 },
-        { idx: 6, lat: 25.6112, lon: 85.1520 },
-        { idx: 8, lat: 25.5952, lon: 85.1705 },
-        { idx: 11, lat: 25.5858, lon: 85.1915 },
+        { idx: 0, lat: 25.6115, lon: 85.1386 }, // Patna Junction
+        { idx: 2, lat: 25.6175, lon: 85.1432 }, // Gandhi Maidan
+        { idx: 3, lat: 25.6212, lon: 85.1520 }, // PMCH
+        { idx: 4, lat: 25.6190, lon: 85.1620 }, // Patna University
+        { idx: 5, lat: 25.6047, lon: 85.1673 }, // Moin Ul Haq Stadium (FIXED)
+        { idx: 6, lat: 25.6000, lon: 85.1610 }, // Rajendra Nagar
+        { idx: 8, lat: 25.5952, lon: 85.1705 }, // Khemnichak (Blue)
+        { idx: 11, lat: 25.5841, lon: 85.1950 }, // New ISBT
       ],
     },
   },
