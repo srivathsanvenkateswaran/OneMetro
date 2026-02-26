@@ -190,11 +190,11 @@ const GEO_CITIES = {
         { idx: 31, lat: 12.95, lon: 80.245 },
         { idx: 37, lat: 12.9, lon: 80.23 },
         { idx: 42, lat: 12.87, lon: 80.225 },
-        { idx: 48, lat: 12.83, lon: 80.22 },
+        { idx: 48, lat: 12.82, lon: 80.22 },
       ],
     },
     yellow: {
-      count: 28,
+      count: 29,
       waypoints: [
         { idx: 0, lat: 13.04, lon: 80.28 },
         { idx: 2, lat: 13.035, lon: 80.27 },
@@ -209,7 +209,7 @@ const GEO_CITIES = {
       ],
     },
     red: {
-      count: 48,
+      count: 47,
       waypoints: [
         { idx: 0, lat: 13.15, lon: 80.23 },
         { idx: 4, lat: 13.13, lon: 80.22 },
@@ -224,7 +224,7 @@ const GEO_CITIES = {
         { idx: 33, lat: 12.975, lon: 80.215 },
         { idx: 38, lat: 12.95, lon: 80.22 },
         { idx: 42, lat: 12.93, lon: 80.225 },
-        { idx: 47, lat: 12.9, lon: 80.23 },
+        { idx: 46, lat: 12.9, lon: 80.23 },
       ],
     },
   },

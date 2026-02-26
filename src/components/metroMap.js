@@ -464,7 +464,7 @@ export function renderMetroMap(
   const clusters = new Map();
   const visibleLineIds = layout.lines.map(l => l.line.id);
   const externalSystems = ["rail", "monorail", "water", "bus", "ferry"];
-  const CLUSTER_RADIUS = 12; // Radius in SVG units to group nearby stations
+  const CLUSTER_RADIUS = 8; // Radius in SVG units to group nearby stations
 
   layout.lines.forEach(({ coords, line }) => {
     coords.forEach(coord => {
@@ -549,11 +549,12 @@ export function renderMetroMap(
       })
       .join("")}
 
-            ${Array.from(clusters.values()).map((clusterStations) => {
-        const isGroup = clusterStations.length > 1;
+      ${Array.from(clusters.values()).map((clusterStations) => {
+        const uniqueLines = new Set(clusterStations.map(c => c.line.id));
+        const isMultiLineGroup = uniqueLines.size > 1;
 
         // An interchange marker is only needed if:
-        // 1. Multiple visible lines overlap (isGroup)
+        // 1. Multiple visible lines overlap (isMultiLineGroup)
         // 2. Or it connects to another VISIBLE line or an EXTERNAL system (rail/monorail/water)
         const hasVisibleInterchange = clusterStations.some(c =>
           c.station.isInterchange &&
@@ -568,7 +569,7 @@ export function renderMetroMap(
           })
         );
 
-        if (isGroup || hasVisibleInterchange) {
+        if (isMultiLineGroup || hasVisibleInterchange) {
           return renderMapInterchange(
             clusterStations[0],
             activeLine,
