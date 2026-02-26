@@ -489,8 +489,9 @@ export function renderMetroMap(
   });
 
   container.innerHTML = `
-    <div class="metro-map-container" id="map-viewer">
-      <div class="map-toolbar">
+    <div class="metro-map-wrapper" id="map-wrapper">
+      <div class="metro-map-container" id="map-viewer">
+        <div class="map-toolbar">
         <div class="map-toolbar-left">
           <button class="map-ctrl-btn map-minimize-btn" id="map-minimize" title="Minimize/Expand map">∨</button>
           <div class="map-toolbar-title">
@@ -614,6 +615,7 @@ export function renderMetroMap(
       .join("")}
         </div>
       </div>
+      </div>
     </div>
   `;
 
@@ -645,6 +647,7 @@ export function renderMetroMap(
 // Zoom by changing SVG viewBox (not CSS transform) — stays crisp at any level
 
 function initMapControls(container) {
+  const wrapper = container.querySelector("#map-wrapper");
   const viewer = container.querySelector("#map-viewer");
   const viewport = container.querySelector("#map-viewport");
   const svg = container.querySelector("#map-svg");
@@ -821,7 +824,7 @@ function initMapControls(container) {
   // Fullscreen toggle
   const fsBtn = container.querySelector("#fullscreen-toggle");
   fsBtn.addEventListener("click", () => {
-    const isFullscreen = viewer.classList.toggle("map-fullscreen");
+    const isFullscreen = wrapper.classList.toggle("map-fullscreen");
     fsBtn.textContent = isFullscreen ? "✕" : "⛶";
 
     // Toggle body states
@@ -830,8 +833,8 @@ function initMapControls(container) {
   });
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && viewer.classList.contains("map-fullscreen")) {
-      viewer.classList.remove("map-fullscreen");
+    if (e.key === "Escape" && wrapper.classList.contains("map-fullscreen")) {
+      wrapper.classList.remove("map-fullscreen");
       fsBtn.textContent = "⛶";
       document.body.style.overflow = "";
       document.body.classList.remove("map-fullscreen-active");

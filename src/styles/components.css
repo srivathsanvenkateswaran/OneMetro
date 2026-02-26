@@ -457,36 +457,19 @@
   display: block;
 }
 
-/* ── Fullscreen Mode (Modal Scaffold) ── */
-body.map-fullscreen-active .content {
-  transform: none !important;
-  will-change: auto !important;
-  z-index: 99999;
-}
-
-body.map-fullscreen-active .app-header,
-body.map-fullscreen-active .sidebar {
-  z-index: 10;
-  /* Lower than modal */
-}
-
-.map-fullscreen {
+/* ── Fullscreen Theatre Mode (Rethink) ── */
+.metro-map-wrapper.map-fullscreen {
   position: fixed !important;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 9999;
-  border-radius: 0 !important;
-  border: none !important;
+  inset: 0 !important;
+  z-index: 100000 !important;
   background: rgba(2, 6, 23, 0.8) !important;
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(30px) saturate(160%);
+  -webkit-backdrop-filter: blur(30px) saturate(160%);
   display: flex !important;
   align-items: center;
   justify-content: center;
-  padding: var(--space-xl);
-  animation: modalFadeIn 0.4s var(--ease-out) both;
+  padding: 2vh 2vw;
+  animation: modalFadeIn 0.5s var(--ease-out) both;
 }
 
 @keyframes modalFadeIn {
@@ -499,45 +482,66 @@ body.map-fullscreen-active .sidebar {
   }
 }
 
-.map-fullscreen.metro-map-container {
-  width: 96vw;
-  height: 94vh;
-  background: var(--bg-primary);
+.metro-map-wrapper.map-fullscreen .metro-map-container {
+  width: 98vw;
+  height: 96vh;
+  max-width: none;
+  max-height: none;
+  background: #0a0e1a;
+  /* True dark for map focus */
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-xl);
   box-shadow:
-    0 40px 100px -20px rgba(0, 0, 0, 0.9),
-    0 20px 50px -25px rgba(0, 0, 0, 0.7);
-  display: flex;
+    0 50px 100px -20px rgba(0, 0, 0, 1),
+    0 30px 60px -30px rgba(0, 0, 0, 0.8),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  display: flex !important;
   flex-direction: column;
   overflow: hidden;
-  animation: modalScaleUp 0.6s var(--ease-spring) both;
+  animation: theaterScaleUp 0.6s var(--ease-spring) both;
 }
 
-@keyframes modalScaleUp {
+@keyframes theaterScaleUp {
   from {
-    transform: scale(0.95) translateY(20px);
+    transform: scale(0.9) translateY(40px);
+    opacity: 0;
   }
 
   to {
     transform: scale(1) translateY(0);
+    opacity: 1;
   }
 }
 
 .map-fullscreen .map-toolbar {
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-  padding: var(--space-md) var(--space-xl);
+  height: 64px;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0 var(--space-2xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.map-fullscreen .map-toolbar-title {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.01em;
 }
 
 .map-fullscreen .map-viewport {
   max-height: none;
   flex: 1;
-  height: auto;
+  background: radial-gradient(circle at center, #111827 0%, #05060a 100%);
 }
 
 .map-fullscreen .map-legend {
-  bottom: var(--space-xl);
-  right: var(--space-xl);
+  bottom: 40px;
+  right: 40px;
+  transform: scale(1.1);
+  /* Slightly larger in theater mode */
+  box-shadow: var(--shadow-2xl);
 }
 
 .map-minimized .map-viewport {
