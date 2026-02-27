@@ -816,15 +816,28 @@ export const mapLayouts = {
   rrts: {
     type: "schematic",
     width: 1400,
-    height: 1000,
+    height: 1100,
     lines: {
       "namo-bharat": [
-        { idx: 0, x: 200, y: 800 },
-        { idx: 2, x: 400, y: 700 },
-        { idx: 4, x: 600, y: 600 },
-        { idx: 7, x: 800, y: 500 },
-        { idx: 10, x: 1000, y: 300 },
-        { idx: 13, x: 1200, y: 100 },
+        { idx: 0, x: 550, y: 550 }, // Jangpura (Slightly SW of Hub)
+        { idx: 1, x: 600, y: 500 }, // Sarai Kale Khan (Hub)
+        { idx: 2, x: 700, y: 500 }, // New Ashok Nagar (East)
+        { idx: 3, x: 800, y: 400 }, // Anand Vihar (NE)
+        { idx: 7, x: 1000, y: 250 }, // Duhai
+        { idx: 16, x: 1300, y: 100 }, // Modipuram
+      ],
+      "rrts-alwar": [
+        { idx: 0, x: 600, y: 500 }, // SKK Hub
+        { idx: 1, x: 500, y: 600 }, // INA
+        { idx: 4, x: 350, y: 750 }, // Cyber City
+        { idx: 8, x: 250, y: 850 }, // Kherki Daula
+        { idx: 18, x: 100, y: 1000 }, // Alwar (Deep SW)
+      ],
+      "rrts-panipat": [
+        { idx: 0, x: 600, y: 500 }, // SKK Hub
+        { idx: 2, x: 600, y: 400 }, // Kashmere Gate
+        { idx: 6, x: 550, y: 300 }, // Kundli
+        { idx: 15, x: 500, y: 50 },  // Panipat Depot (North)
       ],
     },
   },
