@@ -53,9 +53,9 @@ Taking OneMetro to the pocket.
 ---
 
 ## 🛠️ Next Immediate Steps
-1.  **Search**: Implement fuzzy search on the Landing Page and cross-city station search in NCR view.
+1.  **Search**: Universal Command Palette (Finder-style) implemented (Ctrl+P). [COMPLETED]
 2.  **PWA**: Enhance offline support for commuters in basements/tunnels.
 3.  **Mumbai Expansion**: Complete the upcoming Mumbai Metro network layout.
 
 > [!IMPORTANT]
-> OneMetro will remain **Open Source** and **Free Forever**.
+> OneMetro has matured into a professional-grade **Open Source** project. We prioritize technical excellence, search efficiency, and community-driven data integrity.

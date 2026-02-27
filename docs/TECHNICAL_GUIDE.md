@@ -160,35 +160,36 @@ The `snapInterchanges()` function runs before the SVG is drawn. It looks for sta
 
 ## 🔍 3.5 The Universal Search Engine
 
-OneMetro features a sophisticated, macOS Finder-inspired **Universal Search** powered by [Fuse.js](https://www.fusejs.io/). 
+OneMetro features a sophisticated, macOS Finder-inspired **Universal Search** powered by [Fuse.js](https://www.fusejs.io/). As a "search-first" platform, we treat navigation as a discovery problem, not just a list of links.
 
-### Lazy Indexing Architecture
-To stay under our 1-second load goal, we use a **two-stage asynchronous crawler**:
-1.  **Level 1 (Shallow)**: On app boot, we index only the `cityRegistry`. This is instantaneous and takes < 1ms.
-2.  **Level 2 (Deep)**: When the user first triggers the search palette (Ctrl+P), we fire off parallel dynamic imports for **every city data module**. Once loaded, we crawl every Line and Station, building a full national transit index in the background without blocking the UI thread.
+### 🏗️ Lazy Indexing Architecture
+To stay under our 1-second load goal while maintaining a massive national index, we use a **two-stage asynchronous crawler**:
+1.  **Level 1 (Shallow)**: On app boot, we index only the `cityRegistry`. This is instantaneous and takes < 1ms, allowing users to find city networks immediately.
+2.  **Level 2 (Deep)**: When the user first triggers the search palette (Ctrl+P), we fire off parallel dynamic imports for **every city data module**. Once the city data is streamed in, the engine crawls every Line and Station, building a unified search registry in the background. This "Hydration" approach ensures the initial bundle remains extremely small.
 
-### Semantic Flattening (The "Keyword Cloud" Strategy)
-Standard fuzzy matching often fails when users combine properties (e.g., searching "Blue Line Bengaluru"). If "Blue Line" is in the `name` field and "Bengaluru" is in the `sub` field, many engines penalize the score. 
+### 🧠 Mathematical Search Scoring
+We leverage the **Bitap Algorithm** (via Fuse.js) to handle fuzzy matching. Unlike simple string containment, Bitap allows us to calculate the "Edit Distance" (Levenshtein) between the user's query and the index.
 
-We solve this by **Semantic Flattening**: generating a composite `keywords` field for every indexed item:
-```javascript
-// A conceptual snippet from searchEngine.js
-const item = {
-    name: "Blue Line",
-    sub: "Bengaluru • Namma Metro",
-    keywords: "Blue Line Bengaluru Namma Metro Karnataka karnataka city line metro"
-};
-```
+#### The "Intersection Search" Problem
+Traditional search engines often penalize queries that span multiple fields (e.g., "Blue Line Bengaluru"). We solve this via **Semantic Flattening**. Every item in the index has a generated `keywords` string that merges its metadata:
+- **Station Indexing**: `[Name] [NameLocal] [LineName] [CityName] station metro`
+- **Line Indexing**: `[LineColor] [CityName] line metro [CityRegionalName]`
 
-### Search Score Weighting
-We use a weighted scoring system to prioritize direct matches while allowing for regional discovery:
-- **`keywords` (Weight 0.8)**: The highest weight. This enables "Intersection Queries" like "Kochi Water" or "Delhi Magenta".
-- **`name` / `nameLocal` (Weight 0.5)**: High weight for direct name matches.
-- **`sub` (Weight 0.2)**: Lower weight for secondary context.
+By weighting these flattened strings heavily ($0.8$), we enable users to find exactly what they need even with partial knowledge or multi-faceted queries.
 
-### Performance Tuning
-- **Threshold (0.35)**: Carefully tuned to allow for common typos (e.g., "Mumbay" -> "Mumbai") without flooding results with noise.
-- **MinMatchCharLength (2)**: Ignores single letters to prevent irrelevant results during initial typing.
+### 🌍 Cross-Lingual Discovery
+OneMetro is built for a multilingual India. Our indexer automatically pairs English names with their localized equivalents (Hindi, Tamil, Bengali, Marathi, etc.) into the search corpus. This allows a user to type in their native script and get the same high-relevance English results, and vice-versa.
+
+### 🎹 Keyboard Orchestration & UX
+The Command Palette is designed as a focused modal with zero cognitive friction:
+- **Global Listener**: A top-level event orchestrator listens for `Ctrl/Cmd + P` to trigger the search.
+- **Portal Rendering**: To prevent CSS inheritance issues and ensure the palette always remains on top, it is rendered into a dedicated overlay with its own stacking context.
+- **Mac-Style Polish**: We use `backdrop-filter: blur(8px)` and a subtle `0.3s` cubic-bezier transition to mimic the "Premium" feel of modern operating systems.
+
+### ⚡ Performance Tuning Parameters
+- **Threshold (0.35)**: Carefully tuned. A lower value would be too strict (missing typos); a higher value would yield too much noise.
+- **Location & Distance (0 / 100)**: Optimized for short, punchy queries common in transit (Station names, Line colors).
+- **MinMatchCharLength (2)**: Prevents the engine from firing on single characters, saving CPU cycles on mobile devices.
 
 ---
 
