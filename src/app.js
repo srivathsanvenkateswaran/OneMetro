@@ -41,6 +41,7 @@ const cityLoaders = {
     lucknow: () => import('./data/lucknow.js').then(m => m.default),
     agra: () => import('./data/agra.js').then(m => m.default),
     patna: () => import('./data/patna.js').then(m => m.default),
+    noida: () => import('./data/noida.js').then(m => m.default),
 };
 
 // ── City Data Cache ───────────────────────────────────────────────────────────

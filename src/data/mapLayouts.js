@@ -763,5 +763,32 @@ export const mapLayouts = {
       ],
     },
   },
+  noida: {
+    type: "schematic",
+    width: 1400,
+    height: 1000,
+    lines: {
+      aqua: [
+        { idx: 0, x: 600, y: 150 },
+        { idx: 8, x: 600, y: 550 },
+        { idx: 14, x: 750, y: 700 },
+        { idx: 20, x: 1050, y: 700 },
+      ],
+      "aqua-ext-gnw": [
+        { idx: 0, x: 600, y: 150 },
+        { idx: 3, x: 750, y: 100 },
+        { idx: 9, x: 950, y: 100 },
+      ],
+      "aqua-ext-bg": [
+        { idx: 0, x: 600, y: 550 },
+        { idx: 3, x: 450, y: 400 },
+        { idx: 7, x: 450, y: 200 },
+      ],
+      "aqua-ext-bodaki": [
+        { idx: 0, x: 1050, y: 700 },
+        { idx: 2, x: 1200, y: 750 },
+      ],
+    },
+  },
 };
 

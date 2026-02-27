@@ -216,6 +216,18 @@ export const cityRegistry = {
         status: 'available',
         stats: { lines: 2, stations: '26', length: '30.9 km' },
     },
+    noida: {
+        id: 'noida',
+        displayName: 'Noida',
+        nameLocal: 'नोएडा',
+        metroName: 'Noida Metro',
+        tagline: 'Fast-tracking the future of the NCR with the smart, clean Aqua Line.',
+        state: 'Uttar Pradesh',
+        emoji: '🏢',
+        imageClass: 'lp-img-noida',
+        status: 'available',
+        stats: { lines: 2, stations: '21+', length: '29+ km' },
+    },
 };
 
 /**
@@ -240,6 +252,7 @@ export const cityOrder = [
     "patna",
     "agra",
     "lucknow",
+    "noida",
 ];
 
 /** Returns ordered array of city metadata objects, skipping any unknown keys. */
