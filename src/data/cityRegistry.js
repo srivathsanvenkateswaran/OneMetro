@@ -240,6 +240,18 @@ export const cityRegistry = {
         status: 'available',
         stats: { lines: 2, stations: '11+', length: '12+ km' },
     },
+    rrts: {
+        id: 'rrts',
+        displayName: 'RRTS',
+        nameLocal: 'नमो भारत',
+        metroName: 'Regional Rapid Transit System',
+        tagline: 'India\'s first semi-high-speed regional rail, connecting the NCR at 160 km/h.',
+        state: 'Delhi / UP',
+        emoji: '🚆',
+        imageClass: 'lp-img-rrts',
+        status: 'available',
+        stats: { lines: 2, stations: '25', length: '82+ km' },
+    },
 };
 
 /**
@@ -266,6 +278,7 @@ export const cityOrder = [
     "lucknow",
     "noida",
     "gurgaon",
+    "rrts",
 ];
 
 /** Returns ordered array of city metadata objects, skipping any unknown keys. */

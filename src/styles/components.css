@@ -1678,6 +1678,12 @@ body.map-fullscreen-active .sidebar {
     url("/assets/Gurgaon.webp");
 }
 
+.lp-img-rrts {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("/assets/RRTS.webp");
+}
+
 .lp-card-content {
   padding: var(--space-xl);
   flex: 1;
