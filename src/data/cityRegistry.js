@@ -252,6 +252,18 @@ export const cityRegistry = {
         status: 'available',
         stats: { lines: 1, stations: '16', length: '82+ km' },
     },
+    meerut: {
+        id: 'meerut',
+        displayName: 'Meerut',
+        nameLocal: 'मेरठ',
+        metroName: 'Meerut Metro',
+        tagline: 'Modernizing the historic city with a high-speed urban rail network.',
+        state: 'Uttar Pradesh',
+        emoji: '🏤',
+        imageClass: 'lp-img-meerut',
+        status: 'available',
+        stats: { lines: 2, stations: '23', length: '23+ km' },
+    },
 };
 
 /**
@@ -279,6 +291,7 @@ export const cityOrder = [
     "noida",
     "gurgaon",
     "rrts",
+    "meerut",
 ];
 
 /** Returns ordered array of city metadata objects, skipping any unknown keys. */
