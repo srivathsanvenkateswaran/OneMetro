@@ -44,6 +44,7 @@ const cityLoaders = {
     noida: () => import('./data/noida.js').then(m => m.default),
     gurgaon: () => import('./data/gurgaon.js').then(m => m.default),
     rrts: () => import('./data/rrts.js').then(m => m.default),
+    meerut: () => import('./data/meerut.js').then(m => m.default),
 };
 
 // ── City Data Cache ───────────────────────────────────────────────────────────

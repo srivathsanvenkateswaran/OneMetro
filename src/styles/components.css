@@ -1684,6 +1684,12 @@ body.map-fullscreen-active .sidebar {
     url("/assets/RRTS.webp");
 }
 
+.lp-img-meerut {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("/assets/Meerut.webp");
+}
+
 .lp-card-content {
   padding: var(--space-xl);
   flex: 1;
