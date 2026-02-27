@@ -813,5 +813,20 @@ export const mapLayouts = {
       ],
     },
   },
+  rrts: {
+    type: "schematic",
+    width: 1400,
+    height: 1000,
+    lines: {
+      "namo-bharat": [
+        { idx: 0, x: 200, y: 800 },
+        { idx: 2, x: 400, y: 700 },
+        { idx: 4, x: 600, y: 600 },
+        { idx: 7, x: 800, y: 500 },
+        { idx: 10, x: 1000, y: 300 },
+        { idx: 13, x: 1200, y: 100 },
+      ],
+    },
+  },
 };
 
