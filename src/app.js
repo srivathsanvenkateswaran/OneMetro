@@ -422,6 +422,11 @@ function bindSidebarEvents() {
 function renderContent() {
     const content = document.getElementById('content');
     content.className = 'content';
+
+    // Always exit map fullscreen state when navigating or re-rendering content
+    document.body.classList.remove('map-fullscreen-active');
+    document.body.style.overflow = '';
+
     const displayCity = state.showUpcoming ? state.city : getFilteredCity();
 
     // Station detail view

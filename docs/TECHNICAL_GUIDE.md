@@ -30,11 +30,11 @@ export const renderStationHeader = (station, line) => `
 We treat the **Browser URL Hash** as our application's state. There is no `Redux` or `Vuex`.
 1. **Change**: User clicks a station.
 2. **Update**: The app updates the URL to `#/chennai/blue/chennai-central`.
-3. **Reactive Render**: The `hashchange` event listener in `app.js` detects this, identifies the city/line/station from the string, and calls the appropriate render functions.
+3. **Reactive Render**: The `hashchange` event listener in `app.js` detects thichs, identifies the city/line/station from the string, and calls the appropriate render functions.
 
 ---
 
-## �️ 1.5 The SVG Rendering Pipeline
+## 🎨 1.5 The SVG Rendering Pipeline
 
 OneMetro uses a highly optimized, single-pass SVG rendering engine. Unlike Canvas, SVG allows us to maintain **vector-perfect sharpness** at any zoom level and attach event listeners directly to the elements.
 

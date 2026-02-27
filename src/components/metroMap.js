@@ -824,23 +824,34 @@ function initMapControls(container) {
 
   // Fullscreen toggle
   const fsBtn = container.querySelector("#fullscreen-toggle");
-  fsBtn.addEventListener("click", () => {
-    const isFullscreen = wrapper.classList.toggle("map-fullscreen");
+
+  const handleEscKey = (e) => {
+    if (e.key === "Escape" && wrapper.classList.contains("map-fullscreen")) {
+      toggleFullscreen(false);
+    }
+  };
+
+  function toggleFullscreen(force) {
+    const isFullscreen = force !== undefined ? force : wrapper.classList.toggle("map-fullscreen");
+
+    if (force !== undefined) {
+      wrapper.classList.toggle("map-fullscreen", isFullscreen);
+    }
+
     fsBtn.textContent = isFullscreen ? "✕" : "⛶";
 
     // Toggle body states
     document.body.style.overflow = isFullscreen ? "hidden" : "";
     document.body.classList.toggle("map-fullscreen-active", isFullscreen);
-  });
 
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && wrapper.classList.contains("map-fullscreen")) {
-      wrapper.classList.remove("map-fullscreen");
-      fsBtn.textContent = "⛶";
-      document.body.style.overflow = "";
-      document.body.classList.remove("map-fullscreen-active");
+    if (isFullscreen) {
+      document.addEventListener("keydown", handleEscKey);
+    } else {
+      document.removeEventListener("keydown", handleEscKey);
     }
-  });
+  }
+
+  fsBtn.addEventListener("click", () => toggleFullscreen());
 
   // Minimize map toggle
   const minBtn = container.querySelector("#map-minimize");
