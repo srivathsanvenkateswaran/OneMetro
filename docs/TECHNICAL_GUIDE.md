@@ -158,6 +158,40 @@ The `snapInterchanges()` function runs before the SVG is drawn. It looks for sta
 
 ---
 
+## 🔍 3.5 The Universal Search Engine
+
+OneMetro features a sophisticated, macOS Finder-inspired **Universal Search** powered by [Fuse.js](https://www.fusejs.io/). 
+
+### Lazy Indexing Architecture
+To stay under our 1-second load goal, we use a **two-stage asynchronous crawler**:
+1.  **Level 1 (Shallow)**: On app boot, we index only the `cityRegistry`. This is instantaneous and takes < 1ms.
+2.  **Level 2 (Deep)**: When the user first triggers the search palette (Ctrl+P), we fire off parallel dynamic imports for **every city data module**. Once loaded, we crawl every Line and Station, building a full national transit index in the background without blocking the UI thread.
+
+### Semantic Flattening (The "Keyword Cloud" Strategy)
+Standard fuzzy matching often fails when users combine properties (e.g., searching "Blue Line Bengaluru"). If "Blue Line" is in the `name` field and "Bengaluru" is in the `sub` field, many engines penalize the score. 
+
+We solve this by **Semantic Flattening**: generating a composite `keywords` field for every indexed item:
+```javascript
+// A conceptual snippet from searchEngine.js
+const item = {
+    name: "Blue Line",
+    sub: "Bengaluru • Namma Metro",
+    keywords: "Blue Line Bengaluru Namma Metro Karnataka karnataka city line metro"
+};
+```
+
+### Search Score Weighting
+We use a weighted scoring system to prioritize direct matches while allowing for regional discovery:
+- **`keywords` (Weight 0.8)**: The highest weight. This enables "Intersection Queries" like "Kochi Water" or "Delhi Magenta".
+- **`name` / `nameLocal` (Weight 0.5)**: High weight for direct name matches.
+- **`sub` (Weight 0.2)**: Lower weight for secondary context.
+
+### Performance Tuning
+- **Threshold (0.35)**: Carefully tuned to allow for common typos (e.g., "Mumbay" -> "Mumbai") without flooding results with noise.
+- **MinMatchCharLength (2)**: Ignores single letters to prevent irrelevant results during initial typing.
+
+---
+
 ## 🛰️ 4. Data Schemas: The OneMetro Standard
 
 To make OneMetro "AI-friendly" and "VibeCoder-friendly," we use a strict schema. Every city is a static JS module—**not a JSON file**. This allows Vite to tree-shake the data and only load Chennai if the user actually visits Chennai.

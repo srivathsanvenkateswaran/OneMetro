@@ -28,6 +28,7 @@ OneMetro uses a dual-engine approach to map rendering:
 - **No-Framework Core**: Built with Vanilla JS to minimize overhead and prevent "framework rot."
 - **Data as Code**: Metro system data is stored as ES modules. This eliminates JSON parsing overhead and allows for aggressive tree-shaking and lazy-loading.
 - **State via URL**: Every city, line, and station is indexed via URL fragments, making the entire platform deep-linkable and SEO-friendly.
+- **Universal Search**: A premium, macOS Finder-style command palette (Ctrl+P) for instant navigation across cities, lines, and stations using optimized fuzzy-match logic.
 
 ---
 

@@ -20,7 +20,8 @@ export async function buildSearchIndex(cityLoaders) {
         nameLocal: city.nameLocal,
         sub: `${city.state} • ${city.stats.lines} Lines`,
         type: 'city',
-        cityId: city.id
+        cityId: city.id,
+        keywords: `${city.displayName} ${city.nameLocal} ${city.state} city metro india`
     }));
 
     // 2. Load all city data to index lines and stations (lazy)
@@ -35,6 +36,8 @@ export async function buildSearchIndex(cityLoaders) {
             if (!data || !data.lines) return;
 
             data.lines.forEach(line => {
+                const lineKeywords = `${line.name} ${data.city} ${data.displayName || ''} line metro ${id}`.toLowerCase();
+
                 // Index Line
                 searchData.push({
                     id: `${id}-${line.id}`,
@@ -42,12 +45,15 @@ export async function buildSearchIndex(cityLoaders) {
                     sub: `${data.city} • ${line.totalStations} Stations`,
                     type: 'line',
                     cityId: id,
-                    lineId: line.id
+                    lineId: line.id,
+                    keywords: lineKeywords
                 });
 
                 // Index Stations
                 if (line.stations) {
                     line.stations.forEach(station => {
+                        const stationKeywords = `${station.name} ${station.nameLocal || ''} ${line.name} ${data.city} station metro`.toLowerCase();
+
                         searchData.push({
                             id: station.id,
                             name: station.name,
@@ -55,10 +61,11 @@ export async function buildSearchIndex(cityLoaders) {
                             type: 'station',
                             cityId: id,
                             lineId: line.id,
-                            stationId: station.id
+                            stationId: station.id,
+                            keywords: stationKeywords
                         });
 
-                        // Also index local names for fuzzy matching
+                        // Also index local names for fuzzy matching if they are distinct enough
                         if (station.nameLocal && station.nameLocal !== station.name) {
                             searchData.push({
                                 id: `${station.id}-local`,
@@ -68,7 +75,8 @@ export async function buildSearchIndex(cityLoaders) {
                                 cityId: id,
                                 lineId: line.id,
                                 stationId: station.id,
-                                isLocalName: true
+                                isLocalName: true,
+                                keywords: stationKeywords
                             });
                         }
                     });
@@ -79,16 +87,18 @@ export async function buildSearchIndex(cityLoaders) {
         // 3. Initialize Fuse with refined weightings
         fuse = new Fuse(searchData, {
             keys: [
-                { name: 'name', weight: 0.7 },
-                { name: 'nameLocal', weight: 0.7 },
-                { name: 'sub', weight: 0.3 }
+                { name: 'name', weight: 0.5 },
+                { name: 'nameLocal', weight: 0.5 },
+                { name: 'keywords', weight: 0.8 },
+                { name: 'sub', weight: 0.2 }
             ],
-            threshold: 0.3,
+            threshold: 0.35,
             location: 0,
             distance: 100,
             minMatchCharLength: 2,
             includeMatches: true,
-            shouldSort: true
+            shouldSort: true,
+            findAllMatches: true
         });
 
         indexBuilt = true;
