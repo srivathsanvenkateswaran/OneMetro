@@ -18,6 +18,8 @@ import { renderStationList, bindStationEvents } from './components/stationList.j
 import { renderMetroMap } from './components/metroMap.js';
 import { renderStationPage, bindStationPageEvents } from './components/stationPage.js';
 import { renderLandingPage } from './components/landingPage.js';
+import { buildSearchIndex, search } from './services/searchEngine.js';
+import { renderSearchModal, bindSearchEvents, toggleSearchModal } from './components/searchModal.js';
 
 // ── City Loaders ──────────────────────────────────────────────────────────────
 // Dynamic imports create separate JS chunks, loaded only when a city is selected.
@@ -72,6 +74,7 @@ const state = {
     activeLine: null,
     activeStation: null,
     showUpcoming: false,
+    searchInitialized: false
 };
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -212,6 +215,58 @@ async function init() {
 
     // Handle all subsequent URL changes
     window.addEventListener('hashchange', handleHashChange);
+
+    // ── Global Search Keyboard Shortcuts ──
+    document.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+            e.preventDefault();
+            handleOpenSearch();
+        }
+    });
+
+    // Initialize Search UI (invisible until activated)
+    renderSearchModal();
+}
+
+/**
+ * Lazy-initializes the search index only when needed.
+ */
+async function handleOpenSearch() {
+    toggleSearchModal(true);
+    if (!state.searchInitialized) {
+        state.searchInitialized = true;
+
+        // Setup events once
+        bindSearchEvents(
+            search,
+            handleSearchSelect,
+            () => toggleSearchModal(false)
+        );
+
+        // Build index in background
+        await buildSearchIndex(cityLoaders);
+    }
+}
+
+/**
+ * Handles selection from search results.
+ */
+function handleSearchSelect(item) {
+    toggleSearchModal(false);
+
+    if (item.type === 'city') {
+        handleCityChange(item.cityId);
+    } else if (item.type === 'line') {
+        state.activeLine = item.lineId;
+        state.activeStation = null;
+        setHash(item.cityId, item.lineId, null);
+        renderAll();
+    } else if (item.type === 'station') {
+        state.activeLine = item.lineId;
+        state.activeStation = item.stationId;
+        setHash(item.cityId, item.lineId, item.stationId);
+        renderAll();
+    }
 }
 
 // ── Hash Change Handler ───────────────────────────────────────────────────────
@@ -277,6 +332,12 @@ function renderAll() {
         if (sidebar) sidebar.style.display = 'none';
         if (content) content.style.display = 'none';
         renderLandingPage(handleCityChange);
+
+        // Bind Hero Search trigger
+        const heroSearch = document.getElementById('hero-search-trigger');
+        if (heroSearch) {
+            heroSearch.addEventListener('click', handleOpenSearch);
+        }
         return;
     }
 

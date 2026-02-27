@@ -12,5 +12,8 @@
   },
   "devDependencies": {
     "vite": "^6.1.0"
+  },
+  "dependencies": {
+    "fuse.js": "^7.1.0"
   }
 }

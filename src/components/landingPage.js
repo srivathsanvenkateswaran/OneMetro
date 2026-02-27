@@ -27,6 +27,14 @@ export function renderLandingPage(onCitySelect) {
                 <div class="lp-badge">Smart Transit Portal</div>
                 <h1 class="lp-title">Explore India's <span class="lp-highlight">Metro Networks</span></h1>
                 <p class="lp-subtitle">Seamlessly navigate the interconnected future of Indian urban mobility with OneMetro. Interactive maps, real-time insights, and futuristic design.</p>
+                
+                <div class="hero-search-trigger" id="hero-search-trigger">
+                    <span class="search-icon">🔍</span>
+                    <span class="hero-search-text">Find a station, line, or city...</span>
+                    <span class="hero-search-shortcut">
+                        <kbd>Ctrl</kbd> <kbd>P</kbd>
+                    </span>
+                </div>
             </div>
         </div>
 
