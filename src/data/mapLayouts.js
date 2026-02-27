@@ -869,7 +869,8 @@ export const mapLayouts = {
         { idx: 2, x: 700, y: 500 }, // New Ashok Nagar (East)
         { idx: 3, x: 800, y: 400 }, // Anand Vihar (NE)
         { idx: 7, x: 1000, y: 250 }, // Duhai
-        { idx: 16, x: 1300, y: 100 }, // Modipuram
+        { idx: 11, x: 1150, y: 175 }, // Meerut South
+        { idx: 14, x: 1300, y: 100 }, // Modipuram
       ],
       "rrts-alwar": [
         { idx: 0, x: 600, y: 500 }, // SKK Hub
@@ -892,13 +893,16 @@ export const mapLayouts = {
     height: 1000,
     lines: {
       m1: [
-        { idx: 0, x: 300, y: 900 },
-        { idx: 11, x: 300, y: 100 },
+        { idx: 0, x: 100, y: 950 },  // Meerut South (SW)
+        { idx: 3, x: 250, y: 700 },  // Shatabdi Nagar
+        { idx: 5, x: 350, y: 550 },  // Meerut Central
+        { idx: 7, x: 450, y: 450 },  // Begumpul (Hub)
+        { idx: 11, x: 550, y: 50 },  // Modipuram (NE)
       ],
       m2: [
-        { idx: 0, x: 100, y: 300 },
-        { idx: 3, x: 300, y: 300 }, // Begumpul Interchange
-        { idx: 5, x: 500, y: 300 },
+        { idx: 0, x: 100, y: 450 },  // Shradhapuri (West)
+        { idx: 3, x: 450, y: 450 },  // Begumpul Interchange
+        { idx: 5, x: 550, y: 450 },  // Jagriti Vihar (East)
       ],
     },
   },
