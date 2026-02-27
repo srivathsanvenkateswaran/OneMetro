@@ -830,17 +830,18 @@ export const mapLayouts = {
   },
   meerut: {
     type: "schematic",
-    width: 600,
+    width: 1000, // Expanded for diagonals
     height: 1000,
     lines: {
       m1: [
-        { idx: 0, x: 300, y: 900 },
-        { idx: 11, x: 300, y: 100 },
+        { idx: 0, x: 250, y: 850 }, // Meerut South (SW)
+        { idx: 7, x: 500, y: 450 }, // Begumpul (Central Hub)
+        { idx: 11, x: 650, y: 100 }, // Modipuram (NE)
       ],
       m2: [
-        { idx: 0, x: 100, y: 300 },
-        { idx: 3, x: 300, y: 300 }, // Begumpul Interchange
-        { idx: 5, x: 500, y: 300 },
+        { idx: 0, x: 150, y: 150 }, // Shradhapuri (NW)
+        { idx: 3, x: 500, y: 450 }, // Begumpul Interchange
+        { idx: 5, x: 800, y: 750 }, // Jagriti Vihar (SE)
       ],
     },
   },
