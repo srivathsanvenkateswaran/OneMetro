@@ -884,6 +884,7 @@ const greenLineStations = [
     }
 ];
 
+
 // Real-world coordinates for all Hyderabad Metro stations (WGS84)
 const stationCoords = {
     // Red Line — Miyapur → LB Nagar
@@ -953,7 +954,7 @@ const stationCoords = {
 const data = {
     id: 'hyderabad',
     name: 'Hyderabad Metro',
-    nameLocal: 'హైదరాబాద్ మెટ્રો',
+    nameLocal: 'హైదరాబాద్ మెట్్రో',
     city: 'Hyderabad',
     state: 'Telangana',
     operator: 'Hyderabad Metro Rail Limited (HMRL) / L&T Metro',

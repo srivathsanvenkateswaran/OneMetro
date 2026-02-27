@@ -12,11 +12,482 @@ const delhiMetro = {
     operator: 'Delhi Metro Rail Corporation (DMRC)',
     totalStations: 231,
     totalLength: '350.67 km',
-    totalLines: 11,
+    totalLines: 14,
     established: '2002',
     website: 'https://www.delhimetrorail.com',
 
     lines: [
+        {
+            'id': 'golden',
+            'name': 'Golden Line (Upcoming)',
+            'color': '#FFD700',
+            'colorLight': '#FFF9C4',
+            'corridor': '10',
+            'length': '23.6 km',
+            'totalStations': 15,
+            'status': 'upcoming',
+            'operationalSince': 'Expected 2026',
+            'frequency': 'TBD',
+            'gauge': 'Standard Gauge (1435 mm)',
+            'rollingStock': 'Alstom',
+            'stations': [
+                {
+                    'id': 'del_inter_aerocity',
+                    'name': 'Aerocity',
+                    'nameLocal': 'एरोसिटी',
+                    'type': 'underground',
+                    'isInterchange': true,
+                    'interchangeWith': [
+                        'orange'
+                    ],
+                    'landmark': 'Aerocity Hotels'
+                },
+                {
+                    'id': 'gld02',
+                    'name': 'Mahipalpur',
+                    'nameLocal': 'महिपालपुर',
+                    'type': 'underground',
+                    'isInterchange': false,
+                    'interchangeWith': [],
+                    'landmark': 'Mahipalpur'
+                },
+                {
+                    'id': 'gld03',
+                    'name': 'Vasant Kunj',
+                    'nameLocal': 'वसंत कुंज',
+                    'type': 'underground',
+                    'isInterchange': false,
+                    'interchangeWith': [],
+                    'landmark': 'Vasant Kunj'
+                },
+                {
+                    'id': 'gld04',
+                    'name': 'Kishangarh',
+                    'nameLocal': 'किशनगढ़',
+                    'type': 'underground',
+                    'isInterchange': false,
+                    'interchangeWith': [],
+                    'landmark': 'Kishangarh'
+                },
+                {
+                    'id': 'y29',
+                    'name': 'Chhatarpur',
+                    'nameLocal': 'छतरपुर',
+                    'type': 'underground',
+                    'isInterchange': true,
+                    'interchangeWith': [
+                        'yellow'
+                    ],
+                    'landmark': 'Chhatarpur Temple'
+                },
+                {
+                    'id': 'gld06',
+                    'name': 'Chhattarpur Mandir',
+                    'nameLocal': 'छतरपुर मंदिर',
+                    'type': 'underground',
+                    'isInterchange': false,
+                    'interchangeWith': [],
+                    'landmark': 'Mandir'
+                },
+                {
+                    'id': 'gld07',
+                    'name': 'IGNOU',
+                    'nameLocal': 'इग्नू',
+                    'type': 'underground',
+                    'isInterchange': false,
+                    'interchangeWith': [],
+                    'landmark': 'IGNOU Campus'
+                },
+                {
+                    'id': 'gld08',
+                    'name': 'Neb Sarai',
+                    'nameLocal': 'नेब सराय',
+                    'type': 'underground',
+                    'isInterchange': false,
+                    'interchangeWith': [],
+                    'landmark': 'Neb Sarai'
+                },
+                {
+                    'id': 'gld09',
+                    'name': 'Saket G-Block',
+                    'nameLocal': 'साकेत जी-ब्लॉक',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': [],
+                    'landmark': 'Saket'
+                },
+                {
+                    'id': 'gld10',
+                    'name': 'Ambedkar Nagar',
+                    'nameLocal': 'अंबेडकर नगर',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': [],
+                    'landmark': 'Ambedkar Nagar'
+                },
+                {
+                    'id': 'gld11',
+                    'name': 'Khanpur',
+                    'nameLocal': 'खानपुर',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': [],
+                    'landmark': 'Khanpur'
+                },
+                {
+                    'id': 'gld12',
+                    'name': 'Sangam Vihar – Tigri',
+                    'nameLocal': 'संगम विहार – तिगड़ी',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': [],
+                    'landmark': 'Sangam Vihar'
+                },
+                {
+                    'id': 'gld13',
+                    'name': 'Anandmayee Marg',
+                    'nameLocal': 'आनंदमयी मार्ग',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': [],
+                    'landmark': 'Okhla'
+                },
+                {
+                    'id': 'gld14',
+                    'name': 'Tughlakabad Railway Colony',
+                    'nameLocal': 'तुगलकाबाद रेलवे कॉलोनी',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': [],
+                    'landmark': 'Railway Colony'
+                },
+                {
+                    'id': 'v22',
+                    'name': 'Tughlakabad',
+                    'nameLocal': 'तुगलकाबाद',
+                    'type': 'underground',
+                    'isInterchange': true,
+                    'interchangeWith': [
+                        'violet'
+                    ],
+                    'landmark': 'Tughlakabad Fort'
+                }
+            ]
+        },
+        {
+            'id': 'magenta-ext',
+            'name': 'Magenta Line Ext (Upcoming)',
+            'color': '#9C27B0',
+            'colorLight': '#E1BEE7',
+            'corridor': '8 Ext',
+            'length': '28.9 km',
+            'totalStations': 22,
+            'status': 'upcoming',
+            'operationalSince': 'Expected 2026',
+            'frequency': 'TBD',
+            'gauge': 'Standard Gauge (1435 mm)',
+            'stations': [
+                {
+                    'id': 'del_inter_janakpuri_west',
+                    'name': 'Janakpuri West',
+                    'nameLocal': 'जनकपुरी पश्चिम',
+                    'type': 'underground',
+                    'isInterchange': true,
+                    'interchangeWith': [
+                        'blue',
+                        'magenta'
+                    ]
+                },
+                {
+                    'id': 'me02',
+                    'name': 'Krishna Park Extn',
+                    'nameLocal': 'कृष्णा पार्क एक्सटेंशन',
+                    'type': 'underground',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'me03',
+                    'name': 'Keshopur',
+                    'nameLocal': 'केशोपुर',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'me04',
+                    'name': 'Paschim Vihar',
+                    'nameLocal': 'पश्चिम विहार',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'g09',
+                    'name': 'Peeragarhi',
+                    'nameLocal': 'पीरागढ़ी',
+                    'type': 'elevated',
+                    'isInterchange': true,
+                    'interchangeWith': [
+                        'green'
+                    ]
+                },
+                {
+                    'id': 'me06',
+                    'name': 'Mangol Puri',
+                    'nameLocal': 'मंगोल पुरी',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'me07',
+                    'name': 'West Enclave',
+                    'nameLocal': 'वेस्ट एन्क्लेव',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'me08',
+                    'name': 'Pushpanjali',
+                    'nameLocal': 'पुष्पांजलि',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'me09',
+                    'name': 'Deepali Chowk',
+                    'nameLocal': 'दीपाली चौक',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'me10',
+                    'name': 'Pitampura',
+                    'nameLocal': 'पीतमपुरा',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'me11',
+                    'name': 'Prashant Vihar',
+                    'nameLocal': 'प्रशांत विहार',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'me12',
+                    'name': 'North Pitampura',
+                    'nameLocal': 'उत्तर पीतमपुरा',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'y03',
+                    'name': 'Haiderpur Badli Mor',
+                    'nameLocal': 'हैदरपुर बादली मोड़',
+                    'type': 'elevated',
+                    'isInterchange': true,
+                    'interchangeWith': [
+                        'yellow'
+                    ]
+                },
+                {
+                    'id': 'me14',
+                    'name': 'Bhalaswa',
+                    'nameLocal': 'भलस्वा',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'p01',
+                    'name': 'Majlis Park',
+                    'nameLocal': 'मजलिस पार्क',
+                    'type': 'elevated',
+                    'isInterchange': true,
+                    'interchangeWith': [
+                        'pink'
+                    ]
+                },
+                {
+                    'id': 'del_inter_azadpur',
+                    'name': 'Azadpur',
+                    'nameLocal': 'आज़ादपुर',
+                    'type': 'underground',
+                    'isInterchange': true,
+                    'interchangeWith': [
+                        'yellow',
+                        'pink'
+                    ]
+                },
+                {
+                    'id': 'me17',
+                    'name': 'Ashok Vihar',
+                    'nameLocal': 'अशोक विहार',
+                    'type': 'underground',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'me18',
+                    'name': 'Derawal Nagar',
+                    'nameLocal': 'डेरावल नगर',
+                    'type': 'underground',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'me19',
+                    'name': 'Ghanta Ghar',
+                    'nameLocal': 'घंटा घर',
+                    'type': 'underground',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'r18',
+                    'name': 'Pulbangash',
+                    'nameLocal': 'पुल बंगाश',
+                    'type': 'underground',
+                    'isInterchange': true,
+                    'interchangeWith': [
+                        'red'
+                    ]
+                },
+                {
+                    'id': 'me21',
+                    'name': 'Sadar Bazar',
+                    'nameLocal': 'सदर बाजार',
+                    'type': 'underground',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'me22',
+                    'name': 'Nabi Karim',
+                    'nameLocal': 'नबी करीम',
+                    'type': 'underground',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'bl28',
+                    'name': 'Ramakrishna Ashram Marg',
+                    'nameLocal': 'रामकृष्ण आश्रम मार्ग',
+                    'type': 'underground',
+                    'isInterchange': true,
+                    'interchangeWith': [
+                        'blue'
+                    ]
+                }
+            ]
+        },
+        {
+            'id': 'pink-ext',
+            'name': 'Pink Line Loop (Upcoming)',
+            'color': '#E91E63',
+            'colorLight': '#F48FB1',
+            'corridor': '7 Ext',
+            'length': '12.5 km',
+            'totalStations': 10,
+            'status': 'upcoming',
+            'operationalSince': 'Expected 2026',
+            'frequency': 'TBD',
+            'gauge': 'Standard Gauge (1435 mm)',
+            'stations': [
+                {
+                    'id': 'p01',
+                    'name': 'Majlis Park',
+                    'nameLocal': 'मजलिस पार्क',
+                    'type': 'elevated',
+                    'isInterchange': true,
+                    'interchangeWith': [
+                        'pink'
+                    ]
+                },
+                {
+                    'id': 'pe02',
+                    'name': 'Burari Crossing',
+                    'nameLocal': 'बुराड़ी क्रॉसिंग',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'pe03',
+                    'name': 'Jharoda Majra',
+                    'nameLocal': 'झरोदा माजरा',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'pe04',
+                    'name': 'Jagatpur Village',
+                    'nameLocal': 'जगतपुर गांव',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'pe05',
+                    'name': 'Soorghat',
+                    'nameLocal': 'सूरघाट',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'pe06',
+                    'name': 'Sonia Vihar',
+                    'nameLocal': 'सोनिया विहार',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'pe07',
+                    'name': 'Khajuri Khas',
+                    'nameLocal': 'खजुरी खास',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'pe08',
+                    'name': 'Bhajanpura',
+                    'nameLocal': 'भजनपुरा',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'pe09',
+                    'name': 'Yamuna Vihar',
+                    'nameLocal': 'यमुना विहार',
+                    'type': 'elevated',
+                    'isInterchange': false,
+                    'interchangeWith': []
+                },
+                {
+                    'id': 'p35',
+                    'name': 'Maujpur-Babarpur',
+                    'nameLocal': 'मौजपुर - बाबरपुर',
+                    'type': 'elevated',
+                    'isInterchange': true,
+                    'interchangeWith': [
+                        'pink'
+                    ]
+                }
+            ]
+        },
         {
             id: 'red',
             name: 'Red Line',
@@ -85,7 +556,7 @@ const delhiMetro = {
                 { id: 'y03', name: 'Haiderpur Badli Mor', nameLocal: 'हैदरपुर बादली मोड़', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Badli Mor', zone: 1, platforms: [{ no: 1, towards: 'Millennium City Centre', type: 'Side' }, { no: 2, towards: 'Samaypur Badli', type: 'Side' }], gates: [{ gate: '1', landmarks: ['Max Hospital'] }, { gate: '2', landmarks: ['Haiderpur'] }] },
                 { id: 'y04', name: 'Jahangirpuri', nameLocal: 'जहांगीरपुरी', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Jahangirpuri Market', zone: 1, platforms: [{ no: 1, towards: 'Millennium City Centre', type: 'Side' }, { no: 2, towards: 'Samaypur Badli', type: 'Side' }], gates: [{ gate: '1', landmarks: ['Grand Trunk Road'] }, { gate: '2', landmarks: ['Jahangirpuri Village'] }] },
                 { id: 'y05', name: 'Adarsh Nagar', nameLocal: 'आदर्श नगर', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Azadpur Mandi', zone: 1, platforms: [{ no: 1, towards: 'Millennium City Centre', type: 'Side' }, { no: 2, towards: 'Samaypur Badli', type: 'Side' }], gates: [{ gate: '1', landmarks: ['Azadpur Mandi'] }, { gate: '2', landmarks: ['Adarsh Nagar Railway Station'] }] },
-                { id: 'del_inter_azadpur', name: 'Azadpur', nameLocal: 'आजादpur', type: 'elevated', isInterchange: true, interchangeWith: ['pink'], landmark: 'Azadpur Mandi', zone: 1, platforms: [{ no: 1, towards: 'Millennium City Centre', type: 'Side' }, { no: 2, towards: 'Samaypur Badli', type: 'Side' }], gates: [{ gate: '1', landmarks: ['Azadpur Mandi'] }, { gate: '2', landmarks: ['Model Town-3'] }] },
+                { id: 'del_inter_azadpur', name: 'Azadpur', nameLocal: 'आजादपुर', type: 'elevated', isInterchange: true, interchangeWith: ['pink'], landmark: 'Azadpur Mandi', zone: 1, platforms: [{ no: 1, towards: 'Millennium City Centre', type: 'Side' }, { no: 2, towards: 'Samaypur Badli', type: 'Side' }], gates: [{ gate: '1', landmarks: ['Azadpur Mandi'] }, { gate: '2', landmarks: ['Model Town-3'] }] },
                 { id: 'y07', name: 'Model Town', nameLocal: 'मॉडल टाउन', type: 'elevated', isInterchange: false, interchangeWith: [], landmark: 'Model Town Market', zone: 1, platforms: [{ no: 1, towards: 'Millennium City Centre', type: 'Side' }, { no: 2, towards: 'Samaypur Badli', type: 'Side' }], gates: [{ gate: '1', landmarks: ['Gujranwala Town'] }, { gate: '2', landmarks: ['Model Town-II'] }] },
                 { id: 'y08', name: 'GTB Nagar', nameLocal: 'जी.टी.बी. नगर', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'North Campus, DU', zone: 1, platforms: [{ no: 1, towards: 'Millennium City Centre', type: 'Island' }, { no: 2, towards: 'Samaypur Badli', type: 'Island' }], gates: [{ gate: '1', landmarks: ['Hudson Lane', 'Kingsway Camp'] }, { gate: '2', landmarks: ['Mukherjee Nagar'] }, { gate: '5', landmarks: ['Alpana Cinema'] }] },
                 { id: 'y09', name: 'Vishwavidyalaya', nameLocal: 'विश्वविद्यालय', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Delhi University, North Campus', zone: 1, platforms: [{ no: 1, towards: 'Millennium City Centre', type: 'Island' }, { no: 2, towards: 'Samaypur Badli', type: 'Island' }], gates: [{ gate: '1', landmarks: ['Reviera Apartment'] }, { gate: '2', landmarks: ['Mall Road'] }, { gate: '3', landmarks: ['Cavelary Lane'] }, { gate: '4', landmarks: ['Khalsa College'] }] },
@@ -472,6 +943,7 @@ const delhiMetro = {
                 { id: 'w04', name: 'Dhansa Bus Stand', nameLocal: 'धानसा बस स्टैंड', type: 'underground', isInterchange: false, interchangeWith: [], landmark: 'Dhansa Road', zone: 1, platforms: [{ no: 1, towards: 'Terminal', type: 'Island' }, { no: 2, towards: 'Dwarka', type: 'Island' }], gates: [{ gate: '1', landmarks: ['Dhansa Road'] }] }
             ]
         }
+
     ]
 };
 

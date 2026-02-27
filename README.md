@@ -67,11 +67,11 @@ npm run dev
 ---
 
 ## 🧭 Roadmap 2026
-We are building for the future of Indian mobility. Our priorities are:
-1.  🚆 **RRTS Integration**: Adding the Delhi-Meerut and upcoming regional corridors.
-2.  📊 **Real-World Integration**: Moving beyond static paths to include real-world frequency and boarding data.
-3.  🌏 **Multilingual Support**: Localizing the entire interface into regional Indian languages.
-4.  📱 **PWA / Offline Capabilities**: Full offline map access for commuters in underground networks.
+We are building for the future of Indian mobility. See our full **[Strategic Roadmap 2026](ROADMAP_2026.md)** for details on:
+1. 🚆 **Expansion**: Adding RRTS and upcoming metro corridors.
+2. 🌏 **Localization**: Multilingual support for all regional languages.
+3. ⚙️ **Automation**: Building the Data Ingestion Engine for automated updates.
+4. 🧠 **Intelligence**: Browser-side route finding and fare calculation.
 
 ---
 
