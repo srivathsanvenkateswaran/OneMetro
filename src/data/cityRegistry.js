@@ -250,7 +250,7 @@ export const cityRegistry = {
         emoji: '🚆',
         imageClass: 'lp-img-rrts',
         status: 'available',
-        stats: { lines: 2, stations: '25', length: '82+ km' },
+        stats: { lines: 1, stations: '16', length: '82+ km' },
     },
 };
 

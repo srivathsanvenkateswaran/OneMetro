@@ -43,32 +43,6 @@ export default {
                 { id: 'rr13', name: 'Begumpul', nameLocal: 'बेगमपुल', type: 'underground', isInterchange: false, interchangeWith: [], zone: 4 },
                 { id: 'rr14', name: 'Modipuram', nameLocal: 'मोदीपुरम', type: 'elevated', isInterchange: false, interchangeWith: [], zone: 4 }
             ]
-        },
-        {
-            id: 'meerut-metro',
-            name: 'Meerut Metro',
-            color: '#E91E63',
-            colorLight: '#F8BBD0',
-            corridor: 'City Service',
-            length: '23 km',
-            totalStations: 13,
-            status: 'operational',
-            operationalSince: '2026',
-            frequency: '5–8 min',
-            stations: [
-                { id: 'rr11', name: 'Meerut South', nameLocal: 'मेरठ दक्षिण', type: 'elevated', isInterchange: true, interchangeWith: ['namo-bharat'], zone: 4 },
-                { id: 'mm01', name: 'Partapur', nameLocal: 'परतापुर', type: 'elevated', isInterchange: false, interchangeWith: [], zone: 4 },
-                { id: 'mm02', name: 'Rithani', nameLocal: 'रिठानी', type: 'elevated', isInterchange: false, interchangeWith: [], zone: 4 },
-                { id: 'rr12', name: 'Shatabdi Nagar', nameLocal: 'शताब्दी नगर', type: 'elevated', isInterchange: true, interchangeWith: ['namo-bharat'], zone: 4 },
-                { id: 'mm03', name: 'Brahmapuri', nameLocal: 'ब्रह्मपुरी', type: 'elevated', isInterchange: false, interchangeWith: [], zone: 4 },
-                { id: 'mm04', name: 'Meerut Central', nameLocal: 'मेरठ सेंट्रल', type: 'underground', isInterchange: false, interchangeWith: [], zone: 4 },
-                { id: 'mm05', name: 'Bhaisali', nameLocal: 'भैसाली', type: 'underground', isInterchange: false, interchangeWith: [], zone: 4 },
-                { id: 'rr13', name: 'Begumpul', nameLocal: 'बेगमपुल', type: 'underground', isInterchange: true, interchangeWith: ['namo-bharat'], zone: 4 },
-                { id: 'mm06', name: 'MES Colony', nameLocal: 'एमईएस कॉलोनी', type: 'elevated', isInterchange: false, interchangeWith: [], zone: 4 },
-                { id: 'mm07', name: 'Daurli', nameLocal: 'दौरली', type: 'elevated', isInterchange: false, interchangeWith: [], zone: 4 },
-                { id: 'mm08', name: 'Meerut North', nameLocal: 'मेरठ उत्तर', type: 'elevated', isInterchange: false, interchangeWith: [], zone: 4 },
-                { id: 'rr14', name: 'Modipuram', nameLocal: 'मोदीपुरम', type: 'elevated', isInterchange: true, interchangeWith: ['namo-bharat'], zone: 4 }
-            ]
         }
     ]
 };

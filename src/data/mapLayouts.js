@@ -826,10 +826,6 @@ export const mapLayouts = {
         { idx: 10, x: 1000, y: 300 },
         { idx: 13, x: 1200, y: 100 },
       ],
-      "meerut-metro": [
-        { idx: 0, x: 1000, y: 300 },
-        { idx: 11, x: 1200, y: 100 },
-      ],
     },
   },
 };
