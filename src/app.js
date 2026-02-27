@@ -29,6 +29,7 @@ const cityLoaders = {
     bengaluru: () => import('./data/bengaluru.js').then(m => m.default),
     delhi: () => import('./data/delhi.js').then(m => m.default),
     mumbai: () => import('./data/mumbai.js').then(m => m.default),
+    "navi-mumbai": () => import('./data/navi-mumbai.js').then(m => m.default),
     hyderabad: () => import('./data/hyderabad.js').then(m => m.default),
     kolkata: () => import('./data/kolkata.js').then(m => m.default),
     pune: () => import('./data/pune.js').then(m => m.default),

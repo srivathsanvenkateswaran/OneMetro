@@ -1,6 +1,6 @@
 export default {
     id: 'rrts',
-    name: 'RRTS Corridor',
+    name: 'NCR RRTS',
     nameLocal: 'नमो भारत',
     city: 'NCR (Regional)',
     state: 'Delhi / Uttar Pradesh',

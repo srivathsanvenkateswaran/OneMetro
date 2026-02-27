@@ -1594,6 +1594,12 @@ body.map-fullscreen-active .sidebar {
     url("/assets/Mumbai.webp");
 }
 
+.lp-img-navi-mumbai {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("/assets/Navi Mumbai.webp");
+}
+
 .lp-img-kolkata {
   background-image:
     linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
@@ -1689,6 +1695,8 @@ body.map-fullscreen-active .sidebar {
     linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url("/assets/Meerut.webp");
 }
+
+
 
 .lp-card-content {
   padding: var(--space-xl);

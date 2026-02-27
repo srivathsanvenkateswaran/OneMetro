@@ -247,7 +247,7 @@ export const mapLayouts = {
   // ═══════════════════════════════════════════════════════════════
   mumbai: {
     type: "schematic",
-    width: 1300,
+    width: 1600,
     height: 1700,
     lines: {
       yellow: [
@@ -310,16 +310,61 @@ export const mapLayouts = {
         { idx: 15, x: 1100, y: 150 },
         { idx: 16, x: 1120, y: 150 },
       ],
-      gold: [
+      m11: [
         { idx: 0, x: 700, y: 1100 },
         { idx: 9, x: 500, y: 1300 },
         { idx: 13, x: 400, y: 1400 },
         { idx: 15, x: 450, y: 1450 },
       ],
+      gold: [
+        { idx: 0, x: 550, y: 700 },  // CSMIA T2
+        { idx: 1, x: 900, y: 1050 }, // Mankhurd Hub
+        { idx: 2, x: 1000, y: 1050 }, // Vashi
+        { idx: 6, x: 1250, y: 1050 }, // Kharghar
+        { idx: 7, x: 1400, y: 1200 }, // NMIA
+      ],
+      "orange-12": [
+        { idx: 0, x: 1120, y: 150 }, // Kalyan
+        { idx: 4, x: 1120, y: 350 }, // Dombivli
+        { idx: 7, x: 1300, y: 550 }, // Taloja Connection
+      ],
       "red-9": [
         { idx: 0, x: 400, y: 100 },
         { idx: 4, x: 400, y: 0 },
         { idx: 7, x: 300, y: -50 },
+      ],
+    },
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // NAVI MUMBAI — Schematic pixel layout
+  // ═══════════════════════════════════════════════════════════════
+  "navi-mumbai": {
+    type: "schematic",
+    width: 800,
+    height: 1200,
+    lines: {
+      "nmm-1": [
+        { idx: 0, x: 150, y: 1050 }, // CBD Belapur
+        { idx: 2, x: 250, y: 850 },  // Science Park
+        { idx: 3, x: 350, y: 700 },  // Utsav Chowk
+        { idx: 6, x: 550, y: 500 },  // Central Park
+        { idx: 9, x: 650, y: 300 },  // Panchanand
+        { idx: 10, x: 650, y: 150 }, // Pendhar Terminal
+      ],
+      "nmm-3": [
+        { idx: 0, x: 650, y: 150 }, // Pendhar
+        { idx: 2, x: 850, y: 150 }, // MIDC Taloja
+      ],
+      "nmm-2": [
+        { idx: 0, x: 850, y: 150 },   // MIDC Taloja
+        { idx: 2, x: 1000, y: 450 },  // Amandoot (Bends East-South-East)
+        { idx: 4, x: 1150, y: 750 },  // Kamothe (Further East)
+        { idx: 6, x: 1150, y: 1050 }, // Khandeshwar (South-East node)
+      ],
+      "nmm-4": [
+        { idx: 0, x: 1150, y: 1050 }, // Khandeshwar
+        { idx: 2, x: 1350, y: 1250 }, // NMIA (Airport)
       ],
     },
   },
@@ -843,18 +888,17 @@ export const mapLayouts = {
   },
   meerut: {
     type: "schematic",
-    width: 1000, // Expanded for diagonals
+    width: 600,
     height: 1000,
     lines: {
       m1: [
-        { idx: 0, x: 250, y: 850 }, // Meerut South (SW)
-        { idx: 7, x: 500, y: 450 }, // Begumpul (Central Hub)
-        { idx: 11, x: 650, y: 100 }, // Modipuram (NE)
+        { idx: 0, x: 300, y: 900 },
+        { idx: 11, x: 300, y: 100 },
       ],
       m2: [
-        { idx: 0, x: 150, y: 150 }, // Shradhapuri (NW)
-        { idx: 3, x: 500, y: 450 }, // Begumpul Interchange
-        { idx: 5, x: 800, y: 750 }, // Jagriti Vihar (SE)
+        { idx: 0, x: 100, y: 300 },
+        { idx: 3, x: 300, y: 300 }, // Begumpul Interchange
+        { idx: 5, x: 500, y: 300 },
       ],
     },
   },

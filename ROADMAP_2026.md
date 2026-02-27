@@ -18,7 +18,8 @@ OneMetro is the fastest, most aesthetic transit portal for India. We are moving 
 ### 🚆 Phase 1: Expansion & Completeness
 Bringing every network to its full "future" state.
 - **Delhi & Hyderabad Expansion**: Rendered upcoming/under-construction lines for major hubs (Completed Delhi Phase 4, In-Progress Hyderabad Phase 2).
-- **Regional Hubs (NCR & Mumbai)**: Implementing the "Combined Map" strategy. Noida (Completed), Gurgaon Metro and RRTS (In-Progress).
+- **Regional Hubs (NCR & Mumbai)**: Implementing the "Combined Map" strategy. Noida, Gurgaon, Meerut, and NCR RRTS (Phase-1 data complete).
+- **NCR Master Map**: Unified regional transit view for Delhi NCR (Planned / Deferred).
 - **Construction Hub**: Data for Surat, Patna, and Navi Mumbai (Operational vs Under-construction differentiation).
 
 ### 🔍 Phase 2: UX Revolution
@@ -52,9 +53,9 @@ Taking OneMetro to the pocket.
 ---
 
 ## 🛠️ Next Immediate Steps
-1.  **Expansion**: Finalize Gurgaon Metro (Rapid Metro) and RRTS data modules.
-2.  **NCR Hub**: Build the `ncr-transit.js` wrapper to unify Delhi, Noida, Gurgaon, and RRTS into a single master map.
-3.  **Search**: Implement fuzzy search on the Landing Page.
+1.  **Search**: Implement fuzzy search on the Landing Page and cross-city station search in NCR view.
+2.  **PWA**: Enhance offline support for commuters in basements/tunnels.
+3.  **Mumbai Expansion**: Complete the upcoming Mumbai Metro network layout.
 
 > [!IMPORTANT]
 > OneMetro will remain **Open Source** and **Free Forever**.
