@@ -228,6 +228,18 @@ export const cityRegistry = {
         status: 'available',
         stats: { lines: 2, stations: '21+', length: '29+ km' },
     },
+    gurgaon: {
+        id: 'gurgaon',
+        displayName: 'Gurgaon',
+        nameLocal: 'गुरुग्राम',
+        metroName: 'Rapid Metro Gurgaon',
+        tagline: 'India\'s first fully privately funded metro, powering the Millennium City.',
+        state: 'Haryana',
+        emoji: '🏙️',
+        imageClass: 'lp-img-gurgaon',
+        status: 'available',
+        stats: { lines: 2, stations: '11+', length: '12+ km' },
+    },
 };
 
 /**
@@ -253,6 +265,7 @@ export const cityOrder = [
     "agra",
     "lucknow",
     "noida",
+    "gurgaon",
 ];
 
 /** Returns ordered array of city metadata objects, skipping any unknown keys. */

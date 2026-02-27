@@ -790,5 +790,28 @@ export const mapLayouts = {
       ],
     },
   },
+  gurgaon: {
+    type: "schematic",
+    width: 1200,
+    height: 1000,
+    lines: {
+      rapid: [
+        { idx: 0, x: 600, y: 900 },
+        { idx: 5, x: 600, y: 500 },
+        { idx: 6, x: 600, y: 350 },
+        { idx: 7, x: 500, y: 250 },
+        { idx: 8, x: 600, y: 150 },
+        { idx: 9, x: 700, y: 250 },
+        { idx: 10, x: 600, y: 350 },
+      ],
+      "gur-ext": [
+        { idx: 0, x: 500, y: 800 },
+        { idx: 7, x: 200, y: 700 },
+        { idx: 13, x: 100, y: 400 },
+        { idx: 21, x: 300, y: 200 },
+        { idx: 27, x: 600, y: 150 },
+      ],
+    },
+  },
 };
 
